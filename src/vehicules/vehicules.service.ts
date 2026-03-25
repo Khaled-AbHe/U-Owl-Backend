@@ -4,28 +4,53 @@ import { UpdateVehiculeDto } from './dto/update-vehicule.dto';
 import { Repository } from 'typeorm';
 import { Vehicule } from './entities/vehicule.entity';
 import { VehiculeType } from './enums/vehicule-type.enum';
+import { User } from 'src/users/users.entity';
 
 @Injectable()
 export class VehiculesService {
   private constructor(private repo: Repository<Vehicule>) {}
 
-  public createVehicule(type: VehiculeType, model: string, kilometrage: number, carryingCapacity: number): Promise<Vehicule> {
-
+  public async createVehicule(type: VehiculeType, model: string, kilometrage: number, carryingCapacity: number): Promise<Vehicule> {
+    const vehicule =  await this.repo.save({type, model, kilometrage, carryingCapacity});
+    console.log(vehicule);
+    return vehicule;
   }
 
-  public modifyVehicule(id: number, attrs: Partial<Vehicule>): Promise<Vehicule[]> {
+  public async modifyVehicule(id: number, attrs: Partial<Vehicule>): Promise<Vehicule> {
+    const vehicule = await this.repo.findOneBy({id: 1});
 
+    if(!vehicule) {
+      throw new Error("Vehicule introuvable");
+    }
+
+    Object.assign(vehicule, attrs);
+    return this.repo.save(vehicule);
   }
 
-  public getVehicules(): Promise<Vehicule[]> {
-
+  public async getVehicules(): Promise<Vehicule[]> {
+    const vehicules = await this.repo.find();
+    return vehicules;
   }
 
-  public getVehiculeById(id: number): Promise<Vehicule[]> {
+  public async getVehiculeById(id: number): Promise<Vehicule> {
+    const vehicule = await this.repo.findOneBy({id});
 
+    if(!vehicule) {
+      throw new Error("Véhicule pas introuvable");
+    }
+
+    return vehicule;
   }
 
-  public deleteVehiculeById(id: number): Promise<Vehicule> {
-    
+  public async deleteVehiculeById(id: number): Promise<Vehicule> {
+    const vehicule = await this.repo.findOneBy({id});
+
+    if(!vehicule) {
+      throw new Error("Véhicule pas introuvable");
+    }
+
+    await this.repo.delete(id);
+
+    return vehicule;
   }
 }
