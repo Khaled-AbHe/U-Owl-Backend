@@ -1,5 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { UsersController } from './users.controller';
+import { UsersController } from './controllers/users/users.controller';
 import { UsersService } from './services/users/users.service';
 import { User } from './entities/user.entity';
 import { Admin } from './entities/admin.entity';
@@ -9,13 +9,28 @@ import { AuthService } from './services/auth/auth.service';
 // import { CurrentUserInterceptor } from './interceptors/currentUser.interceptor';
 // import { APP_INTERCEPTOR } from '@nestjs/core';
 import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
+import { AuthentificationController } from './controllers/authentification/authentification.controller';
+import { CartsController } from 'src/carts/carts.controller';
+import { CartsModule } from 'src/carts/carts.module';
+import { ReservationsController } from './controllers/reservations/reservations.controller';
+import { ReservationsService } from './services/reservations/reservations.service';
+import { VehiclesModule } from 'src/vehicles/vehicles.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Client, Admin])],
-  controllers: [UsersController],
+  imports: [
+    CartsModule,
+    VehiclesModule,
+    TypeOrmModule.forFeature([User, Client, Admin]),
+  ],
+  controllers: [
+    UsersController,
+    AuthentificationController,
+    ReservationsController,
+  ],
   providers: [
     UsersService,
     AuthService,
+    ReservationsService,
     CurrentUserMiddleware,
     // {
     //   provide: APP_INTERCEPTOR,

@@ -1,7 +1,16 @@
-import { Controller, Get, ParseIntPipe, Post, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { CartsService } from './services/cart/carts.service';
 import { PaymentService } from './services/payment/payment.service';
 import { PaymentType } from './payment.enum';
+import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
 
 @Controller('carts')
 export class CartsController {
@@ -12,11 +21,13 @@ export class CartsController {
     return this.cartsService.findAllCarts();
   }
 
-  @Post('/pay')
-  payCartTotal(
-    @Query('type') type: string,
-    @Query('amount', ParseIntPipe) amount: number,
-  ) {
-    return this.cartsService.payForCart(type, amount);
-  }
+  // @Post('/pay')
+  // payCartTotal(
+  //   @Query('type') type: string,
+  //   @Query('amount', ParseIntPipe) amount: number,
+  // ) {
+  //   return this.cartsService.payForCart(type, amount);
+  // }
+
+  
 }

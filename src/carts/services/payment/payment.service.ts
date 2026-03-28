@@ -1,17 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import type { PaymentStrategy } from 'src/interfaces/payment-strategy.interface.ts';
+import { PaymentSystem } from 'src/carts/payment-system.service';
+import { PaymentType } from 'src/carts/payment.enum';
+import { CreditCardStrategy } from 'src/carts/strategies/credit-cart.payment-strategy';
+import { PaypalStrategy } from 'src/carts/strategies/paypal.payment-strategy';
+import { CartsService } from '../cart/carts.service';
 
 @Injectable()
 export class PaymentService {
-  private paymentStrategy: PaymentStrategy;
+  constructor(
+    private paymentSystem: PaymentSystem,
+    private cartsService: CartsService,
+  ) {}
 
-  constructor() {}
+  payForCart(id: number, method: string, amount: number) {
+    if (method == PaymentType.CREDIT_CARD) {
+      this.paymentSystem.setStrategy(new CreditCardStrategy());
+    } else if (method == PaymentType.PAYPAL) {
+      this.paymentSystem.setStrategy(new PaypalStrategy());
+    }
 
-  setStrategy(strat: PaymentStrategy) {
-    this.paymentStrategy = strat;
-  }
+    this.cartsService.clearCart(id);
 
-  payment(amount: number) {
-    return this.paymentStrategy.pay(amount);
+    return this.paymentSystem.payment(amount);
   }
 }

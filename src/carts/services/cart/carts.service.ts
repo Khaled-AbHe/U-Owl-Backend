@@ -1,28 +1,37 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cart } from '../../cart.entity';
 import { Repository } from 'typeorm';
-import { PaymentService } from '../payment/payment.service';
-import { CreditCardStrategy } from 'src/carts/strategies/credit-cart.payment-strategy';
-import { PaypalStrategy } from 'src/carts/strategies/paypal.payment-strategy';
-import { PaymentType } from 'src/carts/payment.enum';
+import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
 
 @Injectable()
 export class CartsService {
   constructor(
     @InjectRepository(Cart) private repo: Repository<Cart>,
-    private paymentService: PaymentService,
   ) {}
 
   async findAllCarts() {
     return await this.repo.find();
   }
 
-  payForCart(method: string, amount: number) {
-    if (method == PaymentType.CREDIT_CARD)
-      this.paymentService.setStrategy(new CreditCardStrategy());
-    else if (method == PaymentType.PAYPAL)
-      this.paymentService.setStrategy(new PaypalStrategy());
-    return this.paymentService.payment(amount);
+  async findById(id: number) {
+    const cart = await this.repo.findOneBy({ id });
+
+    if (!cart) {
+      throw new NotFoundException("Cart doesn't exist.");
+    }
+
+    return cart;
+  }
+
+  async updateCart(id: number, attrs: Partial<Cart>) {
+    const cart = await this.findById(id);
+    Object.assign(cart, attrs);
+    return await this.repo.save(cart);
+  }
+
+  async clearCart(id: number) {
+    const cart = await this.findById(id);
+    return await this.updateCart(id, {...cart, items: []});
   }
 }

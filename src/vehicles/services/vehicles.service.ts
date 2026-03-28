@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Vehicle } from '../entities/vehicle.entity';
@@ -57,5 +61,23 @@ export class VehiclesService implements Factory {
 
   async findAllVans() {
     return await this.vanRepo.find();
+  }
+
+  // temp helper functions
+
+  async findVehicleById(id: number) {
+    const vehicle = await this.vehicleRepo.findOneBy({ id });
+
+    if (!vehicle) {
+      throw new NotFoundException("Vehicle doesn't exist");
+    }
+    console.log(vehicle);
+    return vehicle;
+  }
+
+  async updateStatus(id: number, attrs: Partial<Vehicle>) {
+    const vehicule = await this.findVehicleById(id);
+    Object.assign(vehicule, attrs);
+    return await this.vehicleRepo.save(vehicule);
   }
 }
