@@ -7,7 +7,7 @@ import { Serialize, SerializeInterceptor } from 'src/interceptors/serialize.inte
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth/auth.service';
 import { CurrentUser } from './decorators/current-user.decorators';
-import { User } from './users.entity';
+import { User } from './entities/users.entity';
 import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { AdminGuard } from 'src/guards/admin-guard';

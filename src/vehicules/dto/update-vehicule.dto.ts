@@ -1,15 +1,37 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateVehiculeDto } from './create-vehicule.dto';
+import {
+  IsString,
+  IsNotEmpty,
+  IsNumber,
+  IsEnum,
+  IsBoolean,
+  IsOptional,
+} from 'class-validator';
 
-export class UpdateVehiculeDto extends PartialType(CreateVehiculeDto) {
+import { VehiculeType } from '../enums/vehicule-type.enum';
 
-    public model : string;
+export class UpdateVehiculeDto {
 
-    public carryingCapacity : number;
+    @IsEnum(VehiculeType)
+    @IsOptional()
+    type: VehiculeType;
 
-    public kilometrage : number;
+    @IsString()
+    @IsOptional()
+    model: string;
 
-    public prixParKm : number;
+    @IsNumber()
+    @IsOptional()
+    carryingSpace: number;
 
-    public location : Location;
+    @IsNumber()
+    @IsOptional()
+    costPerKm: number;
+
+    @IsNumber()
+    @IsOptional()
+    maxWeight: number;
+
+    @IsNumber()
+    @IsOptional()
+    maxItemHeight: number;
 }

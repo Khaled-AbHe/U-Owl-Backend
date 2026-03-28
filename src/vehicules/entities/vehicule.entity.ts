@@ -15,6 +15,7 @@ export class Vehicule {
     public prixParKm: number;
 
     public isReserved: boolean;
+  location: any;
 
     // à faire tantôt
     public calculatePrice(): number {

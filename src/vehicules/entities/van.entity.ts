@@ -1,16 +1,13 @@
-export class Van {
+import { ChildEntity, Column } from 'typeorm';
+import { Vehicule } from './vehicule.entity';
 
-    public id: number;
-
-    public model: string;
-
-    public carryingCapacity: number;
-
-    public kilometrage: number;
-
-    public prixParKm: number;
-
-    public isReserved: boolean;
+@ChildEntity()
+export class Van extends Vehicule {
+    @Column({ default: 0.5 })
+    declare costPerKm: number;
+    
+    @Column()
+    maxItemHeight: number;
     
     // à faire tantôt
     public calculatePrice(): number {

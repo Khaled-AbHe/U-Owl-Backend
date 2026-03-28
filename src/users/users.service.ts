@@ -1,5 +1,5 @@
 import { Body, Injectable, NotFoundException } from '@nestjs/common';
-import { User } from './users.entity';
+import { User } from './entities/users.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dtos/create-user.dto';
