@@ -1,35 +1,26 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthService } from './users/services/auth.service';
-import { CurrentUserMiddleware } from './users/middlewares/current-user.middleware';
-import { UserControllers } from './users/users.controller';
-
+import { VehiclesModule } from './vehicles/vehicles.module';
+import { LocationsModule } from './locations/locations.module';
+import { CartsModule } from './carts/carts.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(
-      {
-        type: "sqlite",
-        database : "db.sqlite",
-        autoLoadEntities: true,
-        synchronize: true // Usually, you keep this at False so you dont mess with an established database
-      }
-    ),
+    TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: 'db.sqlite',
+      autoLoadEntities: true,
+      synchronize: true, // Usually, you keep this at False so you dont mess with an established database
+    }),
     UsersModule,
+    VehiclesModule,
+    LocationsModule,
+    CartsModule,
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService],
 })
-//
- export class AppModule{}
-// export class AppModule implements NestModule{
-//   configure(consumer: MiddlewareConsumer) {
-//     consumer
-//       .apply(CurrentUserMiddleware)
-//       .forRoutes('/whoami');
-// }
-//}
-
+export class AppModule {}

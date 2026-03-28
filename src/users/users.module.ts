@@ -1,29 +1,31 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { UserControllers } from './users.controller';
-import { UsersService } from './services/users.service';
-import { User } from './user.entity';
+import { UsersController } from './users.controller';
+import { UsersService } from './services/users/users.service';
+import { User } from './entities/user.entity';
+import { Admin } from './entities/admin.entity';
+import { Client } from './entities/client.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthService } from './services/auth.service';
-import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
-import { APP_INTERCEPTOR, MiddlewareBuilder } from '@nestjs/core';
+import { AuthService } from './services/auth/auth.service';
+// import { CurrentUserInterceptor } from './interceptors/currentUser.interceptor';
+// import { APP_INTERCEPTOR } from '@nestjs/core';
 import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
 
 @Module({
-  imports : [TypeOrmModule.forFeature([User])],
-  controllers: [UserControllers],
-  // providers: [UsersService,AuthService,CurrentUserInterceptor]
+  imports: [TypeOrmModule.forFeature([User, Client, Admin])],
+  controllers: [UsersController],
   providers: [
     UsersService,
     AuthService,
-    CurrentUserInterceptor,
-    CurrentUserMiddleware
-],
-  exports : [UsersService]
+    CurrentUserMiddleware,
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: CurrentUserInterceptor
+    // },
+  ],
+  exports: [UsersService],
 })
-export class UsersModule implements NestModule{
+export class UsersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(CurrentUserMiddleware)
-      .forRoutes('*');
-}
+    consumer.apply(CurrentUserMiddleware).forRoutes('*');
+  }
 }

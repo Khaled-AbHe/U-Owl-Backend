@@ -1,14 +1,30 @@
-### Create User
-POST http://localhost:3000/users
+### Create User | Sign Up
+POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "email": "khaled@outlook.com",
-    "password": "yf8/$?/9na?&wsf!/$7()*wq9cntqsqw"
+    "type": "Client",
+    "email": "client1@outlook.com",
+    "password": "pswrd"
 }
 
+### Sign In User
+GET http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "email": "admin1@outlook.com",
+    "password": "pswrd"
+}
+
+### Sign Out User
+Post http://localhost:3000/auth/signout
+
+### Who Am I 
+GET http://localhost:3000/auth/whoami
+
 ### Update User
-PATCH http://localhost:3000/users/3
+PATCH http://localhost:3000/auth/3
 Content-Type: application/json
 
 {
@@ -18,117 +34,60 @@ Content-Type: application/json
     "lastName": "Abou Hechmeh"
 }
 
-# ### Get All Users
-# GET http://localhost:3000/users
+### Get All Users
+GET http://localhost:3000/auth
 
-# ### Get User By Id
-# GET http://localhost:3000/users/3
-
-# ### Delete User By Id
-# DELETE http://localhost:3000/users/2
-
-
-
-
-### Get user 
+### Get User By Id
 GET http://localhost:3000/auth/1
 
-### all users
-GET http://localhost:3000/auth/
+### Delete User By Id
+DELETE http://localhost:3000/auth/2
 
-### Test signup user with unique email
-POST http://localhost:3000/auth/signup
-content-type: application/json
+################# Vehicles
 
-{
-    "email": "aaa@hotmail.com",
-    "password": "mdp"
-}
-
-### Test sign in with ADMIN
-POST http://localhost:3000/auth/signin
-content-type: application/json
+### Create Vehicle
+POST http://localhost:3000/vehicles/create
+Content-Type: application/json
 
 {
-    "email": "aaa@hotmail.com",
-    "password": "mdp"
+    "type": "Van",
+    "model": "random",
+    "carryingSpace": 50,
+    "costPerKm": 1.2,
+    "maxItemHeight": 2
 }
 
-### Test sign in with USER : ADMIN : FALSE
-POST http://localhost:3000/auth/signin
-content-type: application/json
+### Get All Vehicles
+GET http://localhost:3000/vehicles/all
+
+### Get All Trucks
+GET http://localhost:3000/vehicles/trucks
+
+### Get All Vans
+GET http://localhost:3000/vehicles/vans
+
+################# Locations
+
+### Create Location
+POST http://localhost:3000/locations/create
+Content-Type: application/json
 
 {
-    "email": "mmm@hotmail.com",
-    "password": "mdp"
+    "depotName": "rand123",
+    "lon": 40,
+    "lat": 50
 }
 
-### test whoami
-GET http://localhost:3000/auth/whoami
+### Get All Locations
+GET http://localhost:3000/locations/all
 
-### test signout
-POST http://localhost:3000/auth/signout
+################# Carts
 
-### Test guard for update user
-PATCH http://localhost:3000/auth/1
+### Get All Carts
+GET http://localhost:3000/carts/all
 
-//////
-/////
-////
-///
-// Admin guard test
+### Pay with Credit Card
+POST http://localhost:3000/carts/pay?type=creditcard&amount=100
 
-### Test signup user with unique email
-POST http://localhost:3000/auth/signup
-content-type: application/json
-
-{
-    "email": "abc@hotmail.com",
-    "password": "mdp"
-}
-
-### Test signup user with unique email
-POST http://localhost:3000/auth/signup
-content-type: application/json
-
-{
-    "email": "mmm@hotmail.com",
-    "password": "mdp"
-}
-
-### Test sign in
-POST http://localhost:3000/auth/signin
-content-type: application/json
-
-{
-    "email": "abc@hotmail.com",
-    "password": "mdp"
-}
-
-### Test sign in with ADMIN
-POST http://localhost:3000/auth/signin
-content-type: application/json
-
-{
-    "email": "aaa@hotmail.com",
-    "password": "mdp"
-}
-
-### Test sign in with USER : ADMIN : FALSE
-POST http://localhost:3000/auth/signin
-content-type: application/json
-
-{
-    "email": "mmm@hotmail.com",
-    "password": "mdp"
-}
-
-
-### test whoami
-GET http://localhost:3000/auth/whoami
-
-### test signout
-POST http://localhost:3000/auth/signout
-
-###
-DELETE http://localhost:3000/auth/9
+### Pay with Paypal
+POST http://localhost:3000/carts/pay?type=paypal&amount=100
