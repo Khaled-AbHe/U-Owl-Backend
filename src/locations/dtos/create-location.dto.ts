@@ -1,6 +1,9 @@
 import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateLocationDto {
+
+
+  id : number
   @IsString()
   @IsNotEmpty()
   depotName: string;

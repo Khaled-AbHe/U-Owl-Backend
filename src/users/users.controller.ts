@@ -27,7 +27,6 @@ import { AdminGuard } from 'src/guards/admin.guard';
 import { SignInUserDto } from './dtos/signin-user.dto';
 
 @Controller('auth')
-@UseGuards(AuthGuard)
 // @UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(
@@ -40,7 +39,7 @@ export class UsersController {
     return this.authService.signUp(body);
   }
 
-  @Get('/signin')
+  @Post('/signin')
   async signIn(@Body() body: SignInUserDto, @Session() session: any) {
     const user = await this.authService.signIn(body.email, body.password);
     session.userId = user.id;
@@ -52,17 +51,20 @@ export class UsersController {
     session.userId = null;
   }
 
+  @UseGuards(AuthGuard)
   @Get('/whoami')
   whoAmI(@CurrentUser() user: User) {
     return user;
     // return this.authService.whoAmI(user.id)
   }
 
+  @UseGuards(AuthGuard)
   @Patch('/:id')
   updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
     return this.usersService.updateUser(parseInt(id), body);
   }
 
+  @UseGuards(AuthGuard)
   @Delete('/:id')
   deleteUserById(@Param('id') id: string) {
     return this.usersService.deleteUserById(parseInt(id));
@@ -78,6 +80,7 @@ export class UsersController {
     return this.usersService.findUserById(parseInt(id));
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   findAllUsers() {
     return this.usersService.findAllUsers();
