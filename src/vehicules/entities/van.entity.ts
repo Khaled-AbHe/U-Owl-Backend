@@ -8,9 +8,4 @@ export class Van extends Vehicule {
     
     @Column()
     maxItemHeight: number;
-    
-    // à faire tantôt
-    public calculatePrice(): number {
-        return 0;
-    }
 }

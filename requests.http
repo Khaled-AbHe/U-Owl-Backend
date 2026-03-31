@@ -38,3 +38,16 @@ DELETE http://localhost:3000/auth/1
 
 ###
 GET http://localhost:3000/auth/whoami
+
+###
+POST http://localhost:3000/services/createvehicule
+Content-Type: application/json
+
+{
+    "type": "TRUCK",
+    "model": "ford",
+    "carryingSpace": "14",
+    "costPerKm": "5",
+    "maxWeight": "500",
+    "maxItemHeight": "6"
+}

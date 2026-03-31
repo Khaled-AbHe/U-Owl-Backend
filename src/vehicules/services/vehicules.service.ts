@@ -58,4 +58,37 @@ export class VehiculesService implements Factory {
   async findAllVans() {
     return await this.vanRepo.find();
   }
+
+  //à faire
+  async modifyVehicule(id : number, attrs: Partial<Vehicule>) {
+    const vehicule = await this.vehicleRepo.findOneBy({id});
+
+    if(!vehicule) {
+      return null;
+    }
+
+    Object.assign(vehicule, attrs);
+    return this.vehicleRepo.save(vehicule);
+  }
+
+  //à faire
+  async isRoadSafe() {
+
+  }
+
+  //à faire
+  async getVehiculeById(id: number) {
+    const vehicule = await this.vehicleRepo.findOneBy({id});
+
+    if(!vehicule) {
+      return null;
+    }
+
+    return vehicule;
+  }
+
+  //à faire
+  async deleteVehiculeById(id: number) {
+    await this.vehicleRepo.delete(id);
+  }
 }

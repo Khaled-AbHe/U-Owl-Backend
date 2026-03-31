@@ -11,9 +11,4 @@ export class Truck extends Vehicule {
     
     @Column({ default: true })
     hasLiftGate: boolean;
-    
-    // à faire tantôt
-    public calculatePrice(): number {
-        return 0;
-    }
 }
