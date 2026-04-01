@@ -3,11 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Cart } from '../../cart.entity';
 import { Repository } from 'typeorm';
 import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
+import { VehiclesService } from 'src/vehicles/services/vehicles.service';
 
 @Injectable()
 export class CartsService {
   constructor(
     @InjectRepository(Cart) private repo: Repository<Cart>,
+    private vehiclesService: VehiclesService,
   ) {}
 
   async findAllCarts() {
@@ -32,6 +34,14 @@ export class CartsService {
 
   async clearCart(id: number) {
     const cart = await this.findById(id);
-    return await this.updateCart(id, {...cart, items: []});
+
+    cart.items.forEach((vehicle) => {
+      this.vehiclesService.updateStatus(vehicle.id, {
+        ...vehicle,
+        isReserved: false,
+      });
+    });
+
+    return await this.updateCart(id, { ...cart, items: [] });
   }
 }

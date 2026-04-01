@@ -95,10 +95,10 @@ POST http://localhost:3000/carts/pay?type=paypal&amount=100
 ################# Reservations
 
 ### Add Vehicle to Cart
-PATCH http://localhost:3000/reservations/addItem/1
+PATCH http://localhost:3000/reservations/addItem/2
 
 ### Remove Vehicule from Cart
 PATCH http://localhost:3000/reservations/removeItem/1
 
 ### Pay for Cart
-POST http://localhost:3000/reservations/pay?type=paypal&amount=100
+POST http://localhost:3000/carts/pay?type=paypal&amount=100

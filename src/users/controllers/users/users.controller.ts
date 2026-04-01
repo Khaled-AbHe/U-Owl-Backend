@@ -19,11 +19,11 @@ import {
 } from '../../../interceptors/serialize.interceptor';
 import { UserDto } from '../../dtos/user.dto';
 import { AuthService } from '../../services/auth/auth.service';
-import { CurrentUser } from '../../decorators/current-user.decorator';
+import { CurrentUser } from '../../../currentUser/decorators/current-user.decorator';
 import { User } from '../../entities/user.entity';
 // import { CurrentUserInterceptor } from './interceptors/currentUser.interceptor';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { AdminGuard } from 'src/guards/admin.guard';
+import { AuthGuard } from 'src/currentUser/guards/auth.guard';
+import { AdminGuard } from 'src/currentUser/guards/admin.guard';
 import { SignInUserDto } from '../../dtos/signin-user.dto';
 import { CartsService } from 'src/carts/services/cart/carts.service';
 import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
@@ -62,5 +62,4 @@ export class UsersController {
   findAllUsers() {
     return this.usersService.findAllUsers();
   }
-
 }

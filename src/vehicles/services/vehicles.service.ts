@@ -63,7 +63,7 @@ export class VehiclesService implements Factory {
     return await this.vanRepo.find();
   }
 
-  // temp helper functions
+  // Helper functions
 
   async findVehicleById(id: number) {
     const vehicle = await this.vehicleRepo.findOneBy({ id });

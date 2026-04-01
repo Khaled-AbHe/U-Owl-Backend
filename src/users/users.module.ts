@@ -8,9 +8,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthService } from './services/auth/auth.service';
 // import { CurrentUserInterceptor } from './interceptors/currentUser.interceptor';
 // import { APP_INTERCEPTOR } from '@nestjs/core';
-import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
+// import { CurrentUserMiddleware } from 'src/currentUser/middlewares/current-user.middleware';
 import { AuthentificationController } from './controllers/authentification/authentification.controller';
-import { CartsController } from 'src/carts/carts.controller';
 import { CartsModule } from 'src/carts/carts.module';
 import { ReservationsController } from './controllers/reservations/reservations.controller';
 import { ReservationsService } from './services/reservations/reservations.service';
@@ -31,7 +30,7 @@ import { VehiclesModule } from 'src/vehicles/vehicles.module';
     UsersService,
     AuthService,
     ReservationsService,
-    CurrentUserMiddleware,
+    // CurrentUserMiddleware,
     // {
     //   provide: APP_INTERCEPTOR,
     //   useClass: CurrentUserInterceptor
@@ -39,8 +38,4 @@ import { VehiclesModule } from 'src/vehicles/vehicles.module';
   ],
   exports: [UsersService],
 })
-export class UsersModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(CurrentUserMiddleware).forRoutes('*');
-  }
-}
+export class UsersModule {}

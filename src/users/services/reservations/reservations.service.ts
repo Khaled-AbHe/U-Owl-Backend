@@ -17,19 +17,17 @@ export class ReservationsService {
   ) {}
 
   async addItem(client: Client, itemId: number) {
-    const cart = await this.cartsService.findById(client.cart.id);
-    const vehicle = await this.vehiclesService.findVehicleById(itemId);
+    const { cart, item } = await this.getData(client, itemId);
 
-    const updatedCart = await this.addVehicleToCart(cart, vehicle);
+    const updatedCart = await this.addVehicleToCart(cart, item);
 
     return await this.cartsService.updateCart(cart.id, updatedCart);
   }
 
   async removeItem(client: Client, itemId: number) {
-    const cart = await this.cartsService.findById(client.cart.id); // cherche le panier
-    const vehicle = await this.vehiclesService.findVehicleById(itemId); // cherche le véhicule
+    const { cart, item } = await this.getData(client, itemId);
 
-    const updatedCartItems = await this.removeVehicleFromCart(cart, vehicle);
+    const updatedCartItems = await this.removeVehicleFromCart(cart, item);
 
     return await this.cartsService.updateCart(cart.id, {
       ...cart,
@@ -38,6 +36,13 @@ export class ReservationsService {
   }
 
   // Helper functions
+
+  async getData(client: Client, itemId: number) {
+    const cart: Cart = await this.cartsService.findById(client.cart.id); // cherche le panier
+    const item: Vehicle = await this.vehiclesService.findVehicleById(itemId); // cherche le véhicule
+
+    return { cart, item };
+  }
 
   async addVehicleToCart(cart: Cart, vehicle: Vehicle) {
     if (vehicle.isReserved) {
@@ -72,7 +77,7 @@ export class ReservationsService {
       throw new NotFoundException('This vehicle is not in your cart');
     }
 
-    const updatedVehicle = await this.vehiclesService.updateStatus(vehicle.id, {
+    await this.vehiclesService.updateStatus(vehicle.id, {
       ...vehicle,
       isReserved: false,
     });
