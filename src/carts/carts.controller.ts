@@ -6,15 +6,16 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CartsService } from './services/cart/carts.service';
 import { PaymentService } from './services/payment/payment.service';
-import { PaymentType } from './payment.enum';
-import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
 import { CurrentUser } from 'src/currentUser/decorators/current-user.decorator';
 import { Client } from 'src/users/entities/client.entity';
+import { AuthGuard } from 'src/currentUser/guards/auth.guard';
 
 @Controller('carts')
+@UseGuards(AuthGuard)
 export class CartsController {
   constructor(
     private cartsService: CartsService,
