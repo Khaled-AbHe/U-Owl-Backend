@@ -1,24 +1,20 @@
 import {
   Controller,
   Param,
-  ParseIntPipe,
   Patch,
-  Post,
-  Query,
   UseGuards,
 } from '@nestjs/common';
-import { PaymentService } from 'src/carts/services/payment/payment.service';
 import { AuthGuard } from 'src/currentUser/guards/auth.guard';
 import { CurrentUser } from 'src/currentUser/decorators/current-user.decorator';
 import { Client } from 'src/users/entities/client.entity';
 import { ReservationsService } from 'src/users/services/reservations/reservations.service';
+import { ClientGuard } from 'src/currentUser/guards/client.guard';
 
 @Controller('reservations')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, ClientGuard)
 export class ReservationsController {
   constructor(
     private reservationsService: ReservationsService,
-    private paymentService: PaymentService,
   ) {}
 
   @Patch('/addItem/:itemId')
@@ -30,6 +26,5 @@ export class ReservationsController {
   removeItem(@CurrentUser() client: Client, @Param('itemId') itemId: number) {
     return this.reservationsService.removeItem(client, itemId);
   }
-
   
 }

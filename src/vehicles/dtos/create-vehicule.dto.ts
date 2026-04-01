@@ -3,7 +3,6 @@ import {
   IsNotEmpty,
   IsNumber,
   IsEnum,
-  IsBoolean,
   IsOptional,
 } from 'class-validator';
 import { VehicleType } from '../vehicles.enum';

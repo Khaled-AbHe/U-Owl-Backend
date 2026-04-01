@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PaymentSystem } from 'src/carts/payment-system.service';
 import { PaymentType } from 'src/carts/payment.enum';
 import { CreditCardStrategy } from 'src/carts/strategies/credit-cart.payment-strategy';
@@ -12,7 +12,12 @@ export class PaymentService {
     private cartsService: CartsService,
   ) {}
 
-  payForCart(id: number, method: string, amount: number) {
+  async payForCart(id: number, method: string, amount: number) {
+
+    if (await this.cartsService.isEmpty(id)) {
+      throw new ForbiddenException("Cart is empty")
+    }
+
     if (method == PaymentType.CREDIT_CARD) {
       this.paymentSystem.setStrategy(new CreditCardStrategy());
     } else if (method == PaymentType.PAYPAL) {

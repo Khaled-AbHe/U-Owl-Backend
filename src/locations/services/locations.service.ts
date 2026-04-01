@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Location } from '../location.entity';
 import { Repository } from 'typeorm';
-import { Factory } from 'src/interfaces/factory.interface';
+// import { Factory } from 'src/interfaces/factory.interface';
 import { CreateLocationDto } from '../dtos/create-location.dto';
 
 @Injectable()

@@ -1,9 +1,7 @@
 import {
   Controller,
   Get,
-  Param,
   ParseIntPipe,
-  Patch,
   Post,
   Query,
   UseGuards,
@@ -13,6 +11,7 @@ import { PaymentService } from './services/payment/payment.service';
 import { CurrentUser } from 'src/currentUser/decorators/current-user.decorator';
 import { Client } from 'src/users/entities/client.entity';
 import { AuthGuard } from 'src/currentUser/guards/auth.guard';
+import { ClientGuard } from 'src/currentUser/guards/client.guard';
 
 @Controller('carts')
 @UseGuards(AuthGuard)
@@ -27,6 +26,7 @@ export class CartsController {
     return this.cartsService.findAllCarts();
   }
 
+  @UseGuards(ClientGuard)
   @Post('/pay')
   payCartTotal(
     @CurrentUser() client: Client,

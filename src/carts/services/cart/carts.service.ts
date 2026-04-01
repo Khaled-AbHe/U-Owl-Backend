@@ -44,4 +44,9 @@ export class CartsService {
 
     return await this.updateCart(id, { ...cart, items: [] });
   }
+
+  async isEmpty(id: number) {
+    const cart = await this.findById(id);
+    return cart.items.length == 0
+  }
 }
