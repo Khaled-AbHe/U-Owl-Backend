@@ -27,24 +27,21 @@ export class VehiculesController {
     return this.vehiculesService.findAllVans();
   }
 
-  //à faire
   @Patch('/:id')
   modifyVehicule(@Param('id') id : string, @Body() body : UpdateVehiculeDto) {
     return this.vehiculesService.modifyVehicule(parseInt(id), body);
   }
 
-  //à faire
+  //à faire prochaine démo
   isRoadSafe() {
 
   }
 
-  //à faire
   @Get('/:id')
   getVehiculeById(@Param('id') id : string) {
     return this.vehiculesService.getVehiculeById(parseInt(id));
   }
 
-  //à faire
   @Delete('/:id')
   deleteVehiculeById(@Param('id') id : string) {
     return this.vehiculesService.deleteVehiculeById(parseInt(id));

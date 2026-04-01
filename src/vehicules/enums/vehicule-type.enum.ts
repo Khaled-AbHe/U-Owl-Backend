@@ -1,4 +1,4 @@
 export enum VehiculeType {
-    Truck,
-    Van
+    Truck = "Truck",
+    Van = "Van"
 }

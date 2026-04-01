@@ -59,24 +59,46 @@ export class VehiculesService implements Factory {
     return await this.vanRepo.find();
   }
 
-  //à faire
   async modifyVehicule(id : number, attrs: Partial<Vehicule>) {
     const vehicule = await this.vehicleRepo.findOneBy({id});
 
     if(!vehicule) {
-      return null;
+      throw new BadRequestException("Véhicule n'a pas été trouver");
     }
 
-    Object.assign(vehicule, attrs);
-    return this.vehicleRepo.save(vehicule);
+    if(vehicule.type == VehiculeType.Truck) {
+      const truck  = await this.truckRepo.findOneBy({id});
+      
+      if(!truck) {
+        throw new BadRequestException("Truck n'a pas été trouver");
+      }
+
+      Object.assign(truck, attrs);
+
+      await this.truckRepo.save(truck);
+      return this.truckRepo.findOneBy({id});
+    }
+
+    if(vehicule.type == VehiculeType.Van) {
+      const van  = await this.vanRepo.findOneBy({id});
+      
+      if(!van) {
+        throw new BadRequestException("Van n'a pas été trouver");
+      }
+
+      Object.assign(van, attrs);
+      await this.vanRepo.save(van);
+      return this.vanRepo.findOneBy({ id });
+    }
+
+    throw new BadRequestException("Le type du véhicule n'a pas été trouver.");
   }
 
-  //à faire
+  //à faire prochaine démo
   async isRoadSafe() {
 
   }
 
-  //à faire
   async getVehiculeById(id: number) {
     const vehicule = await this.vehicleRepo.findOneBy({id});
 
@@ -87,7 +109,6 @@ export class VehiculesService implements Factory {
     return vehicule;
   }
 
-  //à faire
   async deleteVehiculeById(id: number) {
     await this.vehicleRepo.delete(id);
   }
