@@ -1,5 +1,5 @@
 import { ChildEntity, JoinColumn, OneToOne } from 'typeorm';
-import { User } from './users.entity';
+import { User } from './user.entity';
 import { Cart } from 'src/carts/cart.entity';
 
 @ChildEntity()

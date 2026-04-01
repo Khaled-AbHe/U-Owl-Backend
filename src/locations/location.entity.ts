@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Vehicule } from 'src/vehicules/entities/vehicule.entity';
+import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
 
 @Entity()
 export class Location {
@@ -16,6 +16,6 @@ export class Location {
   lat: number;
 
   // Reference: https://typeorm.io/docs/relations/many-to-one-one-to-many-relations
-  @OneToMany(() => Vehicule, (vehicule) => vehicule.location, { eager: true }) // This manages the relation between vehicle and location
-  inventory: Vehicule[]; // this is the actual array of vehicules
+  @OneToMany(() => Vehicle, (vehicle) => vehicle.location, { eager: true }) // This manages the relation between vehicle and location
+  inventory: Vehicle[]; // this is the actual array of vehicules
 }

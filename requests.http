@@ -1,63 +1,57 @@
-### test signup user with unique email
+### Create User | Sign Up
 POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "email": "john@hotmail.com",
-    "password": "01245"
+    "type": "Client",
+    "email": "client1@outlook.com",
+    "password": "pswrd"
 }
 
-
-###
-POST http://localhost:3000/auth/signin
+### Sign In User
+GET http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-    "email": "john@hotmail.com",
-    "password": "01245"
+    "email": "admin1@outlook.com",
+    "password": "pswrd"
 }
 
-###
-POST http://localhost:3000/auth/signout
+### Sign Out User
+Post http://localhost:3000/auth/signout
 
-###
+### Who Am I 
+GET http://localhost:3000/auth/whoami
+
+### Update User
+PATCH http://localhost:3000/auth/3
+Content-Type: application/json
+
+{
+    "email": "khaled@outlook.com",
+    "password": "yf8/$?/9na?&wsf!/$7()*wq9cntqsqw",
+    "firstName": "Khaled",
+    "lastName": "Abou Hechmeh"
+}
+
+### Get All Users
 GET http://localhost:3000/auth
 
-###
+### Get User By Id
 GET http://localhost:3000/auth/1
 
-###
-GET http://localhost:3000/auth/whoami
+### Delete User By Id
+DELETE http://localhost:3000/auth/2
 
-###
-PATCH http://localhost:3000/auth/1
+################# Vehicles
 
-
-###
-DELETE http://localhost:3000/auth/1
-
-###
-GET http://localhost:3000/auth/whoami
-
-###
-POST http://localhost:3000/vehicules/create
-Content-Type: application/json
-
-{
-    "type": 0,
-    "model": "ford",
-    "carryingSpace": 14,
-    "costPerKm": 5,
-    "maxWeight": 500
-}
-
-
-###
-POST http://localhost:3000/vehicules/create
+### Create Vehicle
+POST http://localhost:3000/vehicles/create
 Content-Type: application/json
 
 {
     "type": "Van",
+<<<<<<< HEAD
     "model": "chevrolet",
     "carryingSpace": 18,
     "costPerKm": 8,
@@ -88,3 +82,45 @@ GET http://localhost:3000/vehicules/2
 
 ###
 DELETE http://localhost:3000/vehicules/2
+=======
+    "model": "random",
+    "carryingSpace": 50,
+    "costPerKm": 1.2,
+    "maxItemHeight": 2
+}
+
+### Get All Vehicles
+GET http://localhost:3000/vehicles/all
+
+### Get All Trucks
+GET http://localhost:3000/vehicles/trucks
+
+### Get All Vans
+GET http://localhost:3000/vehicles/vans
+
+################# Locations
+
+### Create Location
+POST http://localhost:3000/locations/create
+Content-Type: application/json
+
+{
+    "depotName": "rand123",
+    "lon": 40,
+    "lat": 50
+}
+
+### Get All Locations
+GET http://localhost:3000/locations/all
+
+################# Carts
+
+### Get All Carts
+GET http://localhost:3000/carts/all
+
+### Pay with Credit Card
+POST http://localhost:3000/carts/pay?type=creditcard&amount=100
+
+### Pay with Paypal
+POST http://localhost:3000/carts/pay?type=paypal&amount=100
+>>>>>>> main

@@ -1,5 +1,5 @@
 import { Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Vehicule } from 'src/vehicules/entities/vehicule.entity';
+import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
 import { Client } from 'src/users/entities/client.entity';
 
 @Entity()
@@ -7,8 +7,8 @@ export class Cart {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => Vehicule, (vehicule) => vehicule.location, { eager: true })
-  items: Vehicule[];
+  @OneToMany(() => Vehicle, (vehicle) => vehicle.location, { eager: true })
+  items: Vehicle[];
 
   @OneToOne(() => Client, (client) => client.cart)
   client: Client;

@@ -1,70 +1,85 @@
-import { Controller, Body, Post, Get, Param, Patch, UseInterceptors, Session, Module, UseGuards, Delete } from '@nestjs/common';
-import { UsersService } from './users.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Session,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { UsersService } from './services/users/users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-// import { UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common'
-import { Serialize, SerializeInterceptor } from 'src/interceptors/serialize.interceptors';
+// import { UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import {
+  Serialize /*SerializeInterceptor*/,
+} from '../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
-import { AuthService } from './auth/auth.service';
-import { CurrentUser } from './decorators/current-user.decorators';
-import { User } from './entities/users.entity';
-import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
+import { AuthService } from './services/auth/auth.service';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { User } from './entities/user.entity';
+// import { CurrentUserInterceptor } from './interceptors/currentUser.interceptor';
 import { AuthGuard } from 'src/guards/auth.guard';
-import { AdminGuard } from 'src/guards/admin-guard';
+import { AdminGuard } from 'src/guards/admin.guard';
+import { SignInUserDto } from './dtos/signin-user.dto';
 
 @Controller('auth')
+@UseGuards(AuthGuard)
+// @UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService,
+  ) {}
 
-    constructor(private service : UsersService, private authService : AuthService) {}
+  @Post('/signup')
+  signUp(@Body() body: CreateUserDto) {
+    return this.authService.signUp(body);
+  }
 
-    @Get()
-    findAll() {
-        return this.service.findAll();
-    }
+  @Get('/signin')
+  async signIn(@Body() body: SignInUserDto, @Session() session: any) {
+    const user = await this.authService.signIn(body.email, body.password);
+    session.userId = user.id;
+    return user;
+  }
 
-    @Post('/signup')
-    async createUser(@Body() body : CreateUserDto, @Session() session : any) {
-        const user = await this.authService.signup(body.email, body.password);
-        console.log('controller session', session );
-        session.userId = user.id;
-        return user;
-    }
+  @Post('/signout')
+  signOut(@Session() session: any) {
+    session.userId = null;
+  }
 
-    @Post('/signin')
-    async signin(@Body() body : CreateUserDto, @Session() session : any) {
-        const user = await this.authService.signin(body.email, body.password);
-        session.userId = user.id;
-        return user;
-    }
+  @Get('/whoami')
+  whoAmI(@CurrentUser() user: User) {
+    return user;
+    // return this.authService.whoAmI(user.id)
+  }
 
-    @Get('/whoami')
-    whoAmI(@CurrentUser() user : User) {
-        return user;
-    }
+  @Patch('/:id')
+  updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
+    return this.usersService.updateUser(parseInt(id), body);
+  }
 
-    @Post('/signout')
-    signOut(@Session() session : any) {
-        session.userId = null;
-    }
+  @Delete('/:id')
+  deleteUserById(@Param('id') id: string) {
+    return this.usersService.deleteUserById(parseInt(id));
+  }
 
-    @UseGuards(AuthGuard)
-    @Patch('/:id')
-    updateUser(@Param('id') id : string, @Body() body : UpdateUserDto) {
-        return this.service.updateUser(parseInt(id), body);
-    }
+  // @UseInterceptors(ClassSerializerInterceptor)
+  // @UseInterceptors(new SerializeInterceptor(UserDto))
+  @UseGuards(AdminGuard)
+  @Serialize(UserDto)
+  @Get('/:id')
+  findUserById(@Param('id') id: string) {
+    console.log('User Controller');
+    return this.usersService.findUserById(parseInt(id));
+  }
 
-    // @UseInterceptors(ClassSerializerInterceptor)
-    // @UseInterceptors(new SerializeInterceptor(UserDto))
-    @Serialize(UserDto)
-    @Get('/:id')
-    findUser(@Param('id') id : string) {
-        console.log('handler is running')
-        return this.service.findOne(parseInt(id));
-    }
-
-    @UseGuards(AdminGuard)
-    @Delete('/:id')
-    removeUser(@Param('id') id : string) {
-        return this.service.removeUser(parseInt(id));
-    }
+  @Get()
+  findAllUsers() {
+    return this.usersService.findAllUsers();
+  }
 }

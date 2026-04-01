@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { VehiculesModule } from './vehicules/vehicules.module';
+import { VehiclesModule } from './vehicles/vehicles.module';
 import { LocationsModule } from './locations/locations.module';
 import { CartsModule } from './carts/carts.module';
 
@@ -16,7 +16,7 @@ import { CartsModule } from './carts/carts.module';
       synchronize: true, // Usually, you keep this at False so you dont mess with an established database
     }),
     UsersModule,
-    VehiculesModule,
+    VehiclesModule,
     LocationsModule,
     CartsModule,
   ],

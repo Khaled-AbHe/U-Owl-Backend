@@ -1,16 +1,19 @@
-import { Inject, Injectable, NestMiddleware } from "@nestjs/common";
-import { UsersService } from "../users.service";
+import { Injectable, NestMiddleware } from "@nestjs/common";
+import { UsersService } from "../services/users/users.service";
 
 @Injectable()
 export class CurrentUserMiddleware implements NestMiddleware {
-    constructor(private userServices: UsersService) {}
-
+    
+    constructor(private usersService: UsersService){}
+    
     async use(req: any, res: any, next: () => void) {
-        const { userId } = req.session;
-        if(userId) {
-            const user = await this.userServices.findOne(userId);
-            req.session.CurrentUser = user;
+        const { userId } = req.session
+        if (!userId) {
+            console.log("User doesn't exist - Middleware")
+        } else {
+            console.log("User does exist - Middleware")
+            req.currUser = await this.usersService.findOneUser(userId)
         }
-        next();
+        next()
     }
 }
