@@ -5,16 +5,16 @@ import {
   TableInheritance,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { UserType } from '../users.enum';
+import { UserType } from '../enums/users.enum';
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'type' } }) // combines admin and client into the user table
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  userId: number;
 
   @Column()
-  type: UserType;
+  userType: UserType;
 
   @Column({ nullable: true })
   name: string;

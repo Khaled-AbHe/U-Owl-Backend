@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Cart } from 'src/carts/cart.entity';
-import { CartsService } from 'src/carts/services/cart/carts.service';
+import { Cart } from 'src/carts/entities/cart.entity';
+import { CartsService } from 'src/carts/services/carts/carts.service';
 import { Client } from 'src/users/entities/client.entity';
 import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
 import { VehiclesService } from 'src/vehicles/services/vehicles.service';
@@ -21,7 +21,7 @@ export class ReservationsService {
 
     const updatedCart = await this.addVehicleToCart(cart, item);
 
-    return await this.cartsService.updateCart(cart.id, updatedCart);
+    return await this.cartsService.updateCart(cart.cartId, updatedCart);
   }
 
   async removeItem(client: Client, itemId: number) {
@@ -29,7 +29,7 @@ export class ReservationsService {
 
     const updatedCartItems = await this.removeVehicleFromCart(cart, item);
 
-    return await this.cartsService.updateCart(cart.id, {
+    return await this.cartsService.updateCart(cart.cartId, {
       ...cart,
       items: updatedCartItems,
     });
@@ -38,7 +38,7 @@ export class ReservationsService {
   // Helper functions
 
   async getData(client: Client, itemId: number) {
-    const cart: Cart = await this.cartsService.findById(client.cart.id); // cherche le panier
+    const cart: Cart = await this.cartsService.findById(client.cart.cartId); // cherche le panier
     const item: Vehicle = await this.vehiclesService.findVehicleById(itemId); // cherche le véhicule
 
     return { cart, item };
@@ -49,7 +49,7 @@ export class ReservationsService {
       throw new ForbiddenException('This vehicle is already reserved');
     }
 
-    const updatedVehicle = await this.vehiclesService.updateStatus(vehicle.id, {
+    const updatedVehicle = await this.vehiclesService.updateStatus(vehicle.vehicleId, {
       ...vehicle,
       isReserved: true,
     });
@@ -60,7 +60,7 @@ export class ReservationsService {
   }
 
   async setVehicleAsReserved(vehicle: Vehicle) {
-    return await this.vehiclesService.updateStatus(vehicle.id, {
+    return await this.vehiclesService.updateStatus(vehicle.vehicleId, {
       ...vehicle,
       isReserved: false,
     });
@@ -70,14 +70,14 @@ export class ReservationsService {
     console.log('function - removeVehicleFromCart');
     console.log(cart.items);
     const itemIndex = cart.items.findIndex((item) => {
-      return item.id == vehicle.id;
+      return item.vehicleId == vehicle.vehicleId;
     });
 
     if (itemIndex === -1) {
       throw new NotFoundException('This vehicle is not in your cart');
     }
 
-    await this.vehiclesService.updateStatus(vehicle.id, {
+    await this.vehiclesService.updateStatus(vehicle.vehicleId, {
       ...vehicle,
       isReserved: false,
     });

@@ -11,7 +11,7 @@ import { Client } from 'src/users/entities/client.entity';
 @Entity()
 export class Cart {
   @PrimaryGeneratedColumn()
-  id: number;
+  cartId: number;
 
   @Column({ default: 0 })
   totalPrice: number;

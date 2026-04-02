@@ -9,7 +9,7 @@ import { Vehicle } from '../entities/vehicle.entity';
 import { Truck } from '../entities/truck.entity';
 import { Van } from '../entities/van.entity';
 import { Factory } from 'src/interfaces/factory.interface';
-import { VehicleType } from '../vehicles.enum';
+import { VehicleType } from '../enum/vehicle-type.enum';
 import { CreateVehicleDto } from '../dtos/create-vehicule.dto';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class VehiclesService implements Factory {
   ) {} // By doing this way, you will have a User Repo
 
   async factoryCreate(data: CreateVehicleDto) {
-    switch (data.type) {
+    switch (data.vehicleType) {
       case VehicleType.TRUCK:
         // Filter to make sure you have the proper input for Truck
         if (!!data.maxItemHeight)
@@ -65,8 +65,8 @@ export class VehiclesService implements Factory {
 
   // Helper functions
 
-  async findVehicleById(id: number) {
-    const vehicle = await this.vehicleRepo.findOneBy({ id });
+  async findVehicleById(vehicleId: number) {
+    const vehicle = await this.vehicleRepo.findOneBy({ vehicleId });
 
     if (!vehicle) {
       throw new NotFoundException("Vehicle doesn't exist");
@@ -75,8 +75,8 @@ export class VehiclesService implements Factory {
     return vehicle;
   }
 
-  async updateStatus(id: number, attrs: Partial<Vehicle>) {
-    const vehicule = await this.findVehicleById(id);
+  async updateStatus(vehicleId: number, attrs: Partial<Vehicle>) {
+    const vehicule = await this.findVehicleById(vehicleId);
     Object.assign(vehicule, attrs);
     return await this.vehicleRepo.save(vehicule);
   }

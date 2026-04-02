@@ -19,7 +19,7 @@ export class AuthentificationController {
   @Get('/signin')
   async signIn(@Body() body: SignInUserDto, @Session() session: any) {
     const user = await this.authService.signIn(body.email, body.password);
-    session.userId = user.id;
+    session.userId = user.userId;
     return user;
   }
 

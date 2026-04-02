@@ -5,12 +5,14 @@ import {
   IsEnum,
   IsOptional,
 } from 'class-validator';
-import { VehicleType } from '../vehicles.enum';
+import { VehicleType } from '../enum/vehicle-type.enum';
+
+// Changer completement
 
 export class CreateVehicleDto {
   @IsEnum(VehicleType)
   @IsNotEmpty()
-  type: VehicleType;
+  vehicleType: VehicleType;
 
   @IsString()
   @IsNotEmpty()
