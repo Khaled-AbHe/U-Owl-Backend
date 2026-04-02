@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Factory } from 'src/interfaces/factory.interface';
 import { Client } from 'src/users/entities/client.entity';
 import { Admin } from 'src/users/entities/admin.entity';
-import { UserType } from 'src/users/users.enum';
+import { UserType } from 'src/users/enums/users.enum';
 
 @Injectable()
 export class UsersService implements Factory {
@@ -39,30 +39,22 @@ export class UsersService implements Factory {
     }
   }
 
-  // async createUser(email: string, password: string) {
-  //   // const user = await this.userRepo.create(data) // create just makes a promise of the new user
-  //   // return await this.userRepo.save(user) // save actually confirms its creation and saves it in the db
-  //   return await this.userRepo.save(
-  //     this.userRepo.create({ email: email, password: password }),
-  //   );
-  // }
-
-  async updateUser(id: number, attrs: Partial<User>) {
-    const user = await this.findUserById(id);
+  async updateUser(userId: number, attrs: Partial<User>) {
+    const user = await this.findUserById(userId);
     Object.assign(user, attrs);
     return await this.userRepo.save(user);
   }
 
-  async deleteUserById(id: number) {
-    this.userRepo.delete(await this.findUserById(id));
+  async deleteUserById(userId: number) {
+    this.userRepo.delete(await this.findUserById(userId));
   }
 
   async findAllUsers() {
     return await this.userRepo.find();
   }
 
-  async findUserById(id: number) {
-    const user = await this.userRepo.findOneBy({ id });
+  async findUserById(userId: number) {
+    const user = await this.userRepo.findOneBy({ userId });
 
     if (!user) {
       throw new NotFoundException("User doesn't exist.");
@@ -75,7 +67,7 @@ export class UsersService implements Factory {
     return await this.userRepo.findOneBy({ email });
   }
 
-  async findOneUser(id: number) {
-    return await this.userRepo.findOneBy({ id });
+  async findOneUser(userId: number) {
+    return await this.userRepo.findOneBy({ userId });
   }
 }

@@ -7,8 +7,14 @@ export class Truck extends Vehicle {
   declare costPerKm: number;
 
   @Column()
-  maxWeight: number;
+  isElectric: boolean
+
+  @Column()
+  seatCount: number
 
   @Column({ default: true })
   hasLiftGate: boolean;
+
+  @Column()
+  towingCapacity: number
 }

@@ -1,10 +1,10 @@
 import { IsEmail, IsString, IsNotEmpty, IsEnum } from 'class-validator';
-import { UserType } from '../users.enum';
+import { UserType } from '../enums/users.enum';
 
 export class CreateUserDto {
   @IsEnum(UserType)
   @IsNotEmpty()
-  type: UserType;
+  userType: UserType;
 
   @IsEmail()
   @IsNotEmpty()

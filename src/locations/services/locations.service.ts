@@ -7,14 +7,14 @@ import { CreateLocationDto } from '../dtos/create-location.dto';
 
 @Injectable()
 export class LocationsService {
-  constructor(@InjectRepository(Location) private repo: Repository<Location>) {}
+  constructor(@InjectRepository(Location) private locationRepo: Repository<Location>) {}
 
   async createLocation(data: CreateLocationDto) {
-    return await this.repo.save(this.repo.create(data));
+    return await this.locationRepo.save(this.locationRepo.create(data));
   }
 
   async findAllLocations() {
-    return await this.repo.find({
+    return await this.locationRepo.find({
       //relations: ['inventory'], // you have to specify the relation so that it can find it easily, or "inventory" will be shown as undefined
     }); // source: https://typeorm.io/docs/working-with-entity-manager/find-options/
   }

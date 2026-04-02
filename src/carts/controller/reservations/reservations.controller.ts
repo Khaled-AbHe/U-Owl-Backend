@@ -7,7 +7,7 @@ import {
 import { AuthGuard } from 'src/currentUser/guards/auth.guard';
 import { CurrentUser } from 'src/currentUser/decorators/current-user.decorator';
 import { Client } from 'src/users/entities/client.entity';
-import { ReservationsService } from 'src/users/services/reservations/reservations.service';
+import { ReservationsService } from 'src/carts/services/reservations/reservations.service';
 import { ClientGuard } from 'src/currentUser/guards/client.guard';
 
 @Controller('reservations')

@@ -5,27 +5,36 @@ import {
   PrimaryGeneratedColumn,
   TableInheritance,
 } from 'typeorm';
-import { VehicleType } from '../vehicles.enum';
+import { VehicleType } from '../enum/vehicle-type.enum';
 import { Location } from 'src/locations/location.entity';
-import { Cart } from 'src/carts/cart.entity';
+import { Cart } from 'src/carts/entities/cart.entity';
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export class Vehicle {
   @PrimaryGeneratedColumn()
-  id: number;
+  vehicleId: number;
 
   @Column()
-  type: VehicleType;
-
-  @Column()
-  model: string;
-
-  @Column()
-  carryingSpace: number;
+  vehicleType: VehicleType
 
   @Column({ default: 0 })
   kilometrage: number;
+
+  @Column()
+  height: number
+
+  @Column()
+  width: number
+
+  @Column()
+  depth: number
+
+  @Column()
+  maxWeight: number
+
+  @Column()
+  amount: number
 
   @Column()
   costPerKm: number;
@@ -37,6 +46,7 @@ export class Vehicle {
   @ManyToOne(() => Location, (location) => location.inventory)
   location: Location;
 
+  // Get rid of this
   @ManyToOne(() => Cart, (cart) => cart.items)
   cart: Cart;
 }

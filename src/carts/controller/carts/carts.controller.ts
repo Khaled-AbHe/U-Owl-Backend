@@ -6,8 +6,8 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { CartsService } from './services/cart/carts.service';
-import { PaymentService } from './services/payment/payment.service';
+import { CartsService } from 'src/carts/services/carts/carts.service';
+import { PaymentService } from 'src/carts/services/payment/payment.service';
 import { CurrentUser } from 'src/currentUser/decorators/current-user.decorator';
 import { Client } from 'src/users/entities/client.entity';
 import { AuthGuard } from 'src/currentUser/guards/auth.guard';
@@ -33,6 +33,6 @@ export class CartsController {
     @Query('type') type: string,
     @Query('amount', ParseIntPipe) amount: number,
   ) {
-    return this.paymentService.payForCart(client.cart.id, type, amount);
+    return this.paymentService.payForCart(client.cart.cartId, type, amount);
   }
 }
