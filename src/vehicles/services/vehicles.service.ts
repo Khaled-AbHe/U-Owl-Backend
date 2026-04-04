@@ -4,50 +4,42 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { Vehicle } from '../entities/vehicle.entity';
 import { Truck } from '../entities/truck.entity';
 import { Van } from '../entities/van.entity';
 import { Factory } from 'src/interfaces/factory.interface';
 import { VehicleType } from '../enum/vehicle-type.enum';
 import { CreateVehicleDto } from '../dtos/create-vehicule.dto';
+import { Trailer } from '../entities/trailer.entity';
+import { contains } from 'class-validator';
+import { TrailerType } from '../enum/trailer-type.enum';
+import { TruckType } from '../enum/truck-type.enum';
 
 @Injectable()
 export class VehiclesService implements Factory {
   constructor(
     @InjectRepository(Vehicle) private vehicleRepo: Repository<Vehicle>, // use for general manipulation
     @InjectRepository(Truck) private truckRepo: Repository<Truck>,
-    @InjectRepository(Van) private vanRepo: Repository<Van>,
+    @InjectRepository(Trailer) private trailerRepo: Repository<Trailer>,
   ) {} // By doing this way, you will have a User Repo
 
   async factoryCreate(data: CreateVehicleDto) {
-    switch (data.vehicleType) {
-      case VehicleType.TRUCK:
-        // Filter to make sure you have the proper input for Truck
-        if (!!data.maxItemHeight)
-          throw new BadRequestException(
-            'maxItemHeight isnt valid property for Truck',
+    if (await this.areVehicleDetailsValid(data)) {
+      switch (data.vehicleType) {
+        case VehicleType.TRUCK:
+          return await this.truckRepo.save(
+            this.truckRepo.create(data as DeepPartial<Truck>),
           );
-        else if (!data.maxWeight)
-          throw new BadRequestException('maxWeight missing');
 
-        // Returns the created & saved truck
-        return await this.truckRepo.save(this.truckRepo.create(data));
-
-      case VehicleType.VAN:
-        // Filter to make sure you have the proper input for Van
-        if (!!data.maxWeight)
-          throw new BadRequestException(
-            'maxWeight isnt valid property for Van',
+        case VehicleType.TRAILER:
+          return await this.trailerRepo.save(
+            this.trailerRepo.create(data as DeepPartial<Trailer>),
           );
-        else if (!data.maxItemHeight)
-          throw new BadRequestException('maxItemHeight missing');
 
-        // Returns the created & saved van
-        return await this.vanRepo.save(this.vanRepo.create(data));
-
-      default:
-        throw new BadRequestException('Invalid Vehicle Type');
+        default:
+          throw new BadRequestException('Invalid Vehicle Type');
+      }
     }
   }
 
@@ -59,12 +51,12 @@ export class VehiclesService implements Factory {
     return await this.truckRepo.find();
   }
 
-  async findAllVans() {
-    return await this.vanRepo.find();
+  async findAllTrailers() {
+    return await this.trailerRepo.find();
   }
 
-  // Helper functions
-
+  //// Helper functions
+  // crud
   async findVehicleById(vehicleId: number) {
     const vehicle = await this.vehicleRepo.findOneBy({ vehicleId });
 
@@ -79,5 +71,34 @@ export class VehiclesService implements Factory {
     const vehicule = await this.findVehicleById(vehicleId);
     Object.assign(vehicule, attrs);
     return await this.vehicleRepo.save(vehicule);
+  }
+
+  // creation
+  async isLicencePlateUnique(licencePlate: string) {
+    const vehicle = await this.vehicleRepo.findOneBy({ licencePlate });
+    return !vehicle ? true : false;
+  }
+
+  async areVehicleDetailsValid(data: CreateVehicleDto) {
+    if (
+      (data.vehicleType == 'Truck' && // Makes sure that you arent assigning Trailer sub types to Trucks
+        Object.values(TrailerType).includes(
+          data.vehicleSubtype as TrailerType,
+        )) ||
+      (data.vehicleType == 'Trailer' && // Makes sure that you arent assigning Truck sub types to Trailers
+        Object.values(TruckType).includes(data.vehicleSubtype as TruckType))
+    ) {
+      throw new BadRequestException(
+        `The '${data.vehicleSubtype}' type is not a ${data.vehicleType} type.`,
+      );
+    }
+
+    if (!(await this.isLicencePlateUnique(data.licencePlate))) {
+      throw new BadRequestException(
+        `A vehicle with the licence plate: '${data.licencePlate}' already exists`,
+      );
+    }
+
+    return true;
   }
 }

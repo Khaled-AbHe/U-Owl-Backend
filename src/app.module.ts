@@ -15,6 +15,7 @@ import { CurrentUserMiddleware } from './currentUser/middlewares/current-user.mi
       database: 'db.sqlite',
       autoLoadEntities: true,
       synchronize: true, // Usually, you keep this at False so you dont mess with an established database
+      dropSchema: false, // This clears the db each time you run it if set to 'true'. !!!! RUNNING YOUR PROGAM WITH 'npm run start:dev' IS NOT RECOMMENDED WITH THIS ON!!!
     }),
     UsersModule,
     VehiclesModule,

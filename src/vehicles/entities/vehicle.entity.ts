@@ -8,6 +8,8 @@ import {
 import { VehicleType } from '../enum/vehicle-type.enum';
 import { Location } from 'src/locations/location.entity';
 import { Cart } from 'src/carts/entities/cart.entity';
+import { TruckType } from '../enum/truck-type.enum';
+import { TrailerType } from '../enum/trailer-type.enum';
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
@@ -16,25 +18,28 @@ export class Vehicle {
   vehicleId: number;
 
   @Column()
-  vehicleType: VehicleType
+  licencePlate: string;
+
+  @Column()
+  vehicleType: VehicleType;
+
+  @Column()
+  vehicleSubtype: TruckType | TrailerType;
 
   @Column({ default: 0 })
   kilometrage: number;
 
   @Column()
-  height: number
+  height: number;
 
   @Column()
-  width: number
+  width: number;
 
   @Column()
-  depth: number
+  depth: number;
 
   @Column()
-  maxWeight: number
-
-  @Column()
-  amount: number
+  maxWeight: number;
 
   @Column()
   costPerKm: number;

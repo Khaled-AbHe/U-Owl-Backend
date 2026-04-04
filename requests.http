@@ -3,7 +3,7 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "type": "Client",
+    "userType": "Client",
     "email": "client1@outlook.com",
     "password": "pswrd"
 }
@@ -50,11 +50,9 @@ POST http://localhost:3000/vehicles/create
 Content-Type: application/json
 
 {
-    "type": "Truck",
-    "model": "random",
-    "carryingSpace": 50,
-    "costPerKm": 1.2,
-    "maxWeight": 100
+    "licencePlate": "12A 123",
+    "vehicleType": "Truck",
+    "vehicleSubtype": "Large Box"
 }
 
 ### Get All Vehicles
@@ -63,8 +61,8 @@ GET http://localhost:3000/vehicles/all
 ### Get All Trucks
 GET http://localhost:3000/vehicles/trucks
 
-### Get All Vans
-GET http://localhost:3000/vehicles/vans
+### Get All Trailers
+GET http://localhost:3000/vehicles/trailers
 
 ################# Locations
 

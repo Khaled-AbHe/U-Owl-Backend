@@ -20,11 +20,11 @@ export class UsersService implements Factory {
   ) {}
 
   async factoryCreate(data: {
-    type: UserType;
+    userType: UserType;
     email: string;
     password: string;
   }) {
-    switch (data.type) {
+    switch (data.userType) {
       case UserType.CLIENT:
         return await this.clientRepo.save(
           this.clientRepo.create({

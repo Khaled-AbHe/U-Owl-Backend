@@ -21,13 +21,12 @@ export class VehiclesController {
     return this.vehiclesService.findAllTrucks();
   }
 
-  @Get('/vans')
-  findAllVans() {
-    return this.vehiclesService.findAllVans();
+  @Get('/trailers')
+  findAllTrailers() {
+    return this.vehiclesService.findAllTrailers();
   }
 
   // temp
-
   @Get('/:id')
   findVehicleById(@Param('id') id: number) {
     return this.vehiclesService.findVehicleById(id);
