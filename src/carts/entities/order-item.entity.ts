@@ -1,12 +1,13 @@
 import {
+  BeforeRemove,
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
-  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
-// import { Client } from 'src/users/entities/client.entity';
 import { Cart } from './cart.entity';
 
 @Entity()
@@ -14,10 +15,11 @@ export class OrderItem {
   @PrimaryGeneratedColumn()
   orderItemId: number;
 
-  @OneToMany(() => Vehicle, (vehicle) => vehicle.cart, { eager: true })
+  @OneToOne(() => Vehicle, (vehicle) => vehicle.orderItem, { eager: true })
+  @JoinColumn()
   vehicle: Vehicle;
 
-  @ManyToOne(() => Cart, (cart) => cart.items)
+  @ManyToOne(() => Cart, (cart) => cart.orderItems)
   cart: Cart;
 
   @Column({ default: 0 })

@@ -8,11 +8,19 @@ import { PaymentSystem } from './services/payment-system/payment-system.service'
 import { VehiclesModule } from 'src/vehicles/vehicles.module';
 import { ReservationsController } from 'src/carts/controller/reservations/reservations.controller';
 import { ReservationsService } from 'src/carts/services/reservations/reservations.service';
+import { OrderItemsService } from './services/order-items/order-items.service';
+import { OrderItem } from './entities/order-item.entity';
 
 @Module({
-  imports: [VehiclesModule, TypeOrmModule.forFeature([Cart])],
+  imports: [VehiclesModule, TypeOrmModule.forFeature([Cart, OrderItem])],
   exports: [CartsService, PaymentService, ReservationsService],
   controllers: [CartsController, ReservationsController],
-  providers: [CartsService, PaymentService, PaymentSystem, ReservationsService],
+  providers: [
+    CartsService,
+    PaymentService,
+    PaymentSystem,
+    ReservationsService,
+    OrderItemsService,
+  ],
 })
 export class CartsModule {}
