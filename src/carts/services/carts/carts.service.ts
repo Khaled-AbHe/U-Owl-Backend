@@ -36,16 +36,14 @@ export class CartsService {
 
   // OTHER
 
-  async clearCart(cartId: number) {
-    const cart = await this.findById(cartId);
-
+  async clearCart(cart: Cart) {
     await Promise.all(
       cart.orderItems.map((item) =>
         this.orderItemsService.removeOrderItem(item.orderItemId),
       ),
     );
 
-    return await this.updateCart(cartId, { ...cart, totalPrice: 0 });
+    return await this.updateCart(cart.cartId, { ...cart, totalPrice: 0 });
   }
 
   async isEmpty(cartId: number) {

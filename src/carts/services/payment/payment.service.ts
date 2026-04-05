@@ -1,42 +1,39 @@
-import {
-  BadRequestException,
-  ForbiddenException,
-  Injectable,
-} from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PaymentSystem } from '../payment-system/payment-system.service';
-import { PaymentType } from '../../enum/payment.enum';
-import { CreditCardStrategy } from '../../strategies/credit-cart.payment-strategy';
-import { PaypalStrategy } from '../../strategies/paypal.payment-strategy';
 import { CartsService } from '../carts/carts.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Payment } from '../../entities/payment.entity';
+import { Repository } from 'typeorm';
+import { Client } from '../../../users/entities/client.entity';
+import { PaymentType } from '../../enum/payment-type.enum';
 
 @Injectable()
 export class PaymentService {
   constructor(
+    @InjectRepository(Payment) private paymentRepo: Repository<Payment>,
     private paymentSystem: PaymentSystem,
     private cartsService: CartsService,
   ) {}
 
-  async payForCart(cartId: number, method: string, amount: number) {
-    const cart = await this.cartsService.findById(cartId);
+  async createPayment(data: {
+    client: Client;
+    paymentType: PaymentType;
+    total: number;
+    items: string[];
+  }) {
+    return await this.paymentRepo.save(this.paymentRepo.create(data));
+  }
+
+  async payForCart(client: Client, method: string, amount: number) {
+    this.paymentSystem.setStrategy(method);
+    const cart = await this.cartsService.findById(client.cart.cartId);
 
     if (await this.cartsService.isEmpty(cart.cartId)) {
       throw new ForbiddenException('Cart is empty');
     }
 
-    if (amount > cart.totalPrice) {
-      throw new BadRequestException("You're paying too much!");
-    } else if (amount < cart.totalPrice) {
-      throw new BadRequestException('Not enough funds to pay for cart');
-    }
-
-    if (method == PaymentType.CREDIT_CARD) {
-      this.paymentSystem.setStrategy(new CreditCardStrategy());
-    } else if (method == PaymentType.PAYPAL) {
-      this.paymentSystem.setStrategy(new PaypalStrategy());
-    }
-
-    const bill = this.paymentSystem.payment(amount, cart);
-    await this.cartsService.clearCart(cartId);
-    return bill;
+    const receipt = await this.paymentSystem.payment(amount, cart);
+    await this.cartsService.clearCart(cart);
+    return await this.createPayment({ ...receipt, client });
   }
 }

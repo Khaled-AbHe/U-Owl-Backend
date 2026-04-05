@@ -8,22 +8,25 @@ Content-Type: application/json
 }
 
 ### View Cart
-GET http://localhost:3000/carts/myCart
+GET http://localhost:3000/carts/currentCart
 
 ### Add Vehicle to Cart
 PATCH http://localhost:3000/reservations/addVehicle
 Content-Type: application/json
 
 {
-    "vehicleId": 11,
+    "vehicleId": 3,
     "distance": 40
 }
 
 ### Remove Vehicle from Cart
 PATCH http://localhost:3000/reservations/removeVehicle/17
 
-### Pay for Cart with PayPal
+### Pay for Cart
 POST http://localhost:3000/carts/pay?method=paypal&amount=80
+Content-Type: application/json
 
-### Pay for Cart with Credit Card
-POST http://localhost:3000/carts/pay?method=creditcard&amount=100
+{
+    "method": "paypal",
+    "amount": 82.4
+}

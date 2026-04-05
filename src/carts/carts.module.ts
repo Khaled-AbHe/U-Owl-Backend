@@ -10,9 +10,13 @@ import { ReservationsController } from './controller/reservations/reservations.c
 import { ReservationsService } from './services/reservations/reservations.service';
 import { OrderItemsService } from './services/order-items/order-items.service';
 import { OrderItem } from './entities/order-item.entity';
+import { Payment } from './entities/payment.entity';
 
 @Module({
-  imports: [VehiclesModule, TypeOrmModule.forFeature([Cart, OrderItem])],
+  imports: [
+    VehiclesModule,
+    TypeOrmModule.forFeature([Cart, OrderItem, Payment]),
+  ],
   exports: [CartsService, PaymentService, ReservationsService],
   controllers: [CartsController, ReservationsController],
   providers: [
