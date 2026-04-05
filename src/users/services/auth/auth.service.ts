@@ -6,7 +6,7 @@ import {
 import { UsersService } from '../users/users.service';
 import { randomBytes, scrypt as _scrypt } from 'crypto'; // pour generer notre salt
 import { promisify } from 'util'; // pour transformer scrypt en une fonction qui retourne une promesse
-import { CreateUserDto } from 'src/users/dtos/create-user.dto';
+import { CreateUserDto } from '../../dtos/create-user.dto';
 
 const scrypt = promisify(_scrypt);
 

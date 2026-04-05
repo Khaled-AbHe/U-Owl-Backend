@@ -1,10 +1,17 @@
-import { Body, Controller, Get, Post, Session, UseGuards } from '@nestjs/common';
-import { CurrentUser } from 'src/currentUser/decorators/current-user.decorator';
-import { AuthGuard } from 'src/currentUser/guards/auth.guard';
-import { CreateUserDto } from 'src/users/dtos/create-user.dto';
-import { SignInUserDto } from 'src/users/dtos/signin-user.dto';
-import { User } from 'src/users/entities/user.entity';
-import { AuthService } from 'src/users/services/auth/auth.service';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Session,
+  UseGuards,
+} from '@nestjs/common';
+import { CurrentUser } from '../../../currentUser/decorators/current-user.decorator';
+import { AuthGuard } from '../../../currentUser/guards/auth.guard';
+import { CreateUserDto } from '../../dtos/create-user.dto';
+import { SignInUserDto } from '../../dtos/signin-user.dto';
+import { User } from '../../entities/user.entity';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Controller('auth')
 @UseGuards(AuthGuard)
@@ -16,7 +23,7 @@ export class AuthentificationController {
     return this.authService.signUp(body);
   }
 
-  @Get('/signin')
+  @Post('/signin')
   async signIn(@Body() body: SignInUserDto, @Session() session: any) {
     const user = await this.authService.signIn(body.email, body.password);
     session.userId = user.userId;

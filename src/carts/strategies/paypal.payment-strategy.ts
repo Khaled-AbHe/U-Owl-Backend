@@ -1,4 +1,4 @@
-import { PaymentStrategy } from 'src/interfaces/payment-strategy.interface';
+import { PaymentStrategy } from '../../interfaces/payment-strategy.interface';
 
 export class PaypalStrategy implements PaymentStrategy {
   pay(amount: number) {

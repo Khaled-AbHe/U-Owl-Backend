@@ -3,10 +3,10 @@ import {
   ForbiddenException,
   Injectable,
 } from '@nestjs/common';
-import { PaymentSystem } from 'src/carts/services/payment-system/payment-system.service';
-import { PaymentType } from 'src/carts/enum/payment.enum';
-import { CreditCardStrategy } from 'src/carts/strategies/credit-cart.payment-strategy';
-import { PaypalStrategy } from 'src/carts/strategies/paypal.payment-strategy';
+import { PaymentSystem } from '../payment-system/payment-system.service';
+import { PaymentType } from '../../enum/payment.enum';
+import { CreditCardStrategy } from '../../strategies/credit-cart.payment-strategy';
+import { PaypalStrategy } from '../../strategies/paypal.payment-strategy';
 import { CartsService } from '../carts/carts.service';
 
 @Injectable()

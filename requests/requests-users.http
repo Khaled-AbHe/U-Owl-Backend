@@ -3,13 +3,13 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "userType": "Admin",
-    "email": "admin1@outlook.com",
+    "userType": "Client",
+    "email": "client1@outlook.com",
     "password": "pswrd"
 }
 
 ### Sign In User
-GET http://localhost:3000/auth/signin
+POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {

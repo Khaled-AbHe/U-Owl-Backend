@@ -7,8 +7,8 @@ import { Client } from './entities/client.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthService } from './services/auth/auth.service';
 import { AuthentificationController } from './controllers/authentification/authentification.controller';
-import { CartsModule } from 'src/carts/carts.module';
-import { VehiclesModule } from 'src/vehicles/vehicles.module';
+import { CartsModule } from '../carts/carts.module';
+import { VehiclesModule } from '../vehicles/vehicles.module';
 
 @Module({
   imports: [

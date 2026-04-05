@@ -1,6 +1,6 @@
 import { ChildEntity, JoinColumn, OneToOne } from 'typeorm';
 import { User } from './user.entity';
-import { Cart } from 'src/carts/entities/cart.entity';
+import { Cart } from '../../carts/entities/cart.entity';
 
 @ChildEntity()
 export class Client extends User {

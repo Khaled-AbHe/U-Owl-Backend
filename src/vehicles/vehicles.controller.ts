@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { CreateVehicleDto } from './dtos/create-vehicule.dto';
 import { VehiclesService } from './services/vehicles.service';
-import { AdminGuard } from 'src/currentUser/guards/admin.guard';
-import { AuthGuard } from 'src/currentUser/guards/auth.guard';
+import { AdminGuard } from '../currentUser/guards/admin.guard';
+import { AuthGuard } from '../currentUser/guards/auth.guard';
 
 @Controller('vehicles')
 @UseGuards(AuthGuard, AdminGuard)

@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { OrderItem } from 'src/carts/entities/order-item.entity';
-import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
-import { VehiclesService } from 'src/vehicles/services/vehicles.service';
+import { OrderItem } from '../../entities/order-item.entity';
+import { Vehicle } from '../../../vehicles/entities/vehicle.entity';
+import { VehiclesService } from '../../../vehicles/services/vehicles.service';
 import { Repository } from 'typeorm';
 
 @Injectable()

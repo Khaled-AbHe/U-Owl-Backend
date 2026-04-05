@@ -6,10 +6,10 @@ import {
 import { User } from '../../entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Factory } from 'src/interfaces/factory.interface';
-import { Client } from 'src/users/entities/client.entity';
-import { Admin } from 'src/users/entities/admin.entity';
-import { UserType } from 'src/users/enums/users.enum';
+import { Factory } from '../../../interfaces/factory.interface';
+import { Client } from '../../entities/client.entity';
+import { Admin } from '../../entities/admin.entity';
+import { UserType } from '../../enums/users.enum';
 
 @Injectable()
 export class UsersService implements Factory {

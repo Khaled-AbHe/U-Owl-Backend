@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CartsService } from 'src/carts/services/carts/carts.service';
-import { Client } from 'src/users/entities/client.entity';
-import { VehiclesService } from 'src/vehicles/services/vehicles.service';
+import { CartsService } from '../carts/carts.service';
+import { Client } from '../../../users/entities/client.entity';
+import { VehiclesService } from '../../../vehicles/services/vehicles.service';
 import { OrderItemsService } from '../order-items/order-items.service';
 
 @Injectable()

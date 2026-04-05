@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, Repository } from 'typeorm';
 import { Vehicle } from '../entities/vehicle.entity';
 import { Truck } from '../entities/truck.entity';
-import { Factory } from 'src/interfaces/factory.interface';
+import { Factory } from '../../interfaces/factory.interface';
 import { VehicleType } from '../enum/vehicle-type.enum';
 import { CreateVehicleDto } from '../dtos/create-vehicule.dto';
 import { Trailer } from '../entities/trailer.entity';

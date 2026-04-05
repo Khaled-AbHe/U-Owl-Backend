@@ -6,12 +6,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { CartsService } from 'src/carts/services/carts/carts.service';
-import { PaymentService } from 'src/carts/services/payment/payment.service';
-import { CurrentUser } from 'src/currentUser/decorators/current-user.decorator';
-import { Client } from 'src/users/entities/client.entity';
-import { AuthGuard } from 'src/currentUser/guards/auth.guard';
-import { ClientGuard } from 'src/currentUser/guards/client.guard';
+import { CartsService } from '../../services/carts/carts.service';
+import { PaymentService } from '../../services/payment/payment.service';
+import { CurrentUser } from '../../../currentUser/decorators/current-user.decorator';
+import { Client } from '../../../users/entities/client.entity';
+import { AuthGuard } from '../../../currentUser/guards/auth.guard';
+import { ClientGuard } from '../../../currentUser/guards/client.guard';
 
 @Controller('carts')
 @UseGuards(AuthGuard)

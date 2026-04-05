@@ -11,8 +11,8 @@ import { UsersService } from '../../services/users/users.service';
 import { UpdateUserDto } from '../../dtos/update-user.dto';
 import { Serialize } from '../../../interceptors/serialize.interceptor';
 import { UserDto } from '../../dtos/user.dto';
-import { AuthGuard } from 'src/currentUser/guards/auth.guard';
-import { AdminGuard } from 'src/currentUser/guards/admin.guard';
+import { AuthGuard } from '../../../currentUser/guards/auth.guard';
+import { AdminGuard } from '../../../currentUser/guards/admin.guard';
 
 @Controller('users')
 @UseGuards(AuthGuard)

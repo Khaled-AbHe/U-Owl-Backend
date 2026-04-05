@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import type { PaymentStrategy } from 'src/interfaces/payment-strategy.interface.ts';
-import { Cart } from 'src/carts/entities/cart.entity';
+import type { PaymentStrategy } from '../../../interfaces/payment-strategy.interface.ts';
+import { Cart } from '../../entities/cart.entity';
 
 @Injectable()
 export class PaymentSystem {

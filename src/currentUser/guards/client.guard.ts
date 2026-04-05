@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { UserType } from 'src/users/enums/users.enum';
+import { UserType } from '../../users/enums/users.enum';
 
 export class ClientGuard implements CanActivate {
   canActivate(
