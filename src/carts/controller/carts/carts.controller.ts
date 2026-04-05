@@ -30,9 +30,15 @@ export class CartsController {
   @Post('/pay')
   payCartTotal(
     @CurrentUser() client: Client,
-    @Query('type') type: string,
+    @Query('method') method: string,
     @Query('amount', ParseIntPipe) amount: number,
   ) {
-    return this.paymentService.payForCart(client.cart.cartId, type, amount);
+    return this.paymentService.payForCart(client.cart.cartId, method, amount);
+  }
+
+  @UseGuards(ClientGuard)
+  @Get('/myCart')
+  findClientCart(@CurrentUser() client: Client) {
+    return this.cartsService.findById(client.cart.cartId);
   }
 }

@@ -1,0 +1,29 @@
+### Sign In as Client
+GET http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "email": "client1@outlook.com",
+    "password": "pswrd"
+}
+
+### View Cart
+GET http://localhost:3000/carts/myCart
+
+### Add Vehicle to Cart
+PATCH http://localhost:3000/reservations/addVehicle
+Content-Type: application/json
+
+{
+    "vehicleId": 2,
+    "distance": 40
+}
+
+### Remove Vehicle from Cart
+PATCH http://localhost:3000/reservations/removeVehicle/3
+
+### Pay for Cart with PayPal
+POST http://localhost:3000/carts/pay?method=paypal&amount=100
+
+### Pay for Cart with Credit Card
+POST http://localhost:3000/carts/pay?method=creditcard&amount=100

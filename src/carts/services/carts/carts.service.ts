@@ -2,15 +2,17 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cart } from '../../entities/cart.entity';
 import { Repository } from 'typeorm';
-import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
-import { VehiclesService } from 'src/vehicles/services/vehicles.service';
+import { OrderItemsService } from '../order-items/order-items.service';
+import { OrderItem } from 'src/carts/entities/order-item.entity';
 
 @Injectable()
 export class CartsService {
   constructor(
     @InjectRepository(Cart) private cartRepo: Repository<Cart>,
-    private vehiclesService: VehiclesService,
+    private orderItemsService: OrderItemsService,
   ) {}
+
+  // CRUD
 
   async findAllCarts() {
     return await this.cartRepo.find();
@@ -32,21 +34,22 @@ export class CartsService {
     return await this.cartRepo.save(cart);
   }
 
+  // OTHER
+
   async clearCart(cartId: number) {
     const cart = await this.findById(cartId);
 
-    cart.items.forEach((vehicle) => {
-      this.vehiclesService.updateStatus(vehicle.vehicleId, {
-        ...vehicle,
-        isReserved: false,
-      });
-    });
+    await Promise.all(
+      cart.orderItems.map((item) =>
+        this.orderItemsService.removeOrderItem(item.orderItemId),
+      ),
+    );
 
-    return await this.updateCart(cartId, { ...cart, items: [] });
+    return await this.updateCart(cartId, { ...cart, totalPrice: 0 });
   }
 
   async isEmpty(cartId: number) {
     const cart = await this.findById(cartId);
-    return cart.items.length == 0
+    return cart.orderItems.length == 0;
   }
 }

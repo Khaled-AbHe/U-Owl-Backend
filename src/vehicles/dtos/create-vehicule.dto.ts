@@ -2,8 +2,6 @@ import {
   IsString,
   IsNotEmpty,
   IsEnum,
-  Length,
-  Contains,
 } from 'class-validator';
 import { TrailerType } from '../enum/trailer-type.enum';
 import { TruckType } from '../enum/truck-type.enum';

@@ -7,12 +7,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, Repository } from 'typeorm';
 import { Vehicle } from '../entities/vehicle.entity';
 import { Truck } from '../entities/truck.entity';
-import { Van } from '../entities/van.entity';
 import { Factory } from 'src/interfaces/factory.interface';
 import { VehicleType } from '../enum/vehicle-type.enum';
 import { CreateVehicleDto } from '../dtos/create-vehicule.dto';
 import { Trailer } from '../entities/trailer.entity';
-import { contains } from 'class-validator';
 import { TrailerType } from '../enum/trailer-type.enum';
 import { TruckType } from '../enum/truck-type.enum';
 
@@ -67,7 +65,7 @@ export class VehiclesService implements Factory {
     return vehicle;
   }
 
-  async updateStatus(vehicleId: number, attrs: Partial<Vehicle>) {
+  async updateVehicle(vehicleId: number, attrs: Partial<Vehicle>) {
     const vehicule = await this.findVehicleById(vehicleId);
     Object.assign(vehicule, attrs);
     return await this.vehicleRepo.save(vehicule);
@@ -100,5 +98,33 @@ export class VehiclesService implements Factory {
     }
 
     return true;
+  }
+
+  // other
+
+  async setVehicleAsReserved(vehicle: Vehicle) {
+    if (vehicle.isReserved) {
+      throw new BadRequestException(
+        `Vehicle ${vehicle.vehicleId} is already reserved`,
+      );
+    }
+
+    return await this.updateVehicle(vehicle.vehicleId, {
+      ...vehicle,
+      isReserved: true,
+    });
+  }
+
+  async setVehicleAsAvailable(vehicle: Vehicle) {
+    if (!vehicle.isReserved) {
+      throw new BadRequestException(
+        `Vehicle ${vehicle.vehicleId} is already available`,
+      );
+    }
+
+    return await this.updateVehicle(vehicle.vehicleId, {
+      ...vehicle,
+      isReserved: false,
+    });
   }
 }

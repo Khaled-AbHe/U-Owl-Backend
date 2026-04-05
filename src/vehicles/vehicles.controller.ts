@@ -1,8 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { CreateVehicleDto } from './dtos/create-vehicule.dto';
 import { VehiclesService } from './services/vehicles.service';
+import { AdminGuard } from 'src/currentUser/guards/admin.guard';
+import { AuthGuard } from 'src/currentUser/guards/auth.guard';
 
 @Controller('vehicles')
+@UseGuards(AuthGuard, AdminGuard)
 export class VehiclesController {
   constructor(private vehiclesService: VehiclesService) {}
 

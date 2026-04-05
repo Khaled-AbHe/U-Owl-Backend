@@ -5,8 +5,8 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
 import { Client } from 'src/users/entities/client.entity';
+import { OrderItem } from './order-item.entity';
 
 @Entity()
 export class Cart {
@@ -16,8 +16,8 @@ export class Cart {
   @Column({ default: 0 })
   totalPrice: number;
 
-  @OneToMany(() => Vehicle, (vehicle) => vehicle.cart, { eager: true })
-  items: Vehicle[];
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.cart, { eager: true })
+  orderItems: OrderItem[];
 
   @OneToOne(() => Client, (client) => client.cart)
   client: Client;

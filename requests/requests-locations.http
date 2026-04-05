@@ -1,0 +1,14 @@
+################# Locations
+
+### Create Location
+POST http://localhost:3000/locations/create
+Content-Type: application/json
+
+{
+    "depotName": "rand123",
+    "lon": 40,
+    "lat": 50
+}
+
+### Get All Locations
+GET http://localhost:3000/locations/all

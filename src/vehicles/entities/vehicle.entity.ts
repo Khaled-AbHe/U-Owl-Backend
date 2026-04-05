@@ -2,14 +2,15 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   TableInheritance,
 } from 'typeorm';
 import { VehicleType } from '../enum/vehicle-type.enum';
 import { Location } from 'src/locations/location.entity';
-import { Cart } from 'src/carts/entities/cart.entity';
 import { TruckType } from '../enum/truck-type.enum';
 import { TrailerType } from '../enum/trailer-type.enum';
+import { OrderItem } from 'src/carts/entities/order-item.entity';
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
@@ -52,6 +53,6 @@ export class Vehicle {
   location: Location;
 
   // Get rid of this
-  @ManyToOne(() => Cart, (cart) => cart.items)
-  cart: Cart;
+  @OneToOne(() => OrderItem, (orderItem) => orderItem.vehicle)
+  orderItem: OrderItem;
 }
