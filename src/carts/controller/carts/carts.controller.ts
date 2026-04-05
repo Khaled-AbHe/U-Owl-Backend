@@ -1,7 +1,7 @@
 import {
   Controller,
   Get,
-  ParseIntPipe,
+  ParseFloatPipe,
   Post,
   Query,
   UseGuards,
@@ -31,7 +31,7 @@ export class CartsController {
   payCartTotal(
     @CurrentUser() client: Client,
     @Query('method') method: string,
-    @Query('amount', ParseIntPipe) amount: number,
+    @Query('amount', ParseFloatPipe) amount: number,
   ) {
     return this.paymentService.payForCart(client.cart.cartId, method, amount);
   }

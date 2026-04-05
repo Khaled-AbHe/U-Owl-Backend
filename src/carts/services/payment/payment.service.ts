@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { PaymentSystem } from 'src/carts/services/payment-system/payment-system.service';
 import { PaymentType } from 'src/carts/enum/payment.enum';
 import { CreditCardStrategy } from 'src/carts/strategies/credit-cart.payment-strategy';
@@ -13,9 +17,16 @@ export class PaymentService {
   ) {}
 
   async payForCart(cartId: number, method: string, amount: number) {
+    const cart = await this.cartsService.findById(cartId);
 
-    if (await this.cartsService.isEmpty(cartId)) {
-      throw new ForbiddenException("Cart is empty")
+    if (await this.cartsService.isEmpty(cart.cartId)) {
+      throw new ForbiddenException('Cart is empty');
+    }
+
+    if (amount > cart.totalPrice) {
+      throw new BadRequestException("You're paying too much!");
+    } else if (amount < cart.totalPrice) {
+      throw new BadRequestException('Not enough funds to pay for cart');
     }
 
     if (method == PaymentType.CREDIT_CARD) {
@@ -24,8 +35,8 @@ export class PaymentService {
       this.paymentSystem.setStrategy(new PaypalStrategy());
     }
 
-    this.cartsService.clearCart(cartId);
-
-    return this.paymentSystem.payment(amount);
+    const bill = this.paymentSystem.payment(amount, cart);
+    await this.cartsService.clearCart(cartId);
+    return bill;
   }
 }

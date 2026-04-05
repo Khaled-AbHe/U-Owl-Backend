@@ -16,11 +16,11 @@ export class ReservationsController {
     return this.reservationsService.addVehicleToCart(client, body);
   }
 
-  @Patch('/removeVehicle/:vehicleId')
+  @Patch('/removeVehicle/:orderItemId')
   removeItem(
     @CurrentUser() client: Client,
-    @Param('vehicleId') vehicleId: number,
+    @Param('orderItemId') orderItemId: number,
   ) {
-    return this.reservationsService.removeVehicleFromCart(client, vehicleId);
+    return this.reservationsService.removeVehicleFromCart(client, orderItemId);
   }
 }

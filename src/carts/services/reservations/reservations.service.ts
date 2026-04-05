@@ -46,10 +46,12 @@ export class ReservationsService {
     }
 
     const updatedOrderItems = cart.orderItems.toSpliced(itemIndex, 1);
+    const updatedTotalPrice = cart.totalPrice - orderItem.itemPrice;
     await this.orderItemsService.removeOrderItem(orderItem.orderItemId);
 
     return this.cartsService.updateCart(cart.cartId, {
       orderItems: updatedOrderItems,
+      totalPrice: updatedTotalPrice,
     });
   }
 }
