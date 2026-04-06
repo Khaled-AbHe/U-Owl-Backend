@@ -4,13 +4,13 @@ import { UserType } from '../enums/users.enum';
 export class CreateUserDto {
   @IsEnum(UserType)
   @IsNotEmpty()
-  userType: UserType;
+  userType!: UserType;
 
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email!: string;
 
   @IsString()
   @IsNotEmpty()
-  password: string;
+  password!: string;
 }

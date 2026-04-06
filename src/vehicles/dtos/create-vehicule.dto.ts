@@ -12,13 +12,13 @@ export class CreateVehicleDto {
   @IsString()
   @IsNotEmpty()
   @IsLicencePlateValid()
-  licencePlate: string;
+  licencePlate!: string;
 
   @IsEnum(VehicleType)
   @IsNotEmpty()
-  vehicleType: VehicleType;
+  vehicleType!: VehicleType;
 
   @IsEnum({ ...TruckType, ...TrailerType })
   @IsNotEmpty()
-  vehicleSubtype: TruckType | TrailerType;
+  vehicleSubtype!: TruckType | TrailerType;
 }
