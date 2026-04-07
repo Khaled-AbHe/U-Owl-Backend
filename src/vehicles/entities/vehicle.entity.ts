@@ -49,8 +49,8 @@ export class Vehicle {
   isReserved: boolean;
 
   // Reference: https://typeorm.io/docs/relations/many-to-one-one-to-many-relations
-  @ManyToOne(() => Location, (location) => location.inventory)
-  location: Location;
+  @ManyToOne(() => Location, (location) => location.inventory, { nullable : true})
+  location: Location | null;
 
   // Get rid of this
   @OneToOne(() => OrderItem, (orderItem) => orderItem.vehicle)

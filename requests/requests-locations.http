@@ -5,10 +5,30 @@ POST http://localhost:3000/locations/create
 Content-Type: application/json
 
 {
-    "depotName": "rand123",
+    "depotName": "ConcessionnaireKhaled",
     "lon": 40,
-    "lat": 50
+    "lat": 50,
+    "phoneNumber" : "514-231-0152"
 }
 
 ### Get All Locations
 GET http://localhost:3000/locations/all
+
+
+### Add location to vehicle
+POST http://localhost:3000/locations/addVehicle
+Content-Type: application/json
+
+{
+    "vehicleId" : 1,
+    "locationId": 1
+}
+
+### Remove location to vehicle
+
+PATCH http://localhost:3000/locations/removeVehicle
+Content-Type: application/json
+
+{
+    "vehicleId" : 1
+}

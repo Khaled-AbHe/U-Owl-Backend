@@ -1,10 +1,21 @@
-### Create User | Sign Up
+### Create admin | Sign Up
 POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
     "userType": "Admin",
     "email": "admin1@outlook.com",
+    "password": "pswrd"
+}
+
+
+### Create user | Sign up
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+    "userType": "Client",
+    "email": "client1@outlook.com",
     "password": "pswrd"
 }
 
