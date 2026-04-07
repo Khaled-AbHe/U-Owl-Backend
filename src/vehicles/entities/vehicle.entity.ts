@@ -2,30 +2,45 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   TableInheritance,
 } from 'typeorm';
-import { VehicleType } from '../vehicles.enum';
+import { VehicleType } from '../enum/vehicle-type.enum';
 import { Location } from 'src/locations/location.entity';
-import { Cart } from 'src/carts/cart.entity';
+import { TruckType } from '../enum/truck-type.enum';
+import { TrailerType } from '../enum/trailer-type.enum';
+import { OrderItem } from 'src/carts/entities/order-item.entity';
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export class Vehicle {
   @PrimaryGeneratedColumn()
-  id: number;
+  vehicleId: number;
 
   @Column()
-  type: VehicleType;
+  licencePlate: string;
 
   @Column()
-  model: string;
+  vehicleType: VehicleType;
 
   @Column()
-  carryingSpace: number;
+  vehicleSubtype: TruckType | TrailerType;
 
   @Column({ default: 0 })
   kilometrage: number;
+
+  @Column()
+  height: number;
+
+  @Column()
+  width: number;
+
+  @Column()
+  depth: number;
+
+  @Column()
+  maxWeight: number;
 
   @Column()
   costPerKm: number;
@@ -37,6 +52,7 @@ export class Vehicle {
   @ManyToOne(() => Location, (location) => location.inventory)
   location: Location;
 
-  @ManyToOne(() => Cart, (cart) => cart.items)
-  cart: Cart;
+  // Get rid of this
+  @OneToOne(() => OrderItem, (orderItem) => orderItem.vehicle)
+  orderItem: OrderItem;
 }

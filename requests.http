@@ -33,7 +33,7 @@ POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-    "email": "admin1@outlook.com",
+    "email": "client1@outlook.com",
     "password": "pswrd"
 }
 
@@ -45,7 +45,7 @@ Post http://localhost:3000/auth/signout
 GET http://localhost:3000/auth/whoami
 
 ### Update User
-PATCH http://localhost:3000/auth/3
+PATCH http://localhost:3000/users/3
 Content-Type: application/json
 
 {
@@ -56,13 +56,13 @@ Content-Type: application/json
 }
 
 ### Get All Users
-GET http://localhost:3000/auth
+GET http://localhost:3000/users
 
 ### Get User By Id
-GET http://localhost:3000/auth/1
+GET http://localhost:3000/users/2
 
 ### Delete User By Id
-DELETE http://localhost:3000/auth/2
+DELETE http://localhost:3000/users/2
 
 ################# Vehicles
 
@@ -71,11 +71,11 @@ POST http://localhost:3000/vehicles/create
 Content-Type: application/json
 
 {
-    "type": "Van",
+    "type": "Truck",
     "model": "random",
     "carryingSpace": 50,
     "costPerKm": 1.2,
-    "maxItemHeight": 2
+    "maxWeight": 100
 }
 
 ### Get All Vehicles
@@ -112,3 +112,16 @@ POST http://localhost:3000/carts/pay?type=creditcard&amount=100
 
 ### Pay with Paypal
 POST http://localhost:3000/carts/pay?type=paypal&amount=100
+
+################# Reservations
+
+### Add Vehicle to Cart
+PATCH http://localhost:3000/reservations/addItem/5
+
+### Remove Vehicule from Cart
+PATCH http://localhost:3000/reservations/removeItem/3
+
+### Pay for Cart
+POST http://localhost:3000/carts/pay?type=paypal&amount=100
+
+### nouvelle ligne de commentaire

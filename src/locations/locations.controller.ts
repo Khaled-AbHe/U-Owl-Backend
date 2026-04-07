@@ -15,4 +15,6 @@ export class LocationsController {
   findAllLocations() {
     return this.locationsService.findAllLocations();
   }
+
+  
 }

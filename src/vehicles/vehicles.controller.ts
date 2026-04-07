@@ -1,8 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { CreateVehicleDto } from './dtos/create-vehicule.dto';
 import { VehiclesService } from './services/vehicles.service';
+import { AdminGuard } from 'src/currentUser/guards/admin.guard';
+import { AuthGuard } from 'src/currentUser/guards/auth.guard';
 
 @Controller('vehicles')
+@UseGuards(AuthGuard, AdminGuard)
 export class VehiclesController {
   constructor(private vehiclesService: VehiclesService) {}
 
@@ -21,8 +24,14 @@ export class VehiclesController {
     return this.vehiclesService.findAllTrucks();
   }
 
-  @Get('/vans')
-  findAllVans() {
-    return this.vehiclesService.findAllVans();
+  @Get('/trailers')
+  findAllTrailers() {
+    return this.vehiclesService.findAllTrailers();
+  }
+
+  // temp
+  @Get('/:id')
+  findVehicleById(@Param('id') id: number) {
+    return this.vehiclesService.findVehicleById(id);
   }
 }

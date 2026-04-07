@@ -27,7 +27,7 @@ export class AuthService {
 
     // 3. creates and returns the new user
     return await this.usersService.factoryCreate({
-      type: dto.type,
+      userType: dto.userType,
       email: dto.email,
       password: result,
     });
@@ -55,9 +55,4 @@ export class AuthService {
     // returns the user if all is checks out
     return user;
   }
-
-  // async whoAmI(userId: number) {
-  //     if (userId == null) throw new NotFoundException("No user is connected")
-  //     return await this.usersService.findUserById(userId)
-  // }
 }

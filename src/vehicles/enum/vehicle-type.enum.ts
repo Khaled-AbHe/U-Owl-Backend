@@ -1,4 +1,4 @@
 export enum VehicleType {
   TRUCK = 'Truck',
-  VAN = 'Van',
+  TRAILER = 'Trailer',
 }

@@ -1,37 +1,24 @@
 import {
   IsString,
   IsNotEmpty,
-  IsNumber,
   IsEnum,
-  IsBoolean,
-  IsOptional,
 } from 'class-validator';
-import { VehicleType } from '../vehicles.enum';
+import { TrailerType } from '../enum/trailer-type.enum';
+import { TruckType } from '../enum/truck-type.enum';
+import { VehicleType } from '../enum/vehicle-type.enum';
+import { IsLicencePlateValid } from '../validators/licence.validator';
 
 export class CreateVehicleDto {
-  @IsEnum(VehicleType)
-  @IsNotEmpty()
-  type: VehicleType;
-
   @IsString()
   @IsNotEmpty()
-  model: string;
+  @IsLicencePlateValid()
+  licencePlate: string;
 
-  @IsNumber()
+  @IsEnum(VehicleType)
   @IsNotEmpty()
-  carryingSpace: number;
+  vehicleType: VehicleType;
 
-  @IsNumber()
+  @IsEnum({ ...TruckType, ...TrailerType })
   @IsNotEmpty()
-  costPerKm: number;
-
-  // Trucks
-  @IsNumber()
-  @IsOptional()
-  maxWeight: number;
-
-  // Vans
-  @IsNumber()
-  @IsOptional()
-  maxItemHeight: number;
+  vehicleSubtype: TruckType | TrailerType;
 }

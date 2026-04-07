@@ -1,17 +1,42 @@
-import { Injectable } from '@nestjs/common';
-import type { PaymentStrategy } from 'src/interfaces/payment-strategy.interface.ts';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
+import { PaymentSystem } from 'src/carts/services/payment-system/payment-system.service';
+import { PaymentType } from 'src/carts/enum/payment.enum';
+import { CreditCardStrategy } from 'src/carts/strategies/credit-cart.payment-strategy';
+import { PaypalStrategy } from 'src/carts/strategies/paypal.payment-strategy';
+import { CartsService } from '../carts/carts.service';
 
 @Injectable()
 export class PaymentService {
-  private paymentStrategy: PaymentStrategy;
+  constructor(
+    private paymentSystem: PaymentSystem,
+    private cartsService: CartsService,
+  ) {}
 
-  constructor() {}
+  async payForCart(cartId: number, method: string, amount: number) {
+    const cart = await this.cartsService.findById(cartId);
 
-  setStrategy(strat: PaymentStrategy) {
-    this.paymentStrategy = strat;
-  }
+    if (await this.cartsService.isEmpty(cart.cartId)) {
+      throw new ForbiddenException('Cart is empty');
+    }
 
-  payment(amount: number) {
-    return this.paymentStrategy.pay(amount);
+    if (amount > cart.totalPrice) {
+      throw new BadRequestException("You're paying too much!");
+    } else if (amount < cart.totalPrice) {
+      throw new BadRequestException('Not enough funds to pay for cart');
+    }
+
+    if (method == PaymentType.CREDIT_CARD) {
+      this.paymentSystem.setStrategy(new CreditCardStrategy());
+    } else if (method == PaymentType.PAYPAL) {
+      this.paymentSystem.setStrategy(new PaypalStrategy());
+    }
+
+    const bill = this.paymentSystem.payment(amount, cart);
+    await this.cartsService.clearCart(cartId);
+    return bill;
   }
 }
