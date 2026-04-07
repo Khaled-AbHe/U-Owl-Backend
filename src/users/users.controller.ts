@@ -19,11 +19,11 @@ import {
 } from '../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './services/auth/auth.service';
-import { CurrentUser } from './decorators/current-user.decorator';
+import { CurrentUser } from 'src/currentUser/decorators/current-user.decorator';
 import { User } from './entities/user.entity';
 // import { CurrentUserInterceptor } from './interceptors/currentUser.interceptor';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { AdminGuard } from 'src/guards/admin.guard';
+import { AuthGuard } from 'src/currentUser/guards/auth.guard';
+import { AdminGuard } from 'src/currentUser/guards/admin.guard';
 import { SignInUserDto } from './dtos/signin-user.dto';
 
 @Controller('auth')
@@ -42,7 +42,7 @@ export class UsersController {
   @Post('/signin')
   async signIn(@Body() body: SignInUserDto, @Session() session: any) {
     const user = await this.authService.signIn(body.email, body.password);
-    session.userId = user.id;
+    session.userId = user.userId;
     return user;
   }
 
