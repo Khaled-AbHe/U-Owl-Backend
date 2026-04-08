@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Cart } from '../../entities/cart.entity';
 import { Repository } from 'typeorm';
 import { OrderItemsService } from '../order-items/order-items.service';
-import { OrderItem } from '../../entities/order-item.entity';
 
 @Injectable()
 export class CartsService {
@@ -43,7 +42,10 @@ export class CartsService {
       ),
     );
 
-    return await this.updateCart(cart.cartId, { ...cart, totalPrice: 0 });
+    return await this.updateCart(cart.cartId, {
+      orderItems: [],
+      totalPrice: 0,
+    });
   }
 
   async isEmpty(cartId: number) {

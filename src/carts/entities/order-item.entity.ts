@@ -1,5 +1,4 @@
 import {
-  BeforeRemove,
   Column,
   Entity,
   JoinColumn,

@@ -10,6 +10,7 @@ import { Factory } from '../../../interfaces/factory.interface';
 import { Client } from '../../entities/client.entity';
 import { Admin } from '../../entities/admin.entity';
 import { UserType } from '../../enums/users.enum';
+import { AdminType } from '../../enums/admin-type.enum';
 
 @Injectable()
 export class UsersService implements Factory {
@@ -21,6 +22,7 @@ export class UsersService implements Factory {
 
   async factoryCreate(data: {
     userType: UserType;
+    adminType: AdminType;
     email: string;
     password: string;
   }) {
@@ -35,14 +37,24 @@ export class UsersService implements Factory {
       case UserType.ADMIN:
         return await this.adminRepo.save(this.adminRepo.create(data));
       default:
-        throw new BadRequestException('Invalid Vehicle Type');
+        throw new BadRequestException('Invalid User Type');
     }
   }
 
-  async updateUser(userId: number, attrs: Partial<User>) {
+  async updateUser<T extends Client | Admin>(
+    userId: number,
+    attrs: Partial<T>,
+  ) {
     const user = await this.findUserById(userId);
-    Object.assign(user, attrs);
-    return await this.userRepo.save(user);
+    
+    switch (user.userType) {
+      case UserType.CLIENT:
+        Object.assign(user, attrs as Partial<Client>);
+        return await this.clientRepo.save(user);
+      case UserType.ADMIN:
+        Object.assign(user, attrs as Partial<Admin>);
+        return await this.adminRepo.save(user);
+    }
   }
 
   async deleteUserById(userId: number) {

@@ -9,7 +9,7 @@ import { PaypalStrategy } from '../../strategies/paypal.payment-strategy.js';
 export class PaymentSystem {
   private paymentStrategy: PaymentStrategy;
 
-  setStrategy(method: string) {
+  setStrategy(method: PaymentType) {
     if (method == PaymentType.CREDIT_CARD) {
       this.paymentStrategy = new CreditCardStrategy();
     } else if (method == PaymentType.PAYPAL) {

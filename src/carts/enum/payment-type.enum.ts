@@ -1,4 +1,4 @@
 export enum PaymentType {
-  CREDIT_CARD = 'creditcard',
-  PAYPAL = 'paypal',
+  CREDIT_CARD = 'Credit Card',
+  PAYPAL = 'PayPal',
 }

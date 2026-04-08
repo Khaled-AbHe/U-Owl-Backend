@@ -21,15 +21,14 @@ export class AuthService {
       throw new BadRequestException('Email already taken');
     }
     // 2. create and hash the password
-    const salt = randomBytes(8).toString('hex');
-    const hash = (await scrypt(dto.password, salt, 32)) as Buffer;
-    const result = salt + '.' + hash.toString('hex');
+    const encryptedPassword = await this.encrypt(dto.password);
 
     // 3. creates and returns the new user
     return await this.usersService.factoryCreate({
       userType: dto.userType,
+      adminType: dto.adminType,
       email: dto.email,
-      password: result,
+      password: encryptedPassword,
     });
   }
 
@@ -54,5 +53,19 @@ export class AuthService {
 
     // returns the user if all is checks out
     return user;
+  }
+
+  async changePassword(userId: number, password: string) {
+    const encryptedPassword = await this.encrypt(password);
+    return await this.usersService.updateUser(userId, {
+      password: encryptedPassword,
+    });
+  }
+
+  // helper
+  async encrypt(password: string) {
+    const salt = randomBytes(8).toString('hex');
+    const hash = (await scrypt(password, salt, 32)) as Buffer;
+    return salt + '.' + hash.toString('hex');
   }
 }

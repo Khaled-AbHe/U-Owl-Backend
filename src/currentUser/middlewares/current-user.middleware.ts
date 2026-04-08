@@ -10,7 +10,6 @@ export class CurrentUserMiddleware implements NestMiddleware {
     if (!userId) {
       console.log("User doesn't exist - Middleware");
     } else {
-      console.log('User does exist - Middleware');
       req.currUser = await this.usersService.findOneUser(userId);
     }
     next();

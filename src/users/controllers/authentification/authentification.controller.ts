@@ -38,6 +38,5 @@ export class AuthentificationController {
   @Get('/whoami')
   whoAmI(@CurrentUser() user: User) {
     return user;
-    // return this.authService.whoAmI(user.id)
   }
 }

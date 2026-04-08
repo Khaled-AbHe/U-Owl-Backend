@@ -6,6 +6,7 @@ import { Payment } from '../../entities/payment.entity';
 import { Repository } from 'typeorm';
 import { Client } from '../../../users/entities/client.entity';
 import { PaymentType } from '../../enum/payment-type.enum';
+import { UsersService } from '../../../users/services/users/users.service';
 
 @Injectable()
 export class PaymentService {
@@ -13,6 +14,7 @@ export class PaymentService {
     @InjectRepository(Payment) private paymentRepo: Repository<Payment>,
     private paymentSystem: PaymentSystem,
     private cartsService: CartsService,
+    private usersService: UsersService,
   ) {}
 
   async createPayment(data: {
@@ -24,7 +26,7 @@ export class PaymentService {
     return await this.paymentRepo.save(this.paymentRepo.create(data));
   }
 
-  async payForCart(client: Client, method: string, amount: number) {
+  async payForCart(client: Client, method: PaymentType, amount: number) {
     this.paymentSystem.setStrategy(method);
     const cart = await this.cartsService.findById(client.cart.cartId);
 
@@ -33,7 +35,14 @@ export class PaymentService {
     }
 
     const receipt = await this.paymentSystem.payment(amount, cart);
-    await this.cartsService.clearCart(cart);
-    return await this.createPayment({ ...receipt, client });
+    const updatedCart = await this.cartsService.clearCart(cart);
+    const updatedClient = (await this.usersService.updateUser(client.userId, {
+      cart: updatedCart,
+    })) as Client;
+    
+    return await this.createPayment({
+      client: updatedClient,
+      ...receipt,
+    });
   }
 }

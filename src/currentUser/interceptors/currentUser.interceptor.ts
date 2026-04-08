@@ -23,7 +23,6 @@ export class CurrentUserInterceptor implements NestInterceptor {
             console.log("No User is connected - CurrentUser Interceptor")
         }
 
-        console.log("CurrentUser Interceptor")
         req.currUser = this.usersService.findOneUser(userId)
         
         return next.handle()

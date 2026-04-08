@@ -15,18 +15,18 @@ PATCH http://localhost:3000/reservations/addVehicle
 Content-Type: application/json
 
 {
-    "vehicleId": 3,
+    "vehicleId": 18,
     "distance": 40
 }
 
-### Remove Vehicle from Cart
-PATCH http://localhost:3000/reservations/removeVehicle/17
+### Remove Order Item from Cart
+PATCH http://localhost:3000/reservations/removeOrderItem/3
 
 ### Pay for Cart
 POST http://localhost:3000/carts/pay?method=paypal&amount=80
 Content-Type: application/json
 
 {
-    "method": "paypal",
-    "amount": 82.4
+    "method": "PayPal",
+    "amount": 62.8
 }

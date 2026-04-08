@@ -11,9 +11,11 @@ import { ReservationsService } from './services/reservations/reservations.servic
 import { OrderItemsService } from './services/order-items/order-items.service';
 import { OrderItem } from './entities/order-item.entity';
 import { Payment } from './entities/payment.entity';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
+    UsersModule,
     VehiclesModule,
     TypeOrmModule.forFeature([Cart, OrderItem, Payment]),
   ],

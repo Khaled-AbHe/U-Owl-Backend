@@ -13,12 +13,14 @@ import { Serialize } from '../../../interceptors/serialize.interceptor';
 import { UserDto } from '../../dtos/user.dto';
 import { AuthGuard } from '../../../currentUser/guards/auth.guard';
 import { AdminGuard } from '../../../currentUser/guards/admin.guard';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Controller('users')
 @UseGuards(AuthGuard)
 export class UsersController {
   constructor(
     private usersService: UsersService,
+    private authService: AuthService,
   ) {}
 
   @Patch('/:id')
@@ -35,12 +37,19 @@ export class UsersController {
   @Serialize(UserDto)
   @Get('/:id')
   findUserById(@Param('id') userId: number) {
-    console.log('User Controller');
     return this.usersService.findUserById(userId);
   }
 
   @Get()
   findAllUsers() {
     return this.usersService.findAllUsers();
+  }
+
+  @Patch('/:id/changePassword/:newPassword')
+  changePassword(
+    @Param('id') userId: number,
+    @Param('newPassword') newPassword: string,
+  ) {
+    return this.authService.changePassword(userId, newPassword);
   }
 }

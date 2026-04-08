@@ -20,7 +20,7 @@ export class VehiclesService implements Factory {
     @InjectRepository(Vehicle) private vehicleRepo: Repository<Vehicle>, // use for general manipulation
     @InjectRepository(Truck) private truckRepo: Repository<Truck>,
     @InjectRepository(Trailer) private trailerRepo: Repository<Trailer>,
-  ) {} // By doing this way, you will have a User Repo
+  ) {} 
 
   async factoryCreate(data: CreateVehicleDto) {
     if (await this.areVehicleDetailsValid(data)) {
@@ -61,7 +61,7 @@ export class VehiclesService implements Factory {
     if (!vehicle) {
       throw new NotFoundException("Vehicle doesn't exist");
     }
-    console.log(vehicle);
+
     return vehicle;
   }
 

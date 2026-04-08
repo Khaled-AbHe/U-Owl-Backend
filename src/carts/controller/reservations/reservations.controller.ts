@@ -16,7 +16,7 @@ export class ReservationsController {
     return this.reservationsService.addVehicleToCart(client, body);
   }
 
-  @Patch('/removeVehicle/:orderItemId')
+  @Patch('/removeOrderItem/:orderItemId')
   removeItem(
     @CurrentUser() client: Client,
     @Param('orderItemId') orderItemId: number,

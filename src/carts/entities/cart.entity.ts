@@ -16,7 +16,10 @@ export class Cart {
   @Column({ default: 0, type: 'decimal', precision: 10, scale: 2 })
   totalPrice: number;
 
-  @OneToMany(() => OrderItem, (orderItem) => orderItem.cart, { eager: true })
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.cart, {
+    eager: true,
+    cascade: true,
+  })
   orderItems: OrderItem[];
 
   @OneToOne(() => Client, (client) => client.cart)
