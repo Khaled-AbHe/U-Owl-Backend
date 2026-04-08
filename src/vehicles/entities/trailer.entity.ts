@@ -12,7 +12,7 @@ export class Trailer extends Vehicle {
   declare vehicleSubtype: TrailerType;
 
   @Column()
-  hasRamp: boolean;
+  hasRamp!: boolean;
 
   @BeforeInsert()
   @BeforeUpdate()

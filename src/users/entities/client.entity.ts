@@ -10,5 +10,5 @@ export class Client extends User {
   // Sources: https://typeorm.io/docs/relations/relations/#cascades
   //          https://typeorm.io/docs/relations/eager-and-lazy-relations/#eager-relations
   @JoinColumn()
-  cart: Cart;
+  cart!: Cart;
 }

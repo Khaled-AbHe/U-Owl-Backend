@@ -12,16 +12,16 @@ export class Truck extends Vehicle {
   declare vehicleSubtype: TruckType;
 
   @Column({ default: false })
-  isElectric: boolean;
+  isElectric!: boolean;
 
   @Column()
-  seatCount: number;
+  seatCount!: number;
 
   @Column()
-  hasLiftGate: boolean;
+  hasLiftGate!: boolean;
 
   @Column()
-  towingCapacity: number;
+  towingCapacity!: number;
 
   @BeforeInsert()
   @BeforeUpdate()
