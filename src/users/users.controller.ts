@@ -1,0 +1,88 @@
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Session,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { UsersService } from './services/users/users.service';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
+// import { UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import {
+  Serialize /*SerializeInterceptor*/,
+} from '../interceptors/serialize.interceptor';
+import { UserDto } from './dtos/user.dto';
+import { AuthService } from './services/auth/auth.service';
+import { CurrentUser } from 'src/currentUser/decorators/current-user.decorator';
+import { User } from './entities/user.entity';
+// import { CurrentUserInterceptor } from './interceptors/currentUser.interceptor';
+import { AuthGuard } from 'src/currentUser/guards/auth.guard';
+import { AdminGuard } from 'src/currentUser/guards/admin.guard';
+import { SignInUserDto } from './dtos/signin-user.dto';
+
+@Controller('auth')
+// @UseInterceptors(CurrentUserInterceptor)
+export class UsersController {
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService,
+  ) {}
+
+  @Post('/signup')
+  signUp(@Body() body: CreateUserDto) {
+    return this.authService.signUp(body);
+  }
+
+  @Post('/signin')
+  async signIn(@Body() body: SignInUserDto, @Session() session: any) {
+    const user = await this.authService.signIn(body.email, body.password);
+    session.userId = user.userId;
+    return user;
+  }
+
+  @Post('/signout')
+  signOut(@Session() session: any) {
+    session.userId = null;
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('/whoami')
+  whoAmI(@CurrentUser() user: User) {
+    return user;
+    // return this.authService.whoAmI(user.id)
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch('/:id')
+  updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
+    return this.usersService.updateUser(parseInt(id), body);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete('/:id')
+  deleteUserById(@Param('id') id: string) {
+    return this.usersService.deleteUserById(parseInt(id));
+  }
+
+  // @UseInterceptors(ClassSerializerInterceptor)
+  // @UseInterceptors(new SerializeInterceptor(UserDto))
+  @UseGuards(AdminGuard)
+  @Serialize(UserDto)
+  @Get('/:id')
+  findUserById(@Param('id') id: string) {
+    console.log('User Controller');
+    return this.usersService.findUserById(parseInt(id));
+  }
+
+  @UseGuards(AuthGuard)
+  @Get()
+  findAllUsers() {
+    return this.usersService.findAllUsers();
+  }
+}

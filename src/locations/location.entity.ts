@@ -16,7 +16,7 @@ export class Location {
   lat: number;
   
   @Column()
-  phoneNumber: number;
+  phoneNumber: string;
 
   // Reference: https://typeorm.io/docs/relations/many-to-one-one-to-many-relations
   @OneToMany(() => Vehicle, (vehicle) => vehicle.location, { eager: true }) // This manages the relation between vehicle and location
