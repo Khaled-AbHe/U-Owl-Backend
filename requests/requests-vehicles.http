@@ -25,3 +25,55 @@ GET http://localhost:3000/vehicles/trucks
 
 ### Get All Trailers
 GET http://localhost:3000/vehicles/trailers
+
+
+
+///Emile
+###
+POST http://localhost:3000/vehicles/create
+Content-Type: application/json
+
+{
+  "vehicleType": "Truck",
+  "vehicleSubtype": "Pickup",
+  "kilometrage": 120000,
+  "height": 150,
+  "width": 180,
+  "depth": 300,
+  "maxWeight": 1000,
+  "amount": 1,
+  "costPerKm": 0.75,
+  "isReserved": false,
+  "licencePlate": "ABC 123",
+  "locationId": 1,
+  "kilometrageSecuritaire": true
+}
+
+###
+GET http://localhost:3000/vehicles/all
+
+###
+GET http://localhost:3000/vehicles/trucks
+
+###
+GET http://localhost:3000/vehicles/trailers
+
+###
+GET http://localhost:3000/vehicles/12
+
+
+###
+GET http://localhost:3000/vehicles/12/roadSafe
+
+###
+PATCH http://localhost:3000/vehicles/12
+Content-Type: application/json
+
+{
+  "kilometrage": 250000,
+  "isReserved": true,
+  "kilometrageSecuritaire": false
+}
+
+###
+DELETE http://localhost:3000/vehicles/12

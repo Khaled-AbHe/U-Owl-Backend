@@ -127,4 +127,14 @@ export class VehiclesService implements Factory {
       isReserved: false,
     });
   }
+
+  async isRoadSafe(vehicleId: number) {
+    const vehicule = await this.findVehicleById(vehicleId);
+    return vehicule.kilometrage < 350000;
+  }
+
+  async deleteVehicleById(vehicleId: number) {
+    await this.findVehicleById(vehicleId);
+    await this.vehicleRepo.delete(vehicleId);
+  }
 }

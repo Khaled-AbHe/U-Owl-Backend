@@ -55,4 +55,7 @@ export class Vehicle {
   // Get rid of this
   @OneToOne(() => OrderItem, (orderItem) => orderItem.vehicle)
   orderItem!: OrderItem;
+
+  @Column({ default: false })
+  kilometrageSecuritaire!: boolean;
 }
