@@ -1,10 +1,10 @@
 ### Sign In as Admin
-GET http://localhost:3000/auth/signin
+POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
     "email": "admin1@outlook.com",
-    "password": "pswrd"
+    "password": "password123"
 }
 
 ### Create Vehicle
@@ -13,7 +13,6 @@ Content-Type: application/json
 
 {
     "licencePlate": "11A 123",
-    "vehicleType": "Truck",
     "vehicleSubtype": "Large Box"
 }
 

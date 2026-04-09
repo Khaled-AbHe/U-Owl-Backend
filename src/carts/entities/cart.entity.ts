@@ -5,7 +5,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Client } from 'src/users/entities/client.entity';
+import { Client } from '../../users/entities/client.entity';
 import { OrderItem } from './order-item.entity';
 
 @Entity()
@@ -13,10 +13,13 @@ export class Cart {
   @PrimaryGeneratedColumn()
   cartId: number;
 
-  @Column({ default: 0 })
+  @Column({ default: 0, type: 'decimal', precision: 10, scale: 2 })
   totalPrice: number;
 
-  @OneToMany(() => OrderItem, (orderItem) => orderItem.cart, { eager: true })
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.cart, {
+    eager: true,
+    cascade: true,
+  })
   orderItems: OrderItem[];
 
   @OneToOne(() => Client, (client) => client.cart)

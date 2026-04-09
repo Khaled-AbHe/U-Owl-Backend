@@ -1,9 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { CreateVehicleDto } from './dtos/create-vehicule.dto';
+import { UpdateVehicleDto } from './dtos/update-vehicule.dto';
 import { VehiclesService } from './services/vehicles.service';
-import { AdminGuard } from 'src/currentUser/guards/admin.guard';
-import { AuthGuard } from 'src/currentUser/guards/auth.guard';
-import { Vehicle } from './entities/vehicle.entity';
+import { AdminGuard } from '../currentUser/guards/admin.guard';
+import { AuthGuard } from '../currentUser/guards/auth.guard';
 
 @Controller('vehicles')
 @UseGuards(AuthGuard, AdminGuard)
@@ -47,7 +47,7 @@ export class VehiclesController {
   }
 
   @Patch('/:id')
-  updateVehicle(@Param('id') vehicleId: number, attrs: Partial<Vehicle>) {
+  updateVehicle(@Param('id') vehicleId: number, @Body() body: UpdateVehicleDto) {
     return this.vehiclesService.updateVehicle(vehicleId, attrs);
   }
 }

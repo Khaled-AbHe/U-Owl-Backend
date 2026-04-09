@@ -4,6 +4,7 @@ Content-Type: application/json
 
 {
     "userType": "Admin",
+    "adminType": "Super Admin", 
     "email": "admin1@outlook.com",
     "password": "pswrd"
 }
@@ -20,12 +21,12 @@ Content-Type: application/json
 }
 
 ### Sign In User
-GET http://localhost:3000/auth/signin
+POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-    "email": "client1@outlook.com",
-    "password": "pswrd"
+    "email": "admin1@outlook.com",
+    "password": "password123"
 }
 
 ### Sign Out User
@@ -35,21 +36,24 @@ Post http://localhost:3000/auth/signout
 GET http://localhost:3000/auth/whoami
 
 ### Update User
-PATCH http://localhost:3000/users/3
+PATCH http://localhost:3000/users/1
 Content-Type: application/json
 
 {
-    "email": "khaled@outlook.com",
-    "password": "yf8/$?/9na?&wsf!/$7()*wq9cntqsqw",
-    "firstName": "Khaled",
-    "lastName": "Abou Hechmeh"
+    "email": "admin1@outlook.com",
+    "password": "pswrd",
+    "name": "Khaled",
+    "surname": "Abou Hechmeh"
 }
+
+### Change a user's password
+PATCH http://localhost:3000/users/2/changePassword/password123
 
 ### Get All Users
 GET http://localhost:3000/users
 
 ### Get User By Id
-GET http://localhost:3000/users/1
+GET http://localhost:3000/users/2
 
 ### Delete User By Id
 DELETE http://localhost:3000/users/1

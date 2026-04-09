@@ -1,6 +1,7 @@
-import { ChildEntity, JoinColumn, OneToOne } from 'typeorm';
+import { ChildEntity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { User } from './user.entity';
-import { Cart } from 'src/carts/entities/cart.entity';
+import { Cart } from '../../carts/entities/cart.entity';
+import { Payment } from '../../carts/entities/payment.entity';
 
 @ChildEntity()
 export class Client extends User {
@@ -10,5 +11,8 @@ export class Client extends User {
   // Sources: https://typeorm.io/docs/relations/relations/#cascades
   //          https://typeorm.io/docs/relations/eager-and-lazy-relations/#eager-relations
   @JoinColumn()
-  cart!: Cart;
+  cart: Cart;
+
+  @OneToMany(() => Payment, (payment) => payment.client, { eager: true })
+  purchaseHistory: Payment[];
 }

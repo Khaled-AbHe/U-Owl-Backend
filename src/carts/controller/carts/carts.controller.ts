@@ -1,17 +1,11 @@
-import {
-  Controller,
-  Get,
-  ParseFloatPipe,
-  Post,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
-import { CartsService } from 'src/carts/services/carts/carts.service';
-import { PaymentService } from 'src/carts/services/payment/payment.service';
-import { CurrentUser } from 'src/currentUser/decorators/current-user.decorator';
-import { Client } from 'src/users/entities/client.entity';
-import { AuthGuard } from 'src/currentUser/guards/auth.guard';
-import { ClientGuard } from 'src/currentUser/guards/client.guard';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { CartsService } from '../../services/carts/carts.service';
+import { PaymentService } from '../../services/payment/payment.service';
+import { CurrentUser } from '../../../currentUser/decorators/current-user.decorator';
+import { Client } from '../../../users/entities/client.entity';
+import { AuthGuard } from '../../../currentUser/guards/auth.guard';
+import { ClientGuard } from '../../../currentUser/guards/client.guard';
+import { CartPaymentDto } from '../../dtos/cart-payment.dto';
 
 @Controller('carts')
 @UseGuards(AuthGuard)
@@ -28,16 +22,12 @@ export class CartsController {
 
   @UseGuards(ClientGuard)
   @Post('/pay')
-  payCartTotal(
-    @CurrentUser() client: Client,
-    @Query('method') method: string,
-    @Query('amount', ParseFloatPipe) amount: number,
-  ) {
-    return this.paymentService.payForCart(client.cart.cartId, method, amount);
+  payCartTotal(@CurrentUser() client: Client, @Body() body: CartPaymentDto) {
+    return this.paymentService.payForCart(client, body.method, body.amount);
   }
 
   @UseGuards(ClientGuard)
-  @Get('/myCart')
+  @Get('/currentCart')
   findClientCart(@CurrentUser() client: Client) {
     return this.cartsService.findById(client.cart.cartId);
   }

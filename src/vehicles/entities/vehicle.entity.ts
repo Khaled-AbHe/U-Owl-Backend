@@ -7,10 +7,10 @@ import {
   TableInheritance,
 } from 'typeorm';
 import { VehicleType } from '../enum/vehicle-type.enum';
-import { Location } from 'src/locations/location.entity';
+import { Location } from '../../locations/location.entity';
 import { TruckType } from '../enum/truck-type.enum';
 import { TrailerType } from '../enum/trailer-type.enum';
-import { OrderItem } from 'src/carts/entities/order-item.entity';
+import { OrderItem } from '../../carts/entities/order-item.entity';
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
@@ -42,8 +42,8 @@ export class Vehicle {
   @Column()
   maxWeight!: number;
 
-  @Column()
-  costPerKm!: number;
+  @Column({ type: 'decimal', precision: 3, scale: 2 })
+  costPerKm: number;
 
   @Column({ default: false })
   isReserved!: boolean;

@@ -1,5 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { UsersService } from 'src/users/services/users/users.service';
+import { UsersService } from '../../users/services/users/users.service';
 
 @Injectable()
 export class CurrentUserMiddleware implements NestMiddleware {
@@ -10,7 +10,6 @@ export class CurrentUserMiddleware implements NestMiddleware {
     if (!userId) {
       console.log("User doesn't exist - Middleware");
     } else {
-      console.log('User does exist - Middleware');
       req.currUser = await this.usersService.findOneUser(userId);
     }
     next();

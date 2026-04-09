@@ -13,56 +13,56 @@ import { IsLicencePlateValid } from '../validators/licence.validator';
 
 export class CreateVehicleDto {
   
-  @IsEnum(VehicleType)
-  @IsNotEmpty()
-  vehicleType!: VehicleType;
+//   @IsEnum(VehicleType)
+//   @IsNotEmpty()
+//   vehicleType!: VehicleType;
 
   @IsEnum({ ...TruckType, ...TrailerType })
   @IsNotEmpty()
-  vehicleSubtype!: TruckType | TrailerType;
+  vehicleSubtype: TruckType | TrailerType;
 
-  @IsNumber()
-  @IsNotEmpty()
-  kilometrage!: number;
+//   @IsNumber()
+//   @IsNotEmpty()
+//   kilometrage!: number;
 
-  @IsNumber()
-  @IsNotEmpty()
-  height!: number;
+//   @IsNumber()
+//   @IsNotEmpty()
+//   height!: number;
 
-  @IsNumber()
-  @IsNotEmpty()
-  width!: number;
+//   @IsNumber()
+//   @IsNotEmpty()
+//   width!: number;
 
-  @IsNumber()
-  @IsNotEmpty()
-  depth!: number;
+//   @IsNumber()
+//   @IsNotEmpty()
+//   depth!: number;
 
-  @IsNumber()
-  @IsNotEmpty()
-  maxWeight!: number;
+//   @IsNumber()
+//   @IsNotEmpty()
+//   maxWeight!: number;
 
-  @IsNumber()
-  @IsNotEmpty()
-  amount!: number;
+//   @IsNumber()
+//   @IsNotEmpty()
+//   amount!: number;
 
-  @IsNumber()
-  @IsNotEmpty()
-  costPerKm!: number;
+//   @IsNumber()
+//   @IsNotEmpty()
+//   costPerKm!: number;
 
-  @IsBoolean()
-  @IsNotEmpty()
-  isReserved!: boolean;
+//   @IsBoolean()
+//   @IsNotEmpty()
+//   isReserved!: boolean;
 
   @IsString()
   @IsNotEmpty()
   @IsLicencePlateValid()
-  licencePlate!: string;
+  licencePlate: string;
 
-  @IsNumber()
-  @IsNotEmpty()
-  locationId!: number;
+//   @IsNumber()
+//   @IsNotEmpty()
+//   locationId!: number;
 
-  @IsBoolean()
-  @IsNotEmpty()
-  kilometrageSecuritaire!: boolean;
+//   @IsBoolean()
+//   @IsNotEmpty()
+//   kilometrageSecuritaire!: boolean;
 }

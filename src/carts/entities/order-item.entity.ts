@@ -1,5 +1,4 @@
 import {
-  BeforeRemove,
   Column,
   Entity,
   JoinColumn,
@@ -7,7 +6,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
+import { Vehicle } from '../../vehicles/entities/vehicle.entity';
 import { Cart } from './cart.entity';
 
 @Entity()
@@ -22,6 +21,6 @@ export class OrderItem {
   @ManyToOne(() => Cart, (cart) => cart.orderItems)
   cart: Cart;
 
-  @Column({ default: 0 })
+  @Column({ default: 0, type: 'decimal', precision: 10, scale: 2 })
   itemPrice: number;
 }

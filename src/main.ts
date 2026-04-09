@@ -1,8 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { AuthGuard } from './currentUser/guards/auth.guard';
-// import { Reflector } from '@nestjs/core';
 
 const cookoieSession = require('cookie-session');
 
@@ -22,10 +20,6 @@ async function bootstrap() {
       transform: true,
     }),
   );
-
-  // app.useGlobalInterceptors(
-  //   new ClassSerializerInterceptor(app.get(Reflector))
-  // )
 
   await app.listen(process.env.PORT ?? 3000);
 }
