@@ -16,43 +16,46 @@ import { OrderItem } from '../../carts/entities/order-item.entity';
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export class Vehicle {
   @PrimaryGeneratedColumn()
-  vehicleId: number;
+  vehicleId!: number;
 
   @Column()
-  licencePlate: string;
+  licencePlate!: string;
 
   @Column()
-  vehicleType: VehicleType;
+  vehicleType!: VehicleType;
 
   @Column()
-  vehicleSubtype: TruckType | TrailerType;
+  vehicleSubtype!: TruckType | TrailerType;
 
   @Column({ default: 0 })
-  kilometrage: number;
+  kilometrage!: number;
 
   @Column()
-  height: number;
+  height!: number;
 
   @Column()
-  width: number;
+  width!: number;
 
   @Column()
-  depth: number;
+  depth!: number;
 
   @Column()
-  maxWeight: number;
+  maxWeight!: number;
 
   @Column({ type: 'decimal', precision: 3, scale: 2 })
   costPerKm: number;
 
   @Column({ default: false })
-  isReserved: boolean;
+  isReserved!: boolean;
 
   // Reference: https://typeorm.io/docs/relations/many-to-one-one-to-many-relations
   @ManyToOne(() => Location, (location) => location.inventory, { nullable : true})
-  location: Location | null;
+  location!: Location | null;
 
   // Get rid of this
   @OneToOne(() => OrderItem, (orderItem) => orderItem.vehicle)
-  orderItem: OrderItem;
+  orderItem!: OrderItem;
+
+  @Column({ default: false })
+  kilometrageSecuritaire!: boolean;
 }

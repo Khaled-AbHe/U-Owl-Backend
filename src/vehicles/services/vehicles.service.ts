@@ -123,6 +123,16 @@ export class VehiclesService implements Factory {
     });
   }
 
+  async isRoadSafe(vehicleId: number) {
+    const vehicule = await this.findVehicleById(vehicleId);
+    return vehicule.kilometrage < 350000;
+  }
+
+  async deleteVehicleById(vehicleId: number) {
+    const vehicle = await this.findVehicleById(vehicleId);
+    return await this.vehicleRepo.delete(vehicle);
+  }
+  
   assignTruckAttributes(data: {
     licencePlate: string;
     vehicleSubtype: TruckType;
