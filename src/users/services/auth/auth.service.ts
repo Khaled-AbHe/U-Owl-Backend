@@ -62,7 +62,7 @@ export class AuthService {
     });
   }
 
-  // helper
+  // Helper
   async encrypt(password: string) {
     const salt = randomBytes(8).toString('hex');
     const hash = (await scrypt(password, salt, 32)) as Buffer;

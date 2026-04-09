@@ -46,7 +46,7 @@ export class UsersService implements Factory {
     attrs: Partial<T>,
   ) {
     const user = await this.findUserById(userId);
-    
+
     switch (user.userType) {
       case UserType.CLIENT:
         Object.assign(user, attrs as Partial<Client>);
@@ -79,6 +79,7 @@ export class UsersService implements Factory {
     return await this.userRepo.findOneBy({ email });
   }
 
+  // Used for current user logic
   async findOneUser(userId: number) {
     return await this.userRepo.findOneBy({ userId });
   }

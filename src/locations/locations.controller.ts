@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
 import { CreateLocationDto } from './dtos/create-location.dto';
 import { LocationsService } from './services/locations.service';
-import { addVehicleToLocationDto } from './dtos/add-vehicleToLocation.dto';
+import { addVehicleToLocationDto } from './dtos/add-vehicle-to-location.dto';
 import { removeVehicleFromLocation } from './dtos/remove-vehicleFromLocation.dto';
 
 @Controller('locations')

@@ -17,15 +17,6 @@ export class PaymentService {
     private usersService: UsersService,
   ) {}
 
-  async createPayment(data: {
-    client: Client;
-    paymentType: PaymentType;
-    total: number;
-    items: string[];
-  }) {
-    return await this.paymentRepo.save(this.paymentRepo.create(data));
-  }
-
   async payForCart(client: Client, method: PaymentType, amount: number) {
     this.paymentSystem.setStrategy(method);
     const cart = await this.cartsService.findById(client.cart.cartId);
@@ -39,10 +30,20 @@ export class PaymentService {
     const updatedClient = (await this.usersService.updateUser(client.userId, {
       cart: updatedCart,
     })) as Client;
-    
+
     return await this.createPayment({
       client: updatedClient,
       ...receipt,
     });
+  }
+
+  // CRUD
+  async createPayment(data: {
+    client: Client;
+    paymentType: PaymentType;
+    total: number;
+    items: string[];
+  }) {
+    return await this.paymentRepo.save(this.paymentRepo.create(data));
   }
 }
