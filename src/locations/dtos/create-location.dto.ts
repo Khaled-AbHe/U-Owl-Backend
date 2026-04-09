@@ -12,4 +12,8 @@ export class CreateLocationDto {
   @IsNumber()
   @IsNotEmpty()
   lat: number;
+
+  @IsString()
+  @IsNotEmpty()
+  phoneNumber : string;
 }

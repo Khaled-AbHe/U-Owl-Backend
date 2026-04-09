@@ -3,19 +3,40 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "userType": "Client",
-    "email": "client1@outlook.com",
-    "password": "pswrd"
+    "type": "Client",
+    "email": "amine1@outlook.com",
+    "password": "helloNestJS123"
 }
 
 ### Sign In User
-GET http://localhost:3000/auth/signin
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "email": "amine1@outlook.com",
+    "password": "helloNestJS123"
+}
+
+
+### ADMIN TEST (Create account)
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+    "type" : "Admin",
+    "email": "admin1@outlook.com",
+    "password": "pswrd"
+}
+
+### Login
+POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
     "email": "client1@outlook.com",
     "password": "pswrd"
 }
+
 
 ### Sign Out User
 Post http://localhost:3000/auth/signout
