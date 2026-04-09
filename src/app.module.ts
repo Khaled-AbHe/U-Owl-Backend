@@ -1,6 +1,4 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { VehiclesModule } from './vehicles/vehicles.module';
@@ -22,8 +20,8 @@ import { CurrentUserMiddleware } from './currentUser/middlewares/current-user.mi
     LocationsModule,
     CartsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, CurrentUserMiddleware],
+  controllers: [],
+  providers: [CurrentUserMiddleware],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

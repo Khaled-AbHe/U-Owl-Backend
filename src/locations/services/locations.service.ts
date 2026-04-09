@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Location } from '../location.entity';
 import { Repository } from 'typeorm';
@@ -6,13 +10,14 @@ import { Repository } from 'typeorm';
 import { CreateLocationDto } from '../dtos/create-location.dto';
 import { addVehicleToLocationDto } from '../dtos/add-vehicleToLocation.dto';
 import { removeVehicleFromLocation } from '../dtos/remove-vehicleFromLocation.dto';
-import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
+import { Vehicle } from '../../vehicles/entities/vehicle.entity';
+import { VehiclesService } from '../../vehicles/services/vehicles.service';
 
 @Injectable()
 export class LocationsService {
   constructor(
     @InjectRepository(Location) private locationRepo: Repository<Location>,
-    @InjectRepository(Vehicle) private vehicleRepo: Repository<Vehicle>,
+    private vehiclesService: VehiclesService,
   ) {}
 
   async createLocation(data: CreateLocationDto) {
@@ -24,33 +29,52 @@ export class LocationsService {
       //relations: ['inventory'], // you have to specify the relation so that it can find it easily, or "inventory" will be shown as undefined
     }); // source: https://typeorm.io/docs/working-with-entity-manager/find-options/
   }
-  async findVehicleByLocation(){
 
-  }
+  async findLocationById(locationId: number) {
+    const location = await this.locationRepo.findOneBy({ locationId });
 
-  async addVehicleToLocation(dto : addVehicleToLocationDto){
-    const location = await this.locationRepo.findOneBy({locationId: dto.locationId});
-    const vehicle = await this.vehicleRepo.findOneBy({vehicleId: dto.vehicleId});
-
-    if(!location){
-      throw new NotFoundException("Location not found");
-    }else if(!vehicle) {
-      throw new NotFoundException("Vehicle not found");
+    if (!location) {
+      throw new BadRequestException("Location doesn't exist");
     }
 
-    vehicle.location = location;
-    return await this.vehicleRepo.save(vehicle);
-
+    return location;
   }
 
-  async removeVehicleFromLocation(dto : removeVehicleFromLocation){
-    const vehicle = await this.vehicleRepo.findOneBy( {vehicleId : dto.vehicleId});
+  async addVehicleToLocation(dto: addVehicleToLocationDto) {
+    const location = await this.findLocationById(dto.locationId);
+    const vehicle = await this.vehiclesService.findVehicleById(dto.vehicleId);
+    location.inventory.push(vehicle);
 
-    if(!vehicle){
-      throw new NotFoundException("Vehicule not found");
+    return await this.updateLocation(dto.locationId, location);
+  }
+
+  async updateLocation(locationId: number, attrs: Partial<Location>) {
+    const location = await this.findLocationById(locationId);
+    Object.assign(location, attrs);
+    return await this.locationRepo.save(location);
+  }
+
+  async removeVehicleFromLocation(dto: removeVehicleFromLocation) {
+    const location = await this.findLocationById(dto.locationId);
+    const vehicle = await this.vehiclesService.findVehicleById(dto.vehicleId); // cherche le véhicule
+
+    const updatedInventory = await this.removeVehicle(location, vehicle);
+
+    return await this.updateLocation(dto.locationId, {
+      inventory: updatedInventory,
+    });
+  }
+
+  // helper
+  async removeVehicle(location: Location, vehicle: Vehicle) {
+    const itemIndex = location.inventory.findIndex((v) => {
+      return v.vehicleId == vehicle.vehicleId;
+    });
+
+    if (itemIndex === -1) {
+      throw new NotFoundException('This vehicle is not in your location');
     }
 
-    vehicle.location = null;
-    return await this.vehicleRepo.save(vehicle);
+    return location.inventory.toSpliced(itemIndex, 1);
   }
 }

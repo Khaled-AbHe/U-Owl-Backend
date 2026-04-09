@@ -2,11 +2,11 @@ import { Expose } from 'class-transformer';
 
 export class UserDto {
   @Expose()
-  userId!: number;
+  userId: number;
 
   @Expose()
-  email!: string;
+  email: string;
 
   @Expose()
-  name!: string;
+  name: string;
 }

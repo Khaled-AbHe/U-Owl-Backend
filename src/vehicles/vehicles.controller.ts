@@ -48,6 +48,6 @@ export class VehiclesController {
 
   @Patch('/:id')
   updateVehicle(@Param('id') vehicleId: number, @Body() body: UpdateVehicleDto) {
-    return this.vehiclesService.updateVehicle(vehicleId, attrs);
+    return this.vehiclesService.updateVehicle(vehicleId, body);
   }
 }

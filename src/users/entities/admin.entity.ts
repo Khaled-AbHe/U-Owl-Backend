@@ -5,5 +5,5 @@ import { AdminType } from '../enums/admin-type.enum';
 @ChildEntity()
 export class Admin extends User {
     @Column()
-    adminType!: AdminType
+    adminType: AdminType
 }

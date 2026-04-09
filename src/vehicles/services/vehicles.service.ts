@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { Vehicle } from '../entities/vehicle.entity';
 import { Truck } from '../entities/truck.entity';
 import { Factory } from '../../interfaces/factory.interface';
@@ -83,10 +83,20 @@ export class VehiclesService implements Factory {
     return vehicle;
   }
 
-  async updateVehicle(vehicleId: number, attrs: Partial<Vehicle>) {
-    const vehicule = await this.findVehicleById(vehicleId);
-    Object.assign(vehicule, attrs);
-    return await this.vehicleRepo.save(vehicule);
+  async updateVehicle<T extends Truck | Trailer>(
+    vehicleId: number,
+    attrs: Partial<T>,
+  ) {
+    const vehicle = await this.findVehicleById(vehicleId);
+    
+    switch (vehicle.vehicleType) {
+      case VehicleType.TRUCK:
+        Object.assign(vehicle, attrs as Partial<Truck>);
+        return await this.truckRepo.save(vehicle as DeepPartial<Truck>);
+      case VehicleType.TRAILER:
+        Object.assign(vehicle, attrs as Partial<Trailer>);
+        return await this.trailerRepo.save(vehicle as DeepPartial<Trailer>);
+    }
   }
 
   // creation
@@ -125,12 +135,16 @@ export class VehiclesService implements Factory {
 
   async isRoadSafe(vehicleId: number) {
     const vehicule = await this.findVehicleById(vehicleId);
-    return vehicule.kilometrage < 350000;
+
+    if (vehicule.kilometrage < 350000) {
+      return this.updateVehicle(vehicleId, {isSafe: true})
+    } else {
+      return this.updateVehicle(vehicleId, {isSafe: false})
+    }
   }
 
   async deleteVehicleById(vehicleId: number) {
-    const vehicle = await this.findVehicleById(vehicleId);
-    return await this.vehicleRepo.delete(vehicle);
+    this.vehicleRepo.remove(await this.findVehicleById(vehicleId));
   }
   
   assignTruckAttributes(data: {
@@ -150,6 +164,7 @@ export class VehiclesService implements Factory {
       costPerKm: 0,
       seatCount: 0,
       hasLiftGate: false,
+      isSafe: true
     };
 
     switch (data.vehicleSubtype) {
@@ -237,6 +252,7 @@ export class VehiclesService implements Factory {
       // other details
       costPerKm: 0,
       hasRamp: false,
+      isSafe: true
     };
 
     switch (data.vehicleSubtype) {

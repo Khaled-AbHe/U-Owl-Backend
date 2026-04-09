@@ -30,5 +30,6 @@ PATCH http://localhost:3000/locations/removeVehicle
 Content-Type: application/json
 
 {
+    "locationId": 1,
     "vehicleId" : 1
 }

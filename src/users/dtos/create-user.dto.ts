@@ -11,7 +11,7 @@ import { AdminType } from '../enums/admin-type.enum';
 export class CreateUserDto {
   @IsEnum(UserType)
   @IsNotEmpty()
-  userType!: UserType;
+  userType: UserType;
 
   @IsEnum(AdminType)
   @ValidateIf((user) => user.userType === UserType.ADMIN)
@@ -19,9 +19,9 @@ export class CreateUserDto {
 
   @IsEmail()
   @IsNotEmpty()
-  email!: string;
+  email: string;
 
   @IsString()
   @IsNotEmpty()
-  password!: string;
+  password: string;
 }

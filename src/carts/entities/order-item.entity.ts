@@ -14,7 +14,10 @@ export class OrderItem {
   @PrimaryGeneratedColumn()
   orderItemId: number;
 
-  @OneToOne(() => Vehicle, (vehicle) => vehicle.orderItem, { eager: true })
+  @OneToOne(() => Vehicle, (vehicle) => vehicle.orderItem, {
+    eager: true,
+    cascade: true,
+  })
   @JoinColumn()
   vehicle: Vehicle;
 

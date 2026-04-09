@@ -1,7 +1,6 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
 import { CreateLocationDto } from './dtos/create-location.dto';
 import { LocationsService } from './services/locations.service';
-import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
 import { addVehicleToLocationDto } from './dtos/add-vehicleToLocation.dto';
 import { removeVehicleFromLocation } from './dtos/remove-vehicleFromLocation.dto';
 
@@ -15,18 +14,17 @@ export class LocationsController {
   }
 
   @Get('/all')
-    findAllLocations() {
-      return this.locationsService.findAllLocations();
-    }
+  findAllLocations() {
+    return this.locationsService.findAllLocations();
+  }
 
   @Post('/addVehicle')
-    addVehicleToLocation(@Body() body: addVehicleToLocationDto){
-      return this.locationsService.addVehicleToLocation(body);
-    }
+  addVehicleToLocation(@Body() body: addVehicleToLocationDto) {
+    return this.locationsService.addVehicleToLocation(body);
+  }
 
   @Patch('/removeVehicle')
-    removeVehicleFromLocation(@Body() body : removeVehicleFromLocation){
-      return this.locationsService.removeVehicleFromLocation(body);
-    }
-  
+  removeVehicleFromLocation(@Body() body: removeVehicleFromLocation) {
+    return this.locationsService.removeVehicleFromLocation(body);
+  }
 }

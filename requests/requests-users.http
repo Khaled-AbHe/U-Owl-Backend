@@ -26,7 +26,7 @@ Content-Type: application/json
 
 {
     "email": "admin1@outlook.com",
-    "password": "password123"
+    "password": "pswrd"
 }
 
 ### Sign Out User

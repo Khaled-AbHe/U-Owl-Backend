@@ -1,7 +1,11 @@
-import { IsNumber } from "class-validator";
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
-export class removeVehicleFromLocation{
+export class removeVehicleFromLocation {
+  @IsNumber()
+  @IsNotEmpty()
+  locationId: number;
 
-    @IsNumber()
-    vehicleId: number
+  @IsNumber()
+  @IsNotEmpty()
+  vehicleId: number;
 }

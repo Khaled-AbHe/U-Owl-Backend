@@ -11,21 +11,21 @@ import { UserType } from '../enums/users.enum';
 @TableInheritance({ column: { type: 'varchar', name: 'type' } }) // combines admin and client into the user table
 export class User {
   @PrimaryGeneratedColumn()
-  userId!: number;
+  userId: number;
 
   @Column()
-  userType!: UserType;
+  userType: UserType;
 
   @Column({ nullable: true })
-  name!: string;
+  name: string;
 
   @Column({ nullable: true })
-  surname!: string;
+  surname: string;
 
   @Column()
-  email!: string;
+  email: string;
 
   @Exclude() // this tells interceptors that password should be hidden
   @Column()
-  password!: string;
+  password: string;
 }
