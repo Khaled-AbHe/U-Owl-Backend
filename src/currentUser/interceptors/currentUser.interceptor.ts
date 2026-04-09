@@ -1,6 +1,6 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
 import { Observable } from "rxjs";
-import { UsersService } from "src/users/services/users/users.service";
+import { UsersService } from "../../users/services/users/users.service";
 
 @Injectable()
 export class CurrentUserInterceptor implements NestInterceptor {
@@ -23,7 +23,6 @@ export class CurrentUserInterceptor implements NestInterceptor {
             console.log("No User is connected - CurrentUser Interceptor")
         }
 
-        console.log("CurrentUser Interceptor")
         req.currUser = this.usersService.findOneUser(userId)
         
         return next.handle()
