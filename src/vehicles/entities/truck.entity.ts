@@ -1,4 +1,4 @@
-import { BeforeInsert, BeforeUpdate, ChildEntity, Column } from 'typeorm';
+import { ChildEntity, Column } from 'typeorm';
 import { Vehicle } from './vehicle.entity';
 import { TruckType } from '../enum/truck-type.enum';
 import { VehicleType } from '../enum/vehicle-type.enum';
@@ -12,13 +12,13 @@ export class Truck extends Vehicle {
   declare vehicleSubtype: TruckType;
 
   @Column({ default: false })
-  isElectric!: boolean;
+  isElectric: boolean;
 
   @Column()
-  seatCount!: number;
+  seatCount: number;
 
   @Column()
-  hasLiftGate!: boolean;
+  hasLiftGate: boolean;
 
   @Column()
   towingCapacity: number;

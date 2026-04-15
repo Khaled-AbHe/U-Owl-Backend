@@ -22,6 +22,11 @@ export class LocationsService {
   async addVehicleToLocation(dto: addVehicleToLocationDto) {
     const location = await this.findLocationById(dto.locationId);
     const vehicle = await this.vehiclesService.findVehicleById(dto.vehicleId);
+  
+    if (location.inventory.findIndex(v => { return v.vehicleId == vehicle.vehicleId}) != -1) {
+      throw new BadRequestException("Vehicle is already in location")
+    }
+
     location.inventory.push(vehicle);
 
     return await this.updateLocation(dto.locationId, location);

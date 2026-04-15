@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
     "email": "admin1@outlook.com",
-    "password": "password123"
+    "password": "pswrd"
 }
 
 ### Create Vehicle
@@ -25,46 +25,14 @@ GET http://localhost:3000/vehicles/trucks
 ### Get All Trailers
 GET http://localhost:3000/vehicles/trailers
 
-
-
-///Emile
-###
-POST http://localhost:3000/vehicles/create
-Content-Type: application/json
-
-{
-  "vehicleType": "Truck",
-  "vehicleSubtype": "Pickup",
-  "kilometrage": 120000,
-  "height": 150,
-  "width": 180,
-  "depth": 300,
-  "maxWeight": 1000,
-  "amount": 1,
-  "costPerKm": 0.75,
-  "isReserved": false,
-  "licencePlate": "ABC 123",
-  "locationId": 1,
-  "kilometrageSecuritaire": true
-}
-
-###
-GET http://localhost:3000/vehicles/all
-
-###
-GET http://localhost:3000/vehicles/trucks
-
-###
-GET http://localhost:3000/vehicles/trailers
-
-###
+### get vehicle by id
 GET http://localhost:3000/vehicles/12
 
 
-###
+### chec if road safe
 GET http://localhost:3000/vehicles/12/roadSafe
 
-###
+### Update
 PATCH http://localhost:3000/vehicles/12
 Content-Type: application/json
 
@@ -74,5 +42,5 @@ Content-Type: application/json
   "kilometrageSecuritaire": false
 }
 
-###
+### delete vehicle by id
 DELETE http://localhost:3000/vehicles/12
