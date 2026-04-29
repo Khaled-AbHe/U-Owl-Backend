@@ -1,6 +1,6 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 
 const cookoieSession = require('cookie-session');
 
@@ -21,6 +21,16 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors({
+    origin: process.env.FRONTEND_ORIGIN || [
+      'http://localhost:5173',
+      'http://localhost:5175',
+    ],
+    credentials: true,
+  });
+
+  app.setGlobalPrefix('api');
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

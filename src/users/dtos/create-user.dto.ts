@@ -17,6 +17,10 @@ export class CreateUserDto {
   @ValidateIf((user) => user.userType === UserType.ADMIN)
   adminType: AdminType;
 
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
   @IsEmail()
   @IsNotEmpty()
   email: string;

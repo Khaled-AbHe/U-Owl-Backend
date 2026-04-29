@@ -7,6 +7,7 @@ import { UsersService } from '../users/users.service';
 import { randomBytes, scrypt as _scrypt } from 'crypto'; // pour generer notre salt
 import { promisify } from 'util'; // pour transformer scrypt en une fonction qui retourne une promesse
 import { CreateUserDto } from '../../dtos/create-user.dto';
+import { UserType } from '../../enums/users.enum';
 
 const scrypt = promisify(_scrypt);
 
@@ -32,12 +33,16 @@ export class AuthService {
     });
   }
 
-  async signIn(email: string, password: string) {
+  async signIn(email: string, userType: UserType, password: string) {
     // verifies user with specified email exist
     const user = await this.usersService.findUserByEmail(email);
 
     if (!user) {
       throw new NotFoundException('User not found');
+    }
+
+    if (user.userType != userType) {
+      throw new BadRequestException('Invalid User Type');
     }
 
     // Acquires hashed password data
