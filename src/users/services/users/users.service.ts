@@ -11,6 +11,7 @@ import { Client } from '../../entities/client.entity';
 import { Admin } from '../../entities/admin.entity';
 import { UserType } from '../../enums/users.enum';
 import { AdminType } from '../../enums/admin-type.enum';
+import { Dealer } from '../../entities/dealer.entity';
 
 @Injectable()
 export class UsersService implements Factory {
@@ -18,6 +19,7 @@ export class UsersService implements Factory {
     @InjectRepository(User) private userRepo: Repository<User>,
     @InjectRepository(Client) private clientRepo: Repository<Client>,
     @InjectRepository(Admin) private adminRepo: Repository<Admin>,
+    @InjectRepository(Dealer) private dealerRepo: Repository<Dealer>
   ) {}
 
   async factoryCreate(data: {
