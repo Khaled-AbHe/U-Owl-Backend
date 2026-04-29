@@ -1,11 +1,12 @@
 ### Create admin | Sign Up
-POST http://localhost:3000/auth/signup
+POST http://localhost:3000/api/auth/signup
 Content-Type: application/json
 
 {
+    "name": "Bobby",
     "userType": "Admin",
-    "adminType": "Super Admin", 
-    "email": "admin1@outlook.com",
+    "adminType": "Location Admin", 
+    "email": "admin2@outlook.com",
     "password": "pswrd"
 }
 
@@ -21,11 +22,12 @@ Content-Type: application/json
 }
 
 ### Sign In User
-POST http://localhost:3000/auth/signin
+POST http://localhost:3000/api/auth/signin
 Content-Type: application/json
 
 {
-    "email": "admin1@outlook.com",
+    "userType": "Admin",
+    "email": "admin2@outlook.com",
     "password": "pswrd"
 }
 
