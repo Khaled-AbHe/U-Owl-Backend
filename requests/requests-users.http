@@ -57,3 +57,23 @@ GET http://localhost:3000/users/2
 
 ### Delete User By Id
 DELETE http://localhost:3000/users/1
+
+
+### Émile ####
+
+### Créer validation de form Concessionnaire(Backend)
+POST http://localhost:3000/users/dealer
+Authorization: Bearer TON_TOKEN_ICI
+Content-Type: application/json
+
+{
+  "nomCompagnie": "Garage Tardif",
+  "adresse": "123 Rue des Érables, Repentigny",
+  "disponiblite": "Lundi-Vendredi 9h-17h",
+  "imageLieu": [
+    "photo1.jpg",
+    "photo2.jpg"
+  ],
+  "telephone": 5145551234
+}
+

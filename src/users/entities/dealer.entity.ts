@@ -14,9 +14,12 @@ export class Dealer {
     adresse: string;
 
     @Column()
+    nomCompagnie: string;
+
+    @Column()
     disponiblite: string;
     
-    @Column()
+    @Column('simple-json')
     imageLieu: string[];
     
     @Column()

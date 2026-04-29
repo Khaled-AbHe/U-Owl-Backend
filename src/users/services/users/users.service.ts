@@ -84,4 +84,13 @@ export class UsersService implements Factory {
   async findOneUser(userId: number) {
     return await this.userRepo.findOneBy({ userId });
   }
+
+  async createDealer(dealer : Partial<Dealer>, user: any) : Promise<Dealer> {
+    const newDealer = this.dealerRepo.create({
+      ... dealer, 
+      user: user,
+    });
+
+    return await this.dealerRepo.save(newDealer);
+  }
 }

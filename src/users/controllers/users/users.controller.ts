@@ -5,6 +5,8 @@ import {
   Get,
   Param,
   Patch,
+  Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from '../../services/users/users.service';
@@ -14,6 +16,7 @@ import { UserDto } from '../../dtos/user.dto';
 import { AuthGuard } from '../../../currentUser/guards/auth.guard';
 import { AdminGuard } from '../../../currentUser/guards/admin.guard';
 import { AuthService } from '../../services/auth/auth.service';
+import { Dealer } from '../../dtos/create-dealer.dto';
 
 @Controller('users')
 @UseGuards(AuthGuard)
@@ -51,5 +54,10 @@ export class UsersController {
     @Param('newPassword') newPassword: string,
   ) {
     return this.authService.changePassword(userId, newPassword);
+  }
+
+  @Post('/dealer')
+  createDealer(@Body() dealer: Dealer, @Req() req) {
+    return this.usersService.createDealer(dealer, req.user);
   }
 }
