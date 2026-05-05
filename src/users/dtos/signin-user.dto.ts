@@ -1,10 +1,16 @@
-import { IsEmail, IsString, IsNotEmpty } from "class-validator";
+import { IsEmail, IsString, IsNotEmpty, IsEnum } from 'class-validator';
+import { UserType } from '../enums/users.enum';
 
 export class SignInUserDto {
-    @IsEmail()
-    email: string;
+  @IsEnum(UserType)
+  @IsNotEmpty()
+  userType: UserType;
 
-    @IsString()
-    @IsNotEmpty()
-    password: string
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
 }

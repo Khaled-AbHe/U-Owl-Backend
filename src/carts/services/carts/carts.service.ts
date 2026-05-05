@@ -11,6 +11,24 @@ export class CartsService {
     private orderItemsService: OrderItemsService,
   ) {}
 
+  async clearCart(cart: Cart) {
+    await Promise.all(
+      cart.orderItems.map((item) =>
+        this.orderItemsService.removeOrderItem(item.orderItemId),
+      ),
+    );
+
+    return await this.updateCart(cart.cartId, {
+      orderItems: [],
+      totalPrice: 0,
+    });
+  }
+
+  async isEmpty(cartId: number) {
+    const cart = await this.findById(cartId);
+    return cart.orderItems.length == 0;
+  }
+
   // CRUD
 
   async findAllCarts() {
@@ -31,25 +49,5 @@ export class CartsService {
     const cart = await this.findById(cartId);
     Object.assign(cart, attrs);
     return await this.cartRepo.save(cart);
-  }
-
-  // OTHER
-
-  async clearCart(cart: Cart) {
-    await Promise.all(
-      cart.orderItems.map((item) =>
-        this.orderItemsService.removeOrderItem(item.orderItemId),
-      ),
-    );
-
-    return await this.updateCart(cart.cartId, {
-      orderItems: [],
-      totalPrice: 0,
-    });
-  }
-
-  async isEmpty(cartId: number) {
-    const cart = await this.findById(cartId);
-    return cart.orderItems.length == 0;
   }
 }

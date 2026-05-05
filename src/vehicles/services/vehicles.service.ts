@@ -21,13 +21,45 @@ export class VehiclesService implements Factory {
     @InjectRepository(Trailer) private trailerRepo: Repository<Trailer>,
   ) {}
 
-  async factoryCreate(
-    // data: CreateVehicleDto,
-    data: {
-      licencePlate: string;
-      vehicleSubtype: TruckType | TrailerType;
-    },
-  ) {
+  async setVehicleAsReserved(vehicle: Vehicle) {
+    if (vehicle.isReserved) {
+      throw new BadRequestException(
+        `Vehicle ${vehicle.vehicleId} is already reserved`,
+      );
+    }
+
+    return await this.updateVehicle(vehicle.vehicleId, {
+      isReserved: true,
+    });
+  }
+
+  async setVehicleAsAvailable(vehicle: Vehicle) {
+    if (!vehicle.isReserved) {
+      throw new BadRequestException(
+        `Vehicle ${vehicle.vehicleId} is already available`,
+      );
+    }
+
+    return await this.updateVehicle(vehicle.vehicleId, {
+      isReserved: false,
+    });
+  }
+
+  async isRoadSafe(vehicleId: number) {
+    const vehicule = await this.findVehicleById(vehicleId);
+
+    if (vehicule.kilometrage < 350000) {
+      return this.updateVehicle(vehicleId, { isSafe: true });
+    } else {
+      return this.updateVehicle(vehicleId, { isSafe: false });
+    }
+  }
+
+  // CRUD
+  async factoryCreate(data: {
+    licencePlate: string;
+    vehicleSubtype: TruckType | TrailerType;
+  }) {
     if (await this.isLicencePlateUnique(data.licencePlate)) {
       if (
         Object.values(TrailerType).includes(data.vehicleSubtype as TrailerType)
@@ -59,20 +91,10 @@ export class VehiclesService implements Factory {
     }
   }
 
-  async findAllVehicles() {
-    return await this.vehicleRepo.find();
+  async deleteVehicleById(vehicleId: number) {
+    this.vehicleRepo.remove(await this.findVehicleById(vehicleId));
   }
 
-  async findAllTrucks() {
-    return await this.truckRepo.find();
-  }
-
-  async findAllTrailers() {
-    return await this.trailerRepo.find();
-  }
-
-  //// Helper functions
-  // crud
   async findVehicleById(vehicleId: number) {
     const vehicle = await this.vehicleRepo.findOneBy({ vehicleId });
 
@@ -88,7 +110,7 @@ export class VehiclesService implements Factory {
     attrs: Partial<T>,
   ) {
     const vehicle = await this.findVehicleById(vehicleId);
-    
+
     switch (vehicle.vehicleType) {
       case VehicleType.TRUCK:
         Object.assign(vehicle, attrs as Partial<Truck>);
@@ -99,54 +121,24 @@ export class VehiclesService implements Factory {
     }
   }
 
-  // creation
+  async findAllVehicles() {
+    return await this.vehicleRepo.find();
+  }
+
+  async findAllTrucks() {
+    return await this.truckRepo.find();
+  }
+
+  async findAllTrailers() {
+    return await this.trailerRepo.find();
+  }
+
+  // Helpers
   async isLicencePlateUnique(licencePlate: string) {
     const vehicle = await this.vehicleRepo.findOneBy({ licencePlate });
     return !vehicle ? true : false;
   }
 
-  // other
-
-  async setVehicleAsReserved(vehicle: Vehicle) {
-    if (vehicle.isReserved) {
-      throw new BadRequestException(
-        `Vehicle ${vehicle.vehicleId} is already reserved`,
-      );
-    }
-
-    return await this.updateVehicle(vehicle.vehicleId, {
-      ...vehicle,
-      isReserved: true,
-    });
-  }
-
-  async setVehicleAsAvailable(vehicle: Vehicle) {
-    if (!vehicle.isReserved) {
-      throw new BadRequestException(
-        `Vehicle ${vehicle.vehicleId} is already available`,
-      );
-    }
-
-    return await this.updateVehicle(vehicle.vehicleId, {
-      ...vehicle,
-      isReserved: false,
-    });
-  }
-
-  async isRoadSafe(vehicleId: number) {
-    const vehicule = await this.findVehicleById(vehicleId);
-
-    if (vehicule.kilometrage < 350000) {
-      return this.updateVehicle(vehicleId, {isSafe: true})
-    } else {
-      return this.updateVehicle(vehicleId, {isSafe: false})
-    }
-  }
-
-  async deleteVehicleById(vehicleId: number) {
-    this.vehicleRepo.remove(await this.findVehicleById(vehicleId));
-  }
-  
   assignTruckAttributes(data: {
     licencePlate: string;
     vehicleSubtype: TruckType;
@@ -164,7 +156,7 @@ export class VehiclesService implements Factory {
       costPerKm: 0,
       seatCount: 0,
       hasLiftGate: false,
-      isSafe: true
+      isSafe: true,
     };
 
     switch (data.vehicleSubtype) {
@@ -252,7 +244,7 @@ export class VehiclesService implements Factory {
       // other details
       costPerKm: 0,
       hasRamp: false,
-      isSafe: true
+      isSafe: true,
     };
 
     switch (data.vehicleSubtype) {

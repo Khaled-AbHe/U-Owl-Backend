@@ -6,9 +6,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Location } from '../location.entity';
 import { Repository } from 'typeorm';
-// import { Factory } from 'src/interfaces/factory.interface';
 import { CreateLocationDto } from '../dtos/create-location.dto';
-import { addVehicleToLocationDto } from '../dtos/add-vehicleToLocation.dto';
+import { addVehicleToLocationDto } from '../dtos/add-vehicle-to-location.dto';
 import { removeVehicleFromLocation } from '../dtos/remove-vehicleFromLocation.dto';
 import { Vehicle } from '../../vehicles/entities/vehicle.entity';
 import { VehiclesService } from '../../vehicles/services/vehicles.service';
@@ -20,6 +19,44 @@ export class LocationsService {
     private vehiclesService: VehiclesService,
   ) {}
 
+  async addVehicleToLocation(dto: addVehicleToLocationDto) {
+    const location = await this.findLocationById(dto.locationId);
+    const vehicle = await this.vehiclesService.findVehicleById(dto.vehicleId);
+  
+    if (location.inventory.findIndex(v => { return v.vehicleId == vehicle.vehicleId}) != -1) {
+      throw new BadRequestException("Vehicle is already in location")
+    }
+
+    location.inventory.push(vehicle);
+
+    return await this.updateLocation(dto.locationId, location);
+  }
+
+  async removeVehicleFromLocation(dto: removeVehicleFromLocation) {
+    const location = await this.findLocationById(dto.locationId);
+    const vehicle = await this.vehiclesService.findVehicleById(dto.vehicleId); // cherche le véhicule
+
+    const updatedInventory = this.removeVehicle(location, vehicle);
+
+    return await this.updateLocation(dto.locationId, {
+      inventory: updatedInventory,
+    });
+  }
+
+  // Helper
+  removeVehicle(location: Location, vehicle: Vehicle) {
+    const itemIndex = location.inventory.findIndex((v) => {
+      return v.vehicleId == vehicle.vehicleId;
+    });
+
+    if (itemIndex === -1) {
+      throw new NotFoundException('This vehicle is not in your location');
+    }
+
+    return location.inventory.toSpliced(itemIndex, 1);
+  }
+
+  // CRUD
   async createLocation(data: CreateLocationDto) {
     return await this.locationRepo.save(this.locationRepo.create(data));
   }
@@ -40,41 +77,9 @@ export class LocationsService {
     return location;
   }
 
-  async addVehicleToLocation(dto: addVehicleToLocationDto) {
-    const location = await this.findLocationById(dto.locationId);
-    const vehicle = await this.vehiclesService.findVehicleById(dto.vehicleId);
-    location.inventory.push(vehicle);
-
-    return await this.updateLocation(dto.locationId, location);
-  }
-
   async updateLocation(locationId: number, attrs: Partial<Location>) {
     const location = await this.findLocationById(locationId);
     Object.assign(location, attrs);
     return await this.locationRepo.save(location);
-  }
-
-  async removeVehicleFromLocation(dto: removeVehicleFromLocation) {
-    const location = await this.findLocationById(dto.locationId);
-    const vehicle = await this.vehiclesService.findVehicleById(dto.vehicleId); // cherche le véhicule
-
-    const updatedInventory = await this.removeVehicle(location, vehicle);
-
-    return await this.updateLocation(dto.locationId, {
-      inventory: updatedInventory,
-    });
-  }
-
-  // helper
-  async removeVehicle(location: Location, vehicle: Vehicle) {
-    const itemIndex = location.inventory.findIndex((v) => {
-      return v.vehicleId == vehicle.vehicleId;
-    });
-
-    if (itemIndex === -1) {
-      throw new NotFoundException('This vehicle is not in your location');
-    }
-
-    return location.inventory.toSpliced(itemIndex, 1);
   }
 }

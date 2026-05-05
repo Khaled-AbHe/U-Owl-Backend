@@ -20,16 +20,15 @@ POST http://localhost:3000/locations/addVehicle
 Content-Type: application/json
 
 {
-    "vehicleId" : 1,
+    "vehicleId" : 2,
     "locationId": 1
 }
 
 ### Remove location to vehicle
-
 PATCH http://localhost:3000/locations/removeVehicle
 Content-Type: application/json
 
 {
     "locationId": 1,
-    "vehicleId" : 1
+    "vehicleId" : 2
 }
