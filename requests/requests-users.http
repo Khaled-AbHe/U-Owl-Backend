@@ -12,7 +12,7 @@ Content-Type: application/json
 
 
 ### Create user | Sign up
-POST http://localhost:3000/auth/signup
+POST http://localhost:3000/api/auth/signup
 Content-Type: application/json
 
 {
@@ -32,13 +32,13 @@ Content-Type: application/json
 }
 
 ### Sign Out User
-Post http://localhost:3000/auth/signout
+Post http://localhost:3000/api/auth/signout
 
 ### Who Am I 
-GET http://localhost:3000/auth/whoami
+GET http://localhost:3000/api/auth/whoami
 
 ### Update User
-PATCH http://localhost:3000/users/1
+PATCH http://localhost:3000/api/users/1
 Content-Type: application/json
 
 {
@@ -49,13 +49,13 @@ Content-Type: application/json
 }
 
 ### Change a user's password
-PATCH http://localhost:3000/users/2/changePassword/password123
+PATCH http://localhost:3000/api/users/2/changePassword/password123
 
 ### Get All Users
-GET http://localhost:3000/users
+GET http://localhost:3000/api/users
 
 ### Get User By Id
-GET http://localhost:3000/users/2
+GET http://localhost:3000/api/users/2
 
 ### Delete User By Id
-DELETE http://localhost:3000/users/1
+DELETE http://localhost:3000/api/users/1

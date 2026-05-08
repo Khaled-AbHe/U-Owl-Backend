@@ -1,14 +1,15 @@
 ### Sign In as Admin
-POST http://localhost:3000/auth/signin
+POST http://localhost:3000/api/auth/signin
 Content-Type: application/json
 
 {
+    "userType": "Admin",
     "email": "admin1@outlook.com",
     "password": "pswrd"
 }
 
 ### Create Vehicle
-POST http://localhost:3000/vehicles/create
+POST http://localhost:3000/api/vehicles/create
 Content-Type: application/json
 
 {
@@ -17,23 +18,22 @@ Content-Type: application/json
 }
 
 ### Get All Vehicles
-GET http://localhost:3000/vehicles/all
+GET http://localhost:3000/api/vehicles/all
 
 ### Get All Trucks
-GET http://localhost:3000/vehicles/trucks
+GET http://localhost:3000/api/vehicles/trucks
 
 ### Get All Trailers
-GET http://localhost:3000/vehicles/trailers
+GET http://localhost:3000/api/vehicles/trailers
 
 ### get vehicle by id
-GET http://localhost:3000/vehicles/12
+GET http://localhost:3000/api/vehicles/12
 
-
-### chec if road safe
-GET http://localhost:3000/vehicles/12/roadSafe
+### Check if a vehicle is road safe
+GET http://localhost:3000/api/vehicles/12/roadSafe
 
 ### Update
-PATCH http://localhost:3000/vehicles/12
+PATCH http://localhost:3000/api/vehicles/12
 Content-Type: application/json
 
 {
@@ -43,4 +43,4 @@ Content-Type: application/json
 }
 
 ### delete vehicle by id
-DELETE http://localhost:3000/vehicles/12
+DELETE http://localhost:3000/api/vehicles/12

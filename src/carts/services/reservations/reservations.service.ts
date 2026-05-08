@@ -24,7 +24,8 @@ export class ReservationsService {
     });
 
     cart.orderItems.push(orderItem);
-    const cartTotal = cart.totalPrice + orderItem.itemPrice;
+    const cartTotal =
+      Math.ceil((cart.totalPrice + orderItem.itemPrice) * 100) / 100;
 
     return await this.cartsService.updateCart(cart.cartId, {
       ...cart,
@@ -46,7 +47,8 @@ export class ReservationsService {
     }
 
     const updatedOrderItems = cart.orderItems.toSpliced(itemIndex, 1);
-    const updatedTotalPrice = cart.totalPrice - orderItem.itemPrice;
+    const updatedTotalPrice =
+      Math.ceil((cart.totalPrice - orderItem.itemPrice) * 100) / 100;
     await this.orderItemsService.removeOrderItem(orderItem.orderItemId);
 
     return this.cartsService.updateCart(cart.cartId, {

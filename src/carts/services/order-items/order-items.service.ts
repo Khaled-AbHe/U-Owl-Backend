@@ -23,7 +23,8 @@ export class OrderItemsService {
   }
 
   async createOrderItem(data: { vehicle: Vehicle; clientDistance: number }) {
-    const itemPrice = data.clientDistance * data.vehicle.costPerKm;
+    const itemPrice =
+      Math.ceil(data.clientDistance * data.vehicle.costPerKm * 100) / 100;
     const updatedVehicle = await this.vehiclesService.setVehicleAsReserved(
       data.vehicle,
     );

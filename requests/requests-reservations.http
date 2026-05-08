@@ -1,29 +1,30 @@
 ### Sign In as Client
-POST http://localhost:3000/auth/signin
+POST http://localhost:3000/api/auth/signin
 Content-Type: application/json
 
 {
+    "userType": "Client",
     "email": "client1@outlook.com",
     "password": "pswrd"
 }
 
-### View Cart
-GET http://localhost:3000/carts/currentCart
+### View Cart/api
+GET http://localhost:3000/api/carts/currentCart
 
 ### Add Vehicle to Cart
-PATCH http://localhost:3000/reservations/addVehicle
+PATCH http://localhost:3000/api/reservations/addVehicle
 Content-Type: application/json
 
 {
-    "vehicleId": 18,
+    "vehicleId": 1,
     "distance": 40
 }
 
 ### Remove Order Item from Cart
-PATCH http://localhost:3000/reservations/removeOrderItem/3
+PATCH http://localhost:3000/api/reservations/removeOrderItem/3
 
 ### Pay for Cart
-POST http://localhost:3000/carts/pay?method=paypal&amount=80
+POST http://localhost:3000/api/carts/pay?method=paypal&amount=80
 Content-Type: application/json
 
 {

@@ -1,7 +1,7 @@
 ################# Locations
 
 ### Create Location
-POST http://localhost:3000/locations/create
+POST http://localhost:3000/api/locations/create
 Content-Type: application/json
 
 {
@@ -12,11 +12,11 @@ Content-Type: application/json
 }
 
 ### Get All Locations
-GET http://localhost:3000/locations/all
+GET http://localhost:3000/api/locations/all
 
 
 ### Add location to vehicle
-POST http://localhost:3000/locations/addVehicle
+POST http://localhost:3000/api/locations/addVehicle
 Content-Type: application/json
 
 {
@@ -25,7 +25,7 @@ Content-Type: application/json
 }
 
 ### Remove location to vehicle
-PATCH http://localhost:3000/locations/removeVehicle
+PATCH http://localhost:3000/api/locations/removeVehicle
 Content-Type: application/json
 
 {
