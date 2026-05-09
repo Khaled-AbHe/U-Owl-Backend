@@ -60,7 +60,7 @@ export class UsersService implements Factory {
   }
 
   async deleteUserById(userId: number) {
-    this.userRepo.delete(await this.findUserById(userId));
+    this.userRepo.remove(await this.findUserById(userId));
   }
 
   async findAllUsers() {

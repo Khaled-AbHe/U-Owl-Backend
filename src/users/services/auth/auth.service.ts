@@ -27,7 +27,7 @@ export class AuthService {
     // 3. creates and returns the new user
     return await this.usersService.factoryCreate({
       name: dto.name,
-      surname: dto.name,
+      surname: dto.surname,
       userType: dto.userType,
       adminType: dto.adminType,
       email: dto.email,
