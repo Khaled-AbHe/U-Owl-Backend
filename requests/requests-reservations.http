@@ -16,7 +16,7 @@ PATCH http://localhost:3000/api/reservations/addVehicle
 Content-Type: application/json
 
 {
-    "vehicleId": 1,
+    "vehicleId": 6,
     "distance": 40
 }
 

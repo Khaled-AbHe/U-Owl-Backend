@@ -22,6 +22,7 @@ export class UsersService implements Factory {
 
   async factoryCreate(data: {
     name: string;
+    surname: string;
     userType: UserType;
     adminType: AdminType;
     email: string;
