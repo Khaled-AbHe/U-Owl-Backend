@@ -46,13 +46,10 @@ export class VehiclesService implements Factory {
   }
 
   async isRoadSafe(vehicleId: number) {
-    const vehicule = await this.findVehicleById(vehicleId);
+    const isVehiculeSafe = (await this.findVehicleById(vehicleId)).kilometrage < 350000;
 
-    if (vehicule.kilometrage < 350000) {
-      return this.updateVehicle(vehicleId, { isSafe: true });
-    } else {
-      return this.updateVehicle(vehicleId, { isSafe: false });
-    }
+    await this.updateVehicle(vehicleId, { isSafe: isVehiculeSafe });
+    return isVehiculeSafe;
   }
 
   // CRUD
@@ -110,6 +107,14 @@ export class VehiclesService implements Factory {
     attrs: Partial<T>,
   ) {
     const vehicle = await this.findVehicleById(vehicleId);
+
+    if (!!attrs.licensePlate) {
+      if (!(await this.isLicencePlateUnique(attrs.licensePlate))) {
+        throw new BadRequestException(
+          `A vehicle with the license plate: '${attrs.licensePlate}' already exists`,
+        );
+      }
+    }
 
     switch (vehicle.vehicleType) {
       case VehicleType.TRUCK:
