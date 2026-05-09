@@ -1,30 +1,30 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class UpdateFormDto {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   fullName: string;
 
   @IsString()
   email: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   businessName: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   businessEmail: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   phoneNumber: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   city: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   postalCode: string;
 }
