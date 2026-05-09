@@ -1,29 +1,29 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Vehicle } from '../../vehicles/entities/vehicle.entity';
 
 @Entity()
-export class Dealer {
-    @PrimaryGeneratedColumn()
-    dealerId: number;
+export class DealerForm {
+  @PrimaryGeneratedColumn()
+  dealerFormId: number;
 
-    @Column()
-    fullName : string;
+  @Column()
+  fullName: string;
 
-    @Column()
-    email : string;
+  @Column()
+  email: string;
 
-    @Column()
-    businessName : string;
+  @Column()
+  businessName: string;
 
-    @Column()
-    businessEmail : string;
+  @Column()
+  businessEmail: string;
 
-    @Column()
-    phoneNumber : string;
+  @Column()
+  phoneNumber: string;
 
-    @Column()
-    city : string; 
-    
-    @Column()
-    postalCode : string
+  @Column()
+  city: string;
 
+  @Column()
+  postalCode: string;
 }
