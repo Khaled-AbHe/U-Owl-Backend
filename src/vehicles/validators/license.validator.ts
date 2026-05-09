@@ -5,7 +5,7 @@ import {
 } from 'class-validator';
 
 /**
- * Validates a Quebec licence plate format (ex: "ABC 123").
+ * Validates a Quebec license plate format (ex: "ABC 123").
  *
  * Rules:
  * - Must be 7 characters long
@@ -13,10 +13,10 @@ import {
  * - All letters are in uppercase
  * - Must not contain the letter "O"
  */
-export function IsLicencePlateValid(validationOptions?: ValidationOptions) {
+export function IsLicensePlateValid(validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {
     registerDecorator({
-      name: 'isLicencePlateValid',
+      name: 'isLicensePlateValid',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,

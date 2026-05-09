@@ -4,8 +4,8 @@ Content-Type: application/json
 
 {
     "userType": "Admin",
-    "email": "admin1@outlook.com",
-    "password": "pswrd"
+    "email": "khaled@uowl.com",
+    "password": "pswrd123"
 }
 
 ### Create Vehicle

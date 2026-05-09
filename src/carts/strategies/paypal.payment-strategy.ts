@@ -17,7 +17,7 @@ export class PaypalStrategy implements PaymentStrategy {
     const receipt: PaymentReceipt = {
       paymentType: PaymentType.PAYPAL,
       items: cart.orderItems.map((item) => {
-        return `[${item.vehicle.licencePlate}] ${item.vehicle.vehicleSubtype} ${item.vehicle.vehicleType}: ${item.itemPrice}$`;
+        return `[${item.vehicle.licensePlate}] ${item.vehicle.vehicleSubtype} ${item.vehicle.vehicleType}: ${item.itemPrice}$`;
       }),
       total: cart.totalPrice,
     };

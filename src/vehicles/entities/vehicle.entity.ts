@@ -19,7 +19,7 @@ export class Vehicle {
   vehicleId: number;
 
   @Column()
-  licencePlate: string;
+  licensePlate: string;
 
   @Column()
   vehicleType: VehicleType;
