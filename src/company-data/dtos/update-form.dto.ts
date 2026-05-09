@@ -6,6 +6,7 @@ export class UpdateFormDto {
   fullName: string;
 
   @IsString()
+  @IsOptional()
   email: string;
 
   @IsString()
