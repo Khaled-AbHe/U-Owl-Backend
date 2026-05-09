@@ -1,29 +1,32 @@
 ### Sign In as Admin
-POST http://localhost:3000/auth/signin
+POST http://localhost:3000/api/auth/signin
 Content-Type: application/json
 
 {
+    "userType": "Admin",
     "email": "admin1@outlook.com",
-    "password": "password123"
+    "password": "pswrd"
 }
 
+
+
 ### Create Vehicle
-POST http://localhost:3000/vehicles/create
+POST http://localhost:3000/api/vehicles/create
 Content-Type: application/json
 
 {
-    "licencePlate": "11A 123",
-    "vehicleSubtype": "Large Box"
+    "licencePlate": "182 397",
+    "vehicleSubtype": "Small"
 }
 
 ### Get All Vehicles
-GET http://localhost:3000/vehicles/all
+GET http://localhost:3000/api/vehicles/all
 
 ### Get All Trucks
-GET http://localhost:3000/vehicles/trucks
+GET http://localhost:3000/api/vehicles/trucks
 
 ### Get All Trailers
-GET http://localhost:3000/vehicles/trailers
+GET http://localhost:3000/api/vehicles/trailers
 
 
 

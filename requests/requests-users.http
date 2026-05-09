@@ -1,17 +1,5 @@
-### Create admin | Sign Up
-POST http://localhost:3000/auth/signup
-Content-Type: application/json
-
-{
-    "userType": "Admin",
-    "adminType": "Super Admin", 
-    "email": "admin1@outlook.com",
-    "password": "pswrd"
-}
-
-
 ### Create user | Sign up
-POST http://localhost:3000/auth/signup
+POST http://localhost:3000/api/auth/signup
 Content-Type: application/json
 
 {
@@ -19,21 +7,33 @@ Content-Type: application/json
     "email": "client1@outlook.com",
     "password": "pswrd"
 }
-
-### Sign In User
-POST http://localhost:3000/auth/signin
+### Create admin | Sign Up
+POST http://localhost:3000/api/auth/signup
 Content-Type: application/json
 
 {
+    "name" : "Jordan",
+    "userType": "Admin",
+    "adminType": "Super Admin", 
+    "email": "admin1@outlook.com",
+    "password": "pswrd"
+}
+
+### Sign In User / ADMIN
+POST http://localhost:3000/api/auth/signin
+Content-Type: application/json
+
+{
+    "userType": "Admin",
     "email": "admin1@outlook.com",
     "password": "pswrd"
 }
 
 ### Sign Out User
-Post http://localhost:3000/auth/signout
+Post http://localhost:3000/api/auth/signout
 
 ### Who Am I 
-GET http://localhost:3000/auth/whoami
+GET http://localhost:3000/api/auth/whoami
 
 ### Update User
 PATCH http://localhost:3000/users/1
@@ -57,3 +57,41 @@ GET http://localhost:3000/users/2
 
 ### Delete User By Id
 DELETE http://localhost:3000/users/1
+
+
+### Create Super Admin
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+    "name" : "Jordan",
+    "userType": "Admin",
+    "adminType": "Super Admin", 
+    "email": "admin1@outlook.com",
+    "password": "pswrd"
+}
+
+### Create Location Admin
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+    "name": "Bobby",
+    "userType": "Admin",
+    "adminType": "Location Admin", 
+    "email": "admin2@outlook.com",
+    "password": "pswrd"
+}
+
+
+# ### Create Super Admin
+# POST http://localhost:3000/api/auth/signup
+# Content-Type: application/json
+
+# {
+#     "name": "Tommy",
+#     "userType": "Admin",
+#     "adminType": "Super Admin", 
+#     "email": "admin1@outlook.com",
+#     "password": "pswrd"
+# }
