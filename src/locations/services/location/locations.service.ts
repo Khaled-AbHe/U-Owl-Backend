@@ -21,6 +21,11 @@ export class LocationsService {
     private maptilerService: MaptilerService,
   ) {}
 
+  async getAllVehiclesFromLocation(locationId: number): Promise<Vehicle[]> {
+    const location = await this.findLocationById(locationId);
+    return location.inventory;
+  }
+
   async addVehicleToLocation(dto: addVehicleToLocationDto) {
     const location = await this.findLocationById(dto.locationId);
     const vehicle = await this.vehiclesService.findVehicleById(dto.vehicleId);
