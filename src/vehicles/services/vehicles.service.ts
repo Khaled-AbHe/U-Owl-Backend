@@ -57,7 +57,7 @@ export class VehiclesService implements Factory {
     licensePlate: string;
     vehicleSubtype: TruckType | TrailerType;
   }) {
-    if (await this.isLicencePlateUnique(data.licensePlate)) {
+    if (await this.isLicensePlateUnique(data.licensePlate)) {
       if (
         Object.values(TrailerType).includes(data.vehicleSubtype as TrailerType)
       ) {
@@ -109,7 +109,7 @@ export class VehiclesService implements Factory {
     const vehicle = await this.findVehicleById(vehicleId);
 
     if (!!attrs.licensePlate) {
-      if (!(await this.isLicencePlateUnique(attrs.licensePlate))) {
+      if (!(await this.isLicensePlateUnique(attrs.licensePlate))) {
         throw new BadRequestException(
           `A vehicle with the license plate: '${attrs.licensePlate}' already exists`,
         );
@@ -139,7 +139,7 @@ export class VehiclesService implements Factory {
   }
 
   // Helpers
-  async isLicencePlateUnique(licensePlate: string) {
+  async isLicensePlateUnique(licensePlate: string) {
     const vehicle = await this.vehicleRepo.findOneBy({ licensePlate });
     return !vehicle ? true : false;
   }
