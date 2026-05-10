@@ -40,4 +40,9 @@ export class LocationsController {
   deleteUserById(@Param('id') locationId: number) {
     return this.locationsService.deleteLocationById(locationId);
   }
+
+  @Get('/:id/vehicles')
+  getAllVehiclesFromLocation(@Param('id') locationId: number) {
+    return this.locationsService.getAllVehiclesFromLocation(locationId);
+  }
 }
