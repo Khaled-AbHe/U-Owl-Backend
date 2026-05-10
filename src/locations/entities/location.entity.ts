@@ -18,10 +18,10 @@ export class Location {
   @Column()
   address: string;
 
-  @Column()
+  @Column('float')
   lon: number;
 
-  @Column()
+  @Column('float')
   lat: number;
 
   @Column()

@@ -102,6 +102,16 @@ export class LocationsService {
 
   async updateLocation(locationId: number, attrs: Partial<Location>) {
     const location = await this.findLocationById(locationId);
+
+    if (attrs.address) {
+      const { lon, lat } = await this.maptilerService.geocodeAddress(
+        attrs.address,
+      );
+
+      attrs.lon = lon;
+      attrs.lat = lat;
+    }
+
     Object.assign(location, attrs);
     return await this.locationRepo.save(location);
   }

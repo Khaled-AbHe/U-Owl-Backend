@@ -3,21 +3,11 @@ POST http://localhost:3000/api/auth/signup
 Content-Type: application/json
 
 {
-    "name": "Bobby",
+    "name": "Khaled",
+    "surname": "Abou Hechmeh",
     "userType": "Admin",
-    "adminType": "Location Admin", 
-    "email": "admin2@outlook.com",
-    "password": "pswrd"
-}
-
-
-### Create user | Sign up
-POST http://localhost:3000/api/auth/signup
-Content-Type: application/json
-
-{
-    "userType": "Client",
-    "email": "client1@outlook.com",
+    "adminType": "Super Admin", 
+    "email": "khaled@uowl.com",
     "password": "pswrd"
 }
 
@@ -27,7 +17,7 @@ Content-Type: application/json
 
 {
     "userType": "Admin",
-    "email": "admin2@outlook.com",
+    "email": "khaled@uowl.com",
     "password": "pswrd"
 }
 
