@@ -1,10 +1,9 @@
-import { IsNumber } from "class-validator";
+import { IsNumber } from 'class-validator';
 
-export class addVehicleToLocationDto{
+export class addVehicleToLocationDto {
+  @IsNumber()
+  locationId: number;
 
-    @IsNumber()
-    locationId: number
-
-    @IsNumber()
-    vehicleId: number
+  @IsNumber()
+  vehicleId: number;
 }

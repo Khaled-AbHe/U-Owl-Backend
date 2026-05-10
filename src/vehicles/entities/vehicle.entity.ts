@@ -7,7 +7,7 @@ import {
   TableInheritance,
 } from 'typeorm';
 import { VehicleType } from '../enum/vehicle-type.enum';
-import { Location } from '../../locations/location.entity';
+import { Location } from '../../locations/entities/location.entity';
 import { TruckType } from '../enum/truck-type.enum';
 import { TrailerType } from '../enum/trailer-type.enum';
 import { OrderItem } from '../../carts/entities/order-item.entity';
@@ -49,7 +49,9 @@ export class Vehicle {
   isReserved: boolean;
 
   // Reference: https://typeorm.io/docs/relations/many-to-one-one-to-many-relations
-  @ManyToOne(() => Location, (location) => location.inventory, { nullable : true})
+  @ManyToOne(() => Location, (location) => location.inventory, {
+    nullable: true,
+  })
   location: Location | null;
 
   // Get rid of this
