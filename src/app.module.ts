@@ -5,9 +5,11 @@ import { VehiclesModule } from './vehicles/vehicles.module';
 import { LocationsModule } from './locations/locations.module';
 import { CartsModule } from './carts/carts.module';
 import { CurrentUserMiddleware } from './currentUser/middlewares/current-user.middleware';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',

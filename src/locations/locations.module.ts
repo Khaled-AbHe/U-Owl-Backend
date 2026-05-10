@@ -1,14 +1,20 @@
 import { Module } from '@nestjs/common';
-import { LocationsController } from './locations.controller';
-import { LocationsService } from './services/locations.service';
+import { HttpModule } from '@nestjs/axios';
+import { LocationsController } from './controllers/locations.controller';
+import { LocationsService } from './services/location/locations.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Location } from './location.entity';
+import { Location } from './entities/location.entity';
 import { VehiclesModule } from '../vehicles/vehicles.module';
+import { MaptilerService } from './services/maptiler/maptiler.service';
 
 @Module({
-  imports: [VehiclesModule, TypeOrmModule.forFeature([Location])],
+  imports: [
+    HttpModule, // provides HttpService for GeocodingService
+    VehiclesModule,
+    TypeOrmModule.forFeature([Location]),
+  ],
   exports: [],
   controllers: [LocationsController],
-  providers: [LocationsService],
+  providers: [LocationsService, MaptilerService],
 })
 export class LocationsModule {}

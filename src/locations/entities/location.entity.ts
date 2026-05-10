@@ -5,7 +5,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Vehicle } from '../vehicles/entities/vehicle.entity';
+import { Vehicle } from '../../vehicles/entities/vehicle.entity';
 
 @Entity()
 export class Location {
@@ -14,6 +14,9 @@ export class Location {
 
   @Column()
   depotName: string;
+
+  @Column()
+  address: string;
 
   @Column()
   lon: number;
@@ -28,7 +31,7 @@ export class Location {
   @OneToMany(() => Vehicle, (vehicle) => vehicle.location, {
     eager: true,
     cascade: true,
-  }) // This manages the relation between vehicle and location
+  })
   @JoinColumn()
-  inventory: Vehicle[]; // this is the actual array of vehicules
+  inventory: Vehicle[];
 }

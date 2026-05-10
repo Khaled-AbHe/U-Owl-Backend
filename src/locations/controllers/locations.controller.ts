@@ -1,8 +1,16 @@
-import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
-import { CreateLocationDto } from './dtos/create-location.dto';
-import { LocationsService } from './services/locations.service';
-import { addVehicleToLocationDto } from './dtos/add-vehicle-to-location.dto';
-import { removeVehicleFromLocationDto } from './dtos/remove-vehicleFromLocation.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { addVehicleToLocationDto } from '../dtos/add-vehicle-to-location.dto';
+import { CreateLocationDto } from '../dtos/create-location.dto';
+import { removeVehicleFromLocationDto } from '../dtos/remove-vehicleFromLocation.dto';
+import { LocationsService } from '../services/location/locations.service';
 
 @Controller('locations')
 export class LocationsController {
@@ -26,5 +34,10 @@ export class LocationsController {
   @Patch('/removeVehicle')
   removeVehicleFromLocation(@Body() body: removeVehicleFromLocationDto) {
     return this.locationsService.removeVehicleFromLocation(body);
+  }
+
+  @Delete('/:id')
+  deleteUserById(@Param('id') locationId: number) {
+    return this.locationsService.deleteLocationById(locationId);
   }
 }

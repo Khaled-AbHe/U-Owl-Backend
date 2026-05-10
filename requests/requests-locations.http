@@ -5,10 +5,9 @@ POST http://localhost:3000/api/locations/create
 Content-Type: application/json
 
 {
-    "depotName": "ConcessionnaireKhaled",
-    "lon": 40,
-    "lat": 50,
-    "phoneNumber" : "514-231-0152"
+  "depotName": "Montreal Depot",
+  "address": "1000 Rue de la Gauchetière, Montreal, QC",
+  "phoneNumber": "514-555-0100"
 }
 
 ### Get All Locations
@@ -32,3 +31,6 @@ Content-Type: application/json
     "locationId": 1,
     "vehicleId" : 2
 }
+
+### Delete location
+DELETE http://localhost:3000/api/locations/1
