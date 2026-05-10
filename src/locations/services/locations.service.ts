@@ -8,7 +8,7 @@ import { Location } from '../location.entity';
 import { Repository } from 'typeorm';
 import { CreateLocationDto } from '../dtos/create-location.dto';
 import { addVehicleToLocationDto } from '../dtos/add-vehicle-to-location.dto';
-import { removeVehicleFromLocation } from '../dtos/remove-vehicleFromLocation.dto';
+import { removeVehicleFromLocationDto } from '../dtos/remove-vehicleFromLocation.dto';
 import { Vehicle } from '../../vehicles/entities/vehicle.entity';
 import { VehiclesService } from '../../vehicles/services/vehicles.service';
 
@@ -32,7 +32,7 @@ export class LocationsService {
     return await this.updateLocation(dto.locationId, location);
   }
 
-  async removeVehicleFromLocation(dto: removeVehicleFromLocation) {
+  async removeVehicleFromLocation(dto: removeVehicleFromLocationDto) {
     const location = await this.findLocationById(dto.locationId);
     const vehicle = await this.vehiclesService.findVehicleById(dto.vehicleId); // cherche le véhicule
 
