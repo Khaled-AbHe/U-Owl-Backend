@@ -4,11 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Location } from '../location.entity';
+import { Location } from '../entities/location.entity';
 import { Repository } from 'typeorm';
 import { CreateLocationDto } from '../dtos/create-location.dto';
 import { addVehicleToLocationDto } from '../dtos/add-vehicle-to-location.dto';
-import { removeVehicleFromLocation } from '../dtos/remove-vehicleFromLocation.dto';
+import { removeVehicleFromLocationDto } from '../dtos/remove-vehicleFromLocation.dto';
 import { Vehicle } from '../../vehicles/entities/vehicle.entity';
 import { VehiclesService } from '../../vehicles/services/vehicles.service';
 
@@ -22,9 +22,13 @@ export class LocationsService {
   async addVehicleToLocation(dto: addVehicleToLocationDto) {
     const location = await this.findLocationById(dto.locationId);
     const vehicle = await this.vehiclesService.findVehicleById(dto.vehicleId);
-  
-    if (location.inventory.findIndex(v => { return v.vehicleId == vehicle.vehicleId}) != -1) {
-      throw new BadRequestException("Vehicle is already in location")
+
+    if (
+      location.inventory.findIndex((v) => {
+        return v.vehicleId == vehicle.vehicleId;
+      }) != -1
+    ) {
+      throw new BadRequestException('Vehicle is already in location');
     }
 
     location.inventory.push(vehicle);
@@ -32,7 +36,7 @@ export class LocationsService {
     return await this.updateLocation(dto.locationId, location);
   }
 
-  async removeVehicleFromLocation(dto: removeVehicleFromLocation) {
+  async removeVehicleFromLocation(dto: removeVehicleFromLocationDto) {
     const location = await this.findLocationById(dto.locationId);
     const vehicle = await this.vehiclesService.findVehicleById(dto.vehicleId); // cherche le véhicule
 
@@ -63,6 +67,9 @@ export class LocationsService {
 
   async findAllLocations() {
     return await this.locationRepo.find({
+      relations: {
+        inventory: true,
+      },
       //relations: ['inventory'], // you have to specify the relation so that it can find it easily, or "inventory" will be shown as undefined
     }); // source: https://typeorm.io/docs/working-with-entity-manager/find-options/
   }

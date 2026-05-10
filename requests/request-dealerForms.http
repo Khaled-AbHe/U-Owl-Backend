@@ -1,0 +1,39 @@
+################ dealer forms
+
+### Create Form
+POST http://localhost:3000/api/dealer-form/create
+Content-Type: application/json
+
+{
+    "fullName" : "Johnathan Meilleur" ,
+    "email" : "johnathan.meilleur@hotmail.com",
+    "businessName" : "JohnAuto",
+    "businessEmail" :  "admin@jonahauto.com",
+    "phoneNumber" : "514-412-4151",
+    "city" : "Montréal",
+    "postalCode" : "K1M P91"
+}
+
+### Delete form by id
+DELETE  http://localhost:3000/api/dealer-form/7
+
+### Find All
+GET  http://localhost:3000/api/dealer-form/all
+
+### Find Dealer
+GET  http://localhost:3000/api/dealer-form/find/3
+
+### Update Form
+PATCH http://localhost:3000/api/dealer-form/update/8
+Content-Type: application/json
+
+{
+    "fullName" : "hello admin" ,
+    "email" : "johnathan.meilleur@hotmail.com",
+    "businessName" : "JohnAuto",
+    "businessEmail" :  "admin@jonahauto.com",
+    "phoneNumber" : "514-412-4151",
+    "city" : "Montréal",
+    "postalCode" : "K1M P91"
+}
+

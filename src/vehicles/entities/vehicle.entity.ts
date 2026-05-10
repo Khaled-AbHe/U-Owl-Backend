@@ -7,7 +7,7 @@ import {
   TableInheritance,
 } from 'typeorm';
 import { VehicleType } from '../enum/vehicle-type.enum';
-import { Location } from '../../locations/location.entity';
+import { Location } from "../../locations/entities/location.entity"
 import { TruckType } from '../enum/truck-type.enum';
 import { TrailerType } from '../enum/trailer-type.enum';
 import { OrderItem } from '../../carts/entities/order-item.entity';

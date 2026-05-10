@@ -1,9 +1,10 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersModule } from './users/users.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
 import { LocationsModule } from './locations/locations.module';
 import { CartsModule } from './carts/carts.module';
+import { CompanyDataModule } from './company-data/company-data.module';
 import { CurrentUserMiddleware } from './currentUser/middlewares/current-user.middleware';
 
 @Module({
@@ -19,8 +20,8 @@ import { CurrentUserMiddleware } from './currentUser/middlewares/current-user.mi
     VehiclesModule,
     LocationsModule,
     CartsModule,
+    CompanyDataModule,
   ],
-  controllers: [],
   providers: [CurrentUserMiddleware],
 })
 export class AppModule implements NestModule {
