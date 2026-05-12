@@ -11,7 +11,7 @@ import { CreateFormDto } from '../dtos/create-form.dto';
 import { UpdateFormDto } from '../dtos/update-form.dto';
 import { DealerFormService } from '../services/dealerForm.service';
 
-@Controller('dealer-form')
+@Controller('dealerform')
 export class DealerFormController {
   constructor(private dealerFormService: DealerFormService) {}
 

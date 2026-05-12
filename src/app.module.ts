@@ -6,6 +6,7 @@ import { LocationsModule } from './locations/locations.module';
 import { CartsModule } from './carts/carts.module';
 import { CurrentUserMiddleware } from './currentUser/middlewares/current-user.middleware';
 import { ConfigModule } from '@nestjs/config';
+import { CompanyDataModule } from './companyData/company-data.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ConfigModule } from '@nestjs/config';
     VehiclesModule,
     LocationsModule,
     CartsModule,
+    CompanyDataModule,
   ],
   controllers: [],
   providers: [CurrentUserMiddleware],
