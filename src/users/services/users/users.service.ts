@@ -1,16 +1,18 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { User } from '../../entities/user.entity';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Factory } from '../../../interfaces/factory.interface';
 import { Client } from '../../entities/client.entity';
 import { Admin } from '../../entities/admin.entity';
 import { UserType } from '../../enums/users.enum';
 import { AdminType } from '../../enums/admin-type.enum';
+import { LocationsService } from '../../../locations/services/location/locations.service';
 
 @Injectable()
 export class UsersService implements Factory {
@@ -18,7 +20,41 @@ export class UsersService implements Factory {
     @InjectRepository(User) private userRepo: Repository<User>,
     @InjectRepository(Client) private clientRepo: Repository<Client>,
     @InjectRepository(Admin) private adminRepo: Repository<Admin>,
+    private locationsService: LocationsService,
   ) {}
+
+  async assignLocationToAdmin(userId: number, locationId: number) {
+    const user = (await this.findUserById(userId)) as Admin;
+
+    if (
+      user.userType != UserType.ADMIN ||
+      user.adminType != AdminType.LOCATION_ADMIN
+    ) {
+      throw new NotFoundException(`User ${userId} is not a Location Admin`);
+    }
+    if (!!user.location) {
+      throw new ConflictException(`User ${userId} already has a location`);
+    }
+
+    const location = await this.locationsService.findLocationById(locationId);
+    return await this.updateUser(userId, { location: location });
+  }
+
+  async unassignLocationToAdmin(userId: number) {
+    const user = (await this.findUserById(userId)) as Admin;
+
+    if (
+      user.userType != UserType.ADMIN ||
+      user.adminType != AdminType.LOCATION_ADMIN
+    ) {
+      throw new NotFoundException(`User ${userId} is not a Location Admin`);
+    }
+    if (user.location == null) {
+      throw new NotFoundException('Location admin doesnt have a location');
+    }
+
+    return await this.updateUser(userId, { location: null });
+  }
 
   async factoryCreate(data: {
     name: string;

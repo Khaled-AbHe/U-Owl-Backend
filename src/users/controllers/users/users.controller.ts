@@ -14,6 +14,8 @@ import { UserDto } from '../../dtos/user.dto';
 import { AuthGuard } from '../../../currentUser/guards/auth.guard';
 import { AdminGuard } from '../../../currentUser/guards/admin.guard';
 import { AuthService } from '../../services/auth/auth.service';
+import { AssignLocationToAdminDto } from '../../dtos/assign-location-to-admin.dto';
+import { SuperAdminGuard } from '../../../currentUser/guards/super-admin.guard';
 
 @Controller('users')
 @UseGuards(AuthGuard)
@@ -22,6 +24,21 @@ export class UsersController {
     private usersService: UsersService,
     private authService: AuthService,
   ) {}
+
+  @UseGuards(SuperAdminGuard)
+  @Patch('/assign-location/:id')
+  assignLocationToAdmin(
+    @Param('id') userId: number,
+    @Body() dto: AssignLocationToAdminDto,
+  ) {
+    return this.usersService.assignLocationToAdmin(userId, dto.locationId);
+  }
+
+  @UseGuards(SuperAdminGuard)
+  @Patch('/unassign-location/:id')
+  unassignLocationToAdmin(@Param('id') id: number) {
+    return this.usersService.unassignLocationToAdmin(id);
+  }
 
   @Patch('/:id')
   updateUser(@Param('id') userId: number, @Body() body: UpdateUserDto) {
@@ -33,6 +50,7 @@ export class UsersController {
     return this.usersService.deleteUserById(userId);
   }
 
+  @UseGuards(SuperAdminGuard)
   @UseGuards(AdminGuard)
   @Serialize(UserDto)
   @Get('/:id')
@@ -40,6 +58,7 @@ export class UsersController {
     return this.usersService.findUserById(userId);
   }
 
+  @UseGuards(SuperAdminGuard)
   @Get()
   findAllUsers() {
     return this.usersService.findAllUsers();

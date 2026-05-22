@@ -13,7 +13,7 @@ import { MaptilerService } from './services/maptiler/maptiler.service';
     VehiclesModule,
     TypeOrmModule.forFeature([Location]),
   ],
-  exports: [],
+  exports: [LocationsService],
   controllers: [LocationsController],
   providers: [LocationsService, MaptilerService],
 })

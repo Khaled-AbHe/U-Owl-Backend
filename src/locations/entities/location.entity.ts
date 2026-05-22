@@ -3,14 +3,19 @@ import {
   Entity,
   JoinColumn,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Vehicle } from '../../vehicles/entities/vehicle.entity';
+import { Admin } from '../../users/entities/admin.entity';
 
 @Entity()
 export class Location {
   @PrimaryGeneratedColumn()
   locationId: number;
+
+  @OneToOne(() => Admin, (admin) => admin.location, { nullable: true })
+  owner: Admin;
 
   @Column()
   depotName: string;

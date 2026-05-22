@@ -7,9 +7,10 @@ import { Client } from './entities/client.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthService } from './services/auth/auth.service';
 import { AuthentificationController } from './controllers/authentification/authentification.controller';
+import { LocationsModule } from '../locations/locations.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Client, Admin])],
+  imports: [TypeOrmModule.forFeature([User, Client, Admin]), LocationsModule],
   controllers: [UsersController, AuthentificationController],
   providers: [UsersService, AuthService],
   exports: [UsersService],

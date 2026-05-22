@@ -3,11 +3,23 @@ POST http://localhost:3000/api/auth/signup
 Content-Type: application/json
 
 {
-    "name": "Khaled",
-    "surname": "Abou Hechmeh",
+    "name": "Jonathan",
+    "surname": "Johnson",
     "userType": "Admin",
-    "adminType": "Super Admin", 
-    "email": "khaled@uowl.com",
+    "adminType": "Location Admin", 
+    "email": "jonathan@uowl.com",
+    "password": "pswrd"
+}
+
+### Create client | Sign Up
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+    "name": "Jane",
+    "surname": "Janeson",
+    "userType": "Client",
+    "email": "jane@uowl.com",
     "password": "pswrd"
 }
 
@@ -17,7 +29,7 @@ Content-Type: application/json
 
 {
     "userType": "Admin",
-    "email": "khaled@uowl.com",
+    "email": "jonathan@uowl.com",
     "password": "pswrd"
 }
 
@@ -49,3 +61,14 @@ GET http://localhost:3000/api/users/2
 
 ### Delete User By Id
 DELETE http://localhost:3000/api/users/1
+
+### Assign location to location admin
+PATCH http://localhost:3000/api/users/assign-location/3
+Content-Type: application/json
+
+{
+    "locationId": 1
+}
+
+### Unassign location to location admin
+PATCH http://localhost:3000/api/users/unassign-location/3

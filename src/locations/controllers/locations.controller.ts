@@ -14,7 +14,9 @@ import { removeVehicleFromLocationDto } from '../dtos/remove-vehicleFromLocation
 import { LocationsService } from '../services/location/locations.service';
 import { UpdateLocationDto } from '../dtos/update-location.dto';
 import { AdminGuard } from '../../currentUser/guards/admin.guard';
+import { AuthGuard } from '../../currentUser/guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('locations')
 export class LocationsController {
   constructor(private locationsService: LocationsService) {}
