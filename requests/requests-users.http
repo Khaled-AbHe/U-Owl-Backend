@@ -1,4 +1,8 @@
-### Create admin | Sign Up
+### ─────────────────────────────────────────
+###  AUTH  (/api/auth)
+### ─────────────────────────────────────────
+
+### Sign Up – Admin (Location Admin)
 POST http://localhost:3000/api/auth/signup
 Content-Type: application/json
 
@@ -6,12 +10,27 @@ Content-Type: application/json
     "name": "Jonathan",
     "surname": "Johnson",
     "userType": "Admin",
-    "adminType": "Location Admin", 
+    "adminType": "Location Admin",
     "email": "jonathan@uowl.com",
     "password": "pswrd"
 }
 
-### Create client | Sign Up
+###
+
+### Sign Up – Admin (Super Admin)
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+    "name": "Khaled",
+    "surname": "Abou Hechmeh",
+    "userType": "Admin",
+    "adminType": "Super Admin",
+    "email": "khaled@uowl.com",
+    "password": "pswrd"
+}
+
+### Sign Up – Client
 POST http://localhost:3000/api/auth/signup
 Content-Type: application/json
 
@@ -19,11 +38,11 @@ Content-Type: application/json
     "name": "Jane",
     "surname": "Janeson",
     "userType": "Client",
-    "email": "jane@uowl.com",
+    "email": "jane@outlook.com",
     "password": "pswrd"
 }
 
-### Sign In User
+### Sign In - Admin
 POST http://localhost:3000/api/auth/signin
 Content-Type: application/json
 
@@ -33,36 +52,48 @@ Content-Type: application/json
     "password": "pswrd"
 }
 
-### Sign Out User
-Post http://localhost:3000/api/auth/signout
+### Sign In - Client
+POST http://localhost:3000/api/auth/signin
+Content-Type: application/json
 
-### Who Am I 
+{
+    "userType": "Client",
+    "email": "jane@outlook.com",
+    "password": "pswrd"
+}
+
+### Sign Out
+POST http://localhost:3000/api/auth/signout
+
+### Who Am I
 GET http://localhost:3000/api/auth/whoami
+
+
+### ─────────────────────────────────────────
+###  USERS  (/api/users)   [AuthGuard required]
+### ─────────────────────────────────────────
+
+### Get All Users  [SuperAdminGuard]
+GET http://localhost:3000/api/users
+
+### Get User By Id  [AdminGuard + SuperAdminGuard]
+GET http://localhost:3000/api/users/2
 
 ### Update User
 PATCH http://localhost:3000/api/users/1
 Content-Type: application/json
 
 {
-    "email": "admin1@outlook.com",
-    "password": "pswrd",
     "name": "Khaled",
-    "surname": "Abou Hechmeh"
+    "surname": "Abou Hechmeh",
+    "email": "admin1@outlook.com",
+    "password": "pswrd"
 }
 
-### Change a user's password
+### Change User Password
 PATCH http://localhost:3000/api/users/2/changePassword/password123
 
-### Get All Users
-GET http://localhost:3000/api/users
-
-### Get User By Id
-GET http://localhost:3000/api/users/2
-
-### Delete User By Id
-DELETE http://localhost:3000/api/users/1
-
-### Assign location to location admin
+### Assign Location to Location Admin  [SuperAdminGuard]
 PATCH http://localhost:3000/api/users/assign-location/3
 Content-Type: application/json
 
@@ -70,5 +101,8 @@ Content-Type: application/json
     "locationId": 1
 }
 
-### Unassign location to location admin
+### Unassign Location from Location Admin  [SuperAdminGuard]
 PATCH http://localhost:3000/api/users/unassign-location/3
+
+### Delete User By Id
+DELETE http://localhost:3000/api/users/1

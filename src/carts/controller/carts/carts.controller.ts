@@ -6,6 +6,7 @@ import { Client } from '../../../users/entities/client.entity';
 import { AuthGuard } from '../../../currentUser/guards/auth.guard';
 import { ClientGuard } from '../../../currentUser/guards/client.guard';
 import { CartPaymentDto } from '../../dtos/cart-payment.dto';
+import { AdminGuard } from '../../../currentUser/guards/admin.guard';
 
 @Controller('carts')
 @UseGuards(AuthGuard)
@@ -15,6 +16,7 @@ export class CartsController {
     private paymentService: PaymentService,
   ) {}
 
+  @UseGuards(AdminGuard)
   @Get('/all')
   findAllCarts() {
     return this.cartsService.findAllCarts();

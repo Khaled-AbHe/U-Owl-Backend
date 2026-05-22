@@ -1,17 +1,37 @@
-### Sign In as Client
-POST http://localhost:3000/api/auth/signin
+### ─────────────────────────────────────────
+###  CARTS  (/api/carts)   [AuthGuard required]
+### ─────────────────────────────────────────
+
+### Get All Carts [AdminGuard]
+GET http://localhost:3000/api/carts/all
+
+### Get Current Client's Cart  [ClientGuard]
+GET http://localhost:3000/api/carts/currentCart
+
+### Pay For Cart  [ClientGuard]
+POST http://localhost:3000/api/carts/pay
 Content-Type: application/json
 
 {
-    "userType": "Client",
-    "email": "client1@outlook.com",
-    "password": "pswrd"
+    "method": "PayPal",
+    "amount": 62.8
 }
 
-### View Cart/api
-GET http://localhost:3000/api/carts/currentCart
+### Pay For Cart – Credit Card  [ClientGuard]
+POST http://localhost:3000/api/carts/pay
+Content-Type: application/json
 
-### Add Vehicle to Cart
+{
+    "method": "Credit Card",
+    "amount": 120.0
+}
+
+
+### ─────────────────────────────────────────
+###  RESERVATIONS  (/api/reservations)   [AuthGuard + ClientGuard required]
+### ─────────────────────────────────────────
+
+### Add Vehicle To Cart
 PATCH http://localhost:3000/api/reservations/addVehicle
 Content-Type: application/json
 
@@ -20,14 +40,5 @@ Content-Type: application/json
     "distance": 40
 }
 
-### Remove Order Item from Cart
+### Remove Order Item From Cart
 PATCH http://localhost:3000/api/reservations/removeOrderItem/3
-
-### Pay for Cart
-POST http://localhost:3000/api/carts/pay?method=paypal&amount=80
-Content-Type: application/json
-
-{
-    "method": "PayPal",
-    "amount": 62.8
-}

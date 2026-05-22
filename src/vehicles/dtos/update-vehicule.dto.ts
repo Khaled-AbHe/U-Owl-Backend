@@ -23,12 +23,7 @@ export class UpdateVehicleDto {
   vehicleType: VehicleType;
 
   @IsEnum({ ...TruckType, ...TrailerType })
-  @ValidateIf(
-    (vehicle) =>
-      vehicle.vehicleType !== '' ||
-      vehicle.vehicleType !== null ||
-      vehicle.vehicleType !== undefined,
-  )
+  @ValidateIf((vehicle) => !!vehicle.vehicleType)
   vehicleSubtype: TruckType | TrailerType;
 
   @IsNumber()

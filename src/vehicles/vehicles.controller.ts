@@ -12,7 +12,9 @@ import { CreateVehicleDto } from './dtos/create-vehicule.dto';
 import { UpdateVehicleDto } from './dtos/update-vehicule.dto';
 import { VehiclesService } from './services/vehicles.service';
 import { AdminGuard } from '../currentUser/guards/admin.guard';
+import { AuthGuard } from '../currentUser/guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('vehicles')
 export class VehiclesController {
   constructor(private vehiclesService: VehiclesService) {}
@@ -36,12 +38,6 @@ export class VehiclesController {
   @Get('/trailers')
   findAllTrailers() {
     return this.vehiclesService.findAllTrailers();
-  }
-
-  // temp
-  @Get('/:id')
-  findVehicleById(@Param('id') id: number) {
-    return this.vehiclesService.findVehicleById(id);
   }
 
   @UseGuards(AdminGuard)

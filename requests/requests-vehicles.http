@@ -1,14 +1,8 @@
-### Sign In as Admin
-POST http://localhost:3000/api/auth/signin
-Content-Type: application/json
+### ─────────────────────────────────────────
+###  VEHICLES  (/api/vehicles)
+### ─────────────────────────────────────────
 
-{
-    "userType": "Admin",
-    "email": "khaled@uowl.com",
-    "password": "pswrd123"
-}
-
-### Create Vehicle
+### Create Vehicle  [AdminGuard]
 POST http://localhost:3000/api/vehicles/create
 Content-Type: application/json
 
@@ -26,21 +20,18 @@ GET http://localhost:3000/api/vehicles/trucks
 ### Get All Trailers
 GET http://localhost:3000/api/vehicles/trailers
 
-### get vehicle by id
-GET http://localhost:3000/api/vehicles/12
-
-### Check if a vehicle is road safe
+### Check If Vehicle Is Road Safe  [AdminGuard]
 GET http://localhost:3000/api/vehicles/12/roadSafe
 
-### Update
+### Update Vehicle  [AdminGuard]
 PATCH http://localhost:3000/api/vehicles/12
 Content-Type: application/json
 
 {
-  "kilometrage": 250000,
-  "isReserved": true,
-  "kilometrageSecuritaire": false
+    "kilometrage": 250000,
+    "isReserved": true,
+    "isSafe": false
 }
 
-### delete vehicle by id
+### Delete Vehicle By Id  [AdminGuard]
 DELETE http://localhost:3000/api/vehicles/12

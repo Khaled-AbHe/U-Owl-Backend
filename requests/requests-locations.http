@@ -1,36 +1,52 @@
-################# Locations
+### ─────────────────────────────────────────
+###  LOCATIONS  (/api/locations)   [AuthGuard required]
+### ─────────────────────────────────────────
 
-### Create Location
+### Create Location  [SuperAdminGuard]
 POST http://localhost:3000/api/locations/create
 Content-Type: application/json
 
 {
-  "depotName": "Montreal Depot",
-  "address": "1000 Rue de la Gauchetière, Montreal, QC",
-  "phoneNumber": "514-555-0100"
+    "depotName": "Montreal Depot",
+    "address": "1000 Rue de la Gauchetière, Montreal, QC",
+    "phoneNumber": "514-555-0100"
 }
 
 ### Get All Locations
 GET http://localhost:3000/api/locations/all
 
+### Get All Vehicles From Location
+GET http://localhost:3000/api/locations/1/vehicles
 
-### Add location to vehicle
+### Update Location  [AdminGuard]
+PATCH http://localhost:3000/api/locations/1
+Content-Type: application/json
+
+{
+    "depotName": "Montreal Depot North",
+    "address": "1200 Rue Saint-Denis, Montreal, QC",
+    "phoneNumber": "514-555-0199",
+    "lon": -73.5673,
+    "lat": 45.5017
+}
+
+### Add Vehicle to Location  [AdminGuard]
 POST http://localhost:3000/api/locations/addVehicle
 Content-Type: application/json
 
 {
-    "vehicleId" : 2,
+    "vehicleId": 2,
     "locationId": 1
 }
 
-### Remove location to vehicle
+### Remove Vehicle From Location  [AdminGuard]
 PATCH http://localhost:3000/api/locations/removeVehicle
 Content-Type: application/json
 
 {
     "locationId": 1,
-    "vehicleId" : 2
+    "vehicleId": 2
 }
 
-### Delete location
+### Delete Location  [SuperAdminGuard]
 DELETE http://localhost:3000/api/locations/1

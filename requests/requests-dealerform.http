@@ -1,0 +1,43 @@
+### ─────────────────────────────────────────
+###  DEALER FORM  (/api/dealerform)
+### ─────────────────────────────────────────
+
+### Create Dealer Form
+POST http://localhost:3000/api/dealerform/create
+Content-Type: application/json
+
+{
+    "fullName": "John Smith",
+    "email": "john@example.com",
+    "businessName": "Smith Logistics",
+    "businessEmail": "contact@smithlogistics.com",
+    "phoneNumber": "514-555-0200",
+    "city": "Montreal",
+    "postalCode": "H2X 1Y6",
+    "status": "Pending"
+}
+
+###
+
+### Get All Dealer Forms  [AuthGuard + SuperAdminGuard]
+GET http://localhost:3000/api/dealerform/all
+
+###
+
+### Get Dealer Form By Id  [AuthGuard + SuperAdminGuard]
+GET http://localhost:3000/api/dealerform/find/1
+
+###
+
+### Update Dealer Form  [AuthGuard + SuperAdminGuard]
+PATCH http://localhost:3000/api/dealerform/update/1
+Content-Type: application/json
+
+{
+    "status": "Accepted"
+}
+
+###
+
+### Delete Dealer Form  [AuthGuard + SuperAdminGuard]
+DELETE http://localhost:3000/api/dealerform/1

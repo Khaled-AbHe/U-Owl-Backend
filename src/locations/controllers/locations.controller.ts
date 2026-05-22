@@ -15,13 +15,14 @@ import { LocationsService } from '../services/location/locations.service';
 import { UpdateLocationDto } from '../dtos/update-location.dto';
 import { AdminGuard } from '../../currentUser/guards/admin.guard';
 import { AuthGuard } from '../../currentUser/guards/auth.guard';
+import { SuperAdminGuard } from '../../currentUser/guards/super-admin.guard';
 
 @UseGuards(AuthGuard)
 @Controller('locations')
 export class LocationsController {
   constructor(private locationsService: LocationsService) {}
 
-  @UseGuards(AdminGuard)
+  @UseGuards(SuperAdminGuard)
   @Post('/create')
   createLocation(@Body() body: CreateLocationDto) {
     return this.locationsService.createLocation(body);
@@ -44,7 +45,7 @@ export class LocationsController {
     return this.locationsService.removeVehicleFromLocation(body);
   }
 
-  @UseGuards(AdminGuard)
+  @UseGuards(SuperAdminGuard)
   @Delete('/:id')
   deleteLocationById(@Param('id') locationId: number) {
     return this.locationsService.deleteLocationById(locationId);

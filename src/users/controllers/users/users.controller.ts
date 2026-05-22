@@ -16,6 +16,7 @@ import { AdminGuard } from '../../../currentUser/guards/admin.guard';
 import { AuthService } from '../../services/auth/auth.service';
 import { AssignLocationToAdminDto } from '../../dtos/assign-location-to-admin.dto';
 import { SuperAdminGuard } from '../../../currentUser/guards/super-admin.guard';
+import { ClientGuard } from '../../../currentUser/guards/client.guard';
 
 @Controller('users')
 @UseGuards(AuthGuard)
@@ -51,7 +52,6 @@ export class UsersController {
   }
 
   @UseGuards(SuperAdminGuard)
-  @UseGuards(AdminGuard)
   @Serialize(UserDto)
   @Get('/:id')
   findUserById(@Param('id') userId: number) {
